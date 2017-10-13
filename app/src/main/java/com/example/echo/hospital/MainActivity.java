@@ -1,7 +1,6 @@
-
-
 package com.example.echo.hospital;
 
+import com.example.echo.hospital.model.User;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -26,14 +25,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +48,6 @@ import java.util.List;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import android.view.Gravity;
 
 public class MainActivity extends Activity
         implements EasyPermissions.PermissionCallbacks {
@@ -73,6 +69,13 @@ public class MainActivity extends Activity
     private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS_READONLY };
     //google sheet api -----end
 
+    //store account and password -----start
+    private String AccountValue;
+    private String PasswordValue;
+    private String NameValue;
+    private int IdentityValue;
+
+    //store account and password -----end
 
     /**
      * Create the main activity.
@@ -114,7 +117,7 @@ public class MainActivity extends Activity
         mCallApiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!account.getText().toString().equals("") && !password.getText().toString().equals("")){
+                if(!account.getText().toString().trim().equals("") && !password.getText().toString().trim().equals("")){
                     mCallApiButton.setEnabled(false);
                     mOutputText.setText("");
                     getResultsFromApi();
@@ -383,7 +386,7 @@ public class MainActivity extends Activity
          */
         private List<String> getDataFromApi() throws IOException {
             String spreadsheetId = "1IvyIKcyzlAqlsbMuoB78Y7LYDkqWkc9iMeUwQ4TaVtA";
-            String range = "Account!A2:C";
+            String range = "Account!A2:D";
             List<String> results = new ArrayList<String>();
             ValueRange response = this.mService.spreadsheets().values()
                     .get(spreadsheetId, range)
@@ -392,7 +395,7 @@ public class MainActivity extends Activity
             if (values != null) {
                 //results.add("Name, Major");
                 for (List row : values) {
-                    results.add(row.get(0) + ", " + row.get(1) + ", " + row.get(2));
+                    results.add(row.get(0) + ", " + row.get(1) + ", " + row.get(2) + ", " + row.get(3));
                 }
             }
             return results;
@@ -416,7 +419,31 @@ public class MainActivity extends Activity
                 //mOutputText.setText(TextUtils.join("\n", output));
                 for(String str: output){
                     String[] array = str.split(",");
-                    if(array[0].trim().equals(account.getText().toString().trim()) && array[1].trim().equals(password.getText().toString().trim())){
+                    String googleAccount = array[0].trim();
+                    String googlePassword = array[1].trim();
+                    String googleName = array[2].trim();
+                    int googleIdentity = Integer.parseInt(array[3].trim());
+
+                    if(googleAccount.equals(account.getText().toString().trim()) && googlePassword.equals(password.getText().toString().trim())){
+
+                        //store input account and password  ---- start
+                        SharedPreferences settings = getSharedPreferences(User.PREFS_NAME,
+                                Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = settings.edit();
+
+                        // Edit and commit
+                        AccountValue = googleAccount;
+                        PasswordValue = googlePassword;
+                        NameValue = googleName;
+                        IdentityValue = googleIdentity;
+
+                        editor.putString(User.PREF_ACCOUNT, AccountValue);
+                        editor.putString(User.PREF_PASSWORD, PasswordValue);
+                        editor.putString(User.PREF_NAME, NameValue);
+                        editor.putInt(User.PREF_IDENTITY, IdentityValue);
+                        editor.commit();
+                        //store input account and password  ---- end
+
                         Intent intent = new Intent();
                         intent.setClass(MainActivity.this, MenuActivity.class);
                         startActivity(intent);
