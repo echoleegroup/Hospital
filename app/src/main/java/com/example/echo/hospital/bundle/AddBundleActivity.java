@@ -1,39 +1,39 @@
-package com.example.echo.hospital.bundle;
+package com.example.echo.hospital;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.view.View;
 import android.widget.EditText;
-import java.util.Calendar;
 import android.app.DatePickerDialog;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Button;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
-import com.google.api.services.sheets.v4.model.ValueRange;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import java.util.Calendar;
+
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.sheets.v4.Sheets;
-import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
+import com.google.api.services.sheets.v4.model.AppendValuesResponse;
+import com.google.api.services.sheets.v4.model.ValueRange;
+import com.google.api.services.sheets.v4.SheetsScopes;
 
-
-import com.example.echo.hospital.R;
 import com.example.echo.hospital.model.User;
 
-public class AddBundleActivity extends AppCompatActivity {
+public class AddBundleActivity extends Activity {
     private EditText date, bed, patient, comment, auditor;
     private RadioButton unitOne, unitTwo, doctorSignTrue, doctorSignFalse, nurseSignTrue, nurseSignFalse;
     private String dateValue, unitValue, bedValue, patientValue, doctorSignValue, nurseSignValue, commentValue, auditorValue;
@@ -47,9 +47,23 @@ public class AddBundleActivity extends AppCompatActivity {
     private String NameValue;
     //store account and password -----end
 
+    //google sheet api -----start
+    // The ID of the spreadsheet to update.
+    private GoogleAccountCredential credential;
+    final HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
+    final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
+    String spreadsheetId = "1ythc41RFh9JmO0hXyZYNghXfXNPn7-NcPbRHosof_sE";
+    // The A1 notation of a range to search for a logical table of data.
+    // Values will be appended after the last row of the table.
+    String range = "106!A1:J";
+    ValueRange body = new ValueRange();
+    private static final String PREF_ACCOUNT_NAME = "accountName";
+    private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS_READONLY };
+    //google sheet api -----end
+    String value;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bundle);
 
@@ -141,29 +155,69 @@ public class AddBundleActivity extends AppCompatActivity {
                     MyAlertDialog.setMessage("請填寫正確資料");
                     MyAlertDialog.show();
                 }else{
-                    //save to excel
 
-                    //TODO
-                    /*
-                    List<List<Object>> values = Arrays.asList(
-                            Arrays.asList(
-                                    // Cell values ...
-                            )
-                            // Additional rows ...
-                    );
-                    ValueRange body = new ValueRange()
-                            .setValues(values);
-                    UpdateValuesResponse result =
-                            service.spreadsheets().values().update(spreadsheetId, range, body)
-                                    .setValueInputOption(valueInputOption)
-                                    .execute();
-                    */
+                    //年度, 月份, 稽核日期, 單位, 床號, 病歷號, 醫師/NP, 護理師, 總完整, 稽核者
+                    value = cYear + "," + cMonth +","+ dateValue +","+ unitValue +","+ bedValue +","+ patientValue +","+ doctorSignValue +","+ nurseSignValue +","+ commentValue +","+ auditorValue;
+
+
+                    try{
+                        //save to excel
+                        AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
+                            private com.google.api.services.sheets.v4.Sheets service = new com.google.api.services.sheets.v4.Sheets.Builder(httpTransport, jsonFactory, credential)
+                                    .setApplicationName("Google Sheets API Android Quickstart").build();
+
+                            @Override
+                            protected String doInBackground(Void... params) {
+                                List<String> results = new ArrayList<String>();
+                                Exception mLastError = null;
+                                try {
+
+                                    List<Object> data1 = new ArrayList<Object>();
+                                    data1.add(value);
+
+                                    List<List<Object>> data = new ArrayList<List<Object>>();
+                                    data.add (data1);
+
+                                    List<List<Object>> values = data;
+
+                                    body = new ValueRange()
+                                            .setValues(values);
+
+                                    Sheets.Spreadsheets.Values.Append request =
+                                            service.spreadsheets().values().append(spreadsheetId, range, body);
+
+                                    AppendValuesResponse response = request.setInsertDataOption("INSERT_ROWS").execute();
+                                    // TODO: Change code below to process the `response` object:
+                                    System.out.println(response);
+                                    return "successful";
+                                } catch (Exception e) {
+                                    mLastError = e;
+                                    cancel(true);
+                                    return "failure";
+                                }
+
+                            }
+                        };
+
+                        task.execute();
+                    }
+                    catch(Exception e){
+                        e.printStackTrace();
+                    }
                 }
 
             }
         });
 
+        // Initialize credentials and service object.
+        // Google Accounts
+        credential = GoogleAccountCredential.usingOAuth2(
+                getApplicationContext(), Arrays.asList(SCOPES))
+                .setBackOff(new ExponentialBackOff());
+        SharedPreferences allSettings = getPreferences(Context.MODE_PRIVATE);
+        credential.setSelectedAccountName(allSettings.getString(PREF_ACCOUNT_NAME, null));
     }
+
 
     private String setDateFormat(int year,int monthOfYear,int dayOfMonth){
         cYear = year-1911;
