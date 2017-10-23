@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.echo.hospital.bundle.AddBundleActivity">
+    tools:context="com.example.echo.hospital.bundle.AddVapBundleActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -112,7 +112,7 @@
 
             <EditText
                 android:id="@+id/EditText2"
-                android:inputType="number"
+                android:inputType="textVisiblePassword"
                 />
 
         </TableRow>

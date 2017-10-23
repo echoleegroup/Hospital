@@ -29,6 +29,9 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
     }
 
+    //compile 'com.google.apis:google-api-services-tasks:v1-rev35-1.19.0' exclude module: 'httpclient'
+    compile 'com.google.http-client:google-http-client-gson:1.19.0' exclude module: 'httpclient'
+
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.google.android.gms:play-services-auth:11.0.4'
     compile 'pub.devrel:easypermissions:0.3.0'

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.echo.hospital.bundle.AddBundleActivity"
-    tools:showIn="@layout/activity_add_bundle">
+    tools:context="com.example.echo.hospital.bundle.AddVapBundleActivity"
+    tools:showIn="@layout/activity_add_vap_bundle">
 
 </android.support.constraint.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.echo.hospital;
+package com.example.echo.hospital.bundle;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,29 +17,36 @@ import android.content.DialogInterface;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 import java.util.Calendar;
 
+import com.example.echo.hospital.MainActivity;
 import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.sheets.v4.Sheets;
+import com.google.api.services.sheets.v4.model.AddSheetRequest;
+import com.google.api.services.sheets.v4.model.Spreadsheet;
 import com.google.api.services.sheets.v4.model.AppendValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
-import com.google.api.services.sheets.v4.SheetsScopes;
+import com.google.api.services.sheets.v4.model.Sheet;
+import com.google.api.services.sheets.v4.model.Request;
+import com.google.api.services.sheets.v4.model.SheetProperties;
+import com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest;
 
+
+
+import com.example.echo.hospital.R;
 import com.example.echo.hospital.model.User;
 
-public class AddBundleActivity extends Activity {
+public class AddVapBundleActivity extends Activity{
     private EditText date, bed, patient, comment, auditor;
     private RadioButton unitOne, unitTwo, doctorSignTrue, doctorSignFalse, nurseSignTrue, nurseSignFalse;
-    private String dateValue, unitValue, bedValue, patientValue, doctorSignValue, nurseSignValue, commentValue, auditorValue;
+    private String dateValue, unitValue, bedValue, patientValue, doctorSignValue, nurseSignValue, commentValue, completeValue, auditorValue;
     private Button saveBtn;
     private int mYear, mMonth, mDay; //西元年
-    private int cYear, cMonth; //民國
+    private int cYear, cMonth; //民國年月
+    private String cDay; //民國日
     private Builder MyAlertDialog;
 
     //store account and password -----start
@@ -48,24 +55,28 @@ public class AddBundleActivity extends Activity {
     //store account and password -----end
 
     //google sheet api -----start
+    static final int REQUEST_ACCOUNT_PICKER = 1000;
+    static final int REQUEST_AUTHORIZATION = 1001;
+    static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
+    static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
+
     // The ID of the spreadsheet to update.
-    private GoogleAccountCredential credential;
+    //private GoogleAccountCredential credential;
     final HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
     final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
     String spreadsheetId = "1ythc41RFh9JmO0hXyZYNghXfXNPn7-NcPbRHosof_sE";
     // The A1 notation of a range to search for a logical table of data.
     // Values will be appended after the last row of the table.
-    String range = "106!A1:J";
+    String range;
     ValueRange body = new ValueRange();
-    private static final String PREF_ACCOUNT_NAME = "accountName";
-    private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS_READONLY };
     //google sheet api -----end
-    String value;
+    final Calendar c = Calendar.getInstance();
+    int correntYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_bundle);
+        setContentView(R.layout.activity_add_vap_bundle);
 
         //init
         MyAlertDialog = new AlertDialog.Builder(this);
@@ -79,8 +90,8 @@ public class AddBundleActivity extends Activity {
         date = (EditText)findViewById(R.id.EditText1);
 
         if(date.getText().length() == 0){
-            final Calendar c = Calendar.getInstance();
             mYear = c.get(Calendar.YEAR);
+            correntYear = mYear;
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
         }
@@ -88,7 +99,7 @@ public class AddBundleActivity extends Activity {
         date.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(AddBundleActivity.this, new DatePickerDialog.OnDateSetListener() {
+                new DatePickerDialog(AddVapBundleActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         String format = setDateFormat(year,month,day);
@@ -144,9 +155,10 @@ public class AddBundleActivity extends Activity {
                 unitValue = unitOne.isChecked() ? "ICU-1": unitTwo.isChecked() ? "ICU-2" : "";
                 bedValue = bed.getText().toString();
                 patientValue = patient.getText().toString();
-                doctorSignValue = doctorSignTrue.isChecked() ? "是": doctorSignFalse.isChecked() ? "否" : "";
-                nurseSignValue = nurseSignTrue.isChecked() ? "是": nurseSignFalse.isChecked() ? "否" : "";
-                commentValue = comment.getText().toString();
+                doctorSignValue = doctorSignTrue.isChecked() ? "Y": doctorSignFalse.isChecked() ? "N" : "";
+                nurseSignValue = nurseSignTrue.isChecked() ? "Y": nurseSignFalse.isChecked() ? "N" : "";
+                commentValue = comment.getText().toString().equals("") ? "NA" : "";
+                completeValue = doctorSignValue.equals("Y") && nurseSignValue.equals("Y") ? "Y" : "N";
                 auditorValue = NameValue.toString();
 
                 //validate
@@ -156,24 +168,88 @@ public class AddBundleActivity extends Activity {
                     MyAlertDialog.show();
                 }else{
 
-                    //年度, 月份, 稽核日期, 單位, 床號, 病歷號, 醫師/NP, 護理師, 總完整, 稽核者
-                    value = cYear + "," + cMonth +","+ dateValue +","+ unitValue +","+ bedValue +","+ patientValue +","+ doctorSignValue +","+ nurseSignValue +","+ commentValue +","+ auditorValue;
-
-
                     try{
                         //save to excel
                         AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
-                            private com.google.api.services.sheets.v4.Sheets service = new com.google.api.services.sheets.v4.Sheets.Builder(httpTransport, jsonFactory, credential)
+                            private com.google.api.services.sheets.v4.Sheets service = new com.google.api.services.sheets.v4.Sheets.Builder(httpTransport, jsonFactory, MainActivity.credential)
                                     .setApplicationName("Google Sheets API Android Quickstart").build();
 
                             @Override
                             protected String doInBackground(Void... params) {
                                 List<String> results = new ArrayList<String>();
                                 Exception mLastError = null;
+                                String sheetName = correntYear-1911+"VAP";
+                                range = sheetName+"!A:J";
                                 try {
+                                    Spreadsheet sheet_metadata = service.spreadsheets().get(spreadsheetId).execute();
+                                    List<Sheet> sheetList = sheet_metadata.getSheets();
+                                    if(!sheetList.contains(sheetName)){//沒有此年度的VAP Bundle
+                                        /*Sheets.Spreadsheets.Create request = service.spreadsheets().create(requestBody);
+                                        new Request().setAddSheet(new AddSheetRequest()
+                                                .setProperties(new SheetProperties().setTitle("scstc")))
+                                        Spreadsheet response = request.execute();*/
+                                        //Create a new AddSheetRequest
+                                        AddSheetRequest addSheetRequest = new AddSheetRequest();
+                                        SheetProperties sheetProperties = new SheetProperties();
+
+                                        //Add the sheetName to the sheetProperties
+                                        addSheetRequest.setProperties(sheetProperties);
+                                        addSheetRequest.setProperties(sheetProperties.setTitle(sheetName));
+
+                                        //Create batchUpdateSpreadsheetRequest
+                                        BatchUpdateSpreadsheetRequest batchUpdateSpreadsheetRequest = new BatchUpdateSpreadsheetRequest();
+                                        //Create requestList and set it on the batchUpdateSpreadsheetRequest
+                                        List<Request> requestsList = new ArrayList<Request>();
+                                        batchUpdateSpreadsheetRequest.setRequests(requestsList);
+
+                                        //Create a new request with containing the addSheetRequest and add it to the requestList
+                                        Request request = new Request();
+                                        request.setAddSheet(addSheetRequest);
+                                        requestsList.add(request);
+
+                                        //Add the requestList to the batchUpdateSpreadsheetRequest
+                                        batchUpdateSpreadsheetRequest.setRequests(requestsList);
+
+                                        //Call the sheets API to execute the batchUpdate
+                                        service.spreadsheets().batchUpdate(spreadsheetId,batchUpdateSpreadsheetRequest).execute();
+
+                                        List<Object> data1 = new ArrayList<Object>();
+                                        data1.add("年度");//年度
+                                        data1.add("月份");//月份
+                                        data1.add("稽核日期");//稽核日期
+                                        data1.add("單位");//單位
+                                        data1.add("床號");//床號
+                                        data1.add("病歷號");//病歷號
+                                        data1.add("醫師/NP");//醫師/NP
+                                        data1.add("護理師");//護理師
+                                        data1.add("總完整");//總完整
+                                        data1.add("稽核者");//稽核者
+
+                                        List<List<Object>> data = new ArrayList<List<Object>>();
+                                        data.add (data1);
+
+                                        List<List<Object>> values = data;
+
+                                        body = new ValueRange()
+                                                .setValues(values);
+                                        Sheets.Spreadsheets.Values.Append requestAddFirstColumnName =
+                                                service.spreadsheets().values().append(spreadsheetId, range, body).setValueInputOption("RAW");
+
+                                        AppendValuesResponse response = requestAddFirstColumnName.setInsertDataOption("INSERT_ROWS").execute();
+                                    }
 
                                     List<Object> data1 = new ArrayList<Object>();
-                                    data1.add(value);
+                                    data1.add(cYear);//年度
+                                    data1.add(cMonth);//月份
+                                    data1.add(dateValue);//稽核日期
+                                    data1.add(unitValue);//單位 //下拉式選單
+                                    data1.add(bedValue);//床號
+                                    data1.add(patientValue);//病歷號
+                                    data1.add(doctorSignValue);//醫師/NP
+                                    data1.add(nurseSignValue);//護理師
+                                    //TODO 項次 commentValue 下拉式選單
+                                    data1.add(completeValue);//總完整
+                                    data1.add(auditorValue);//稽核者
 
                                     List<List<Object>> data = new ArrayList<List<Object>>();
                                     data.add (data1);
@@ -184,11 +260,9 @@ public class AddBundleActivity extends Activity {
                                             .setValues(values);
 
                                     Sheets.Spreadsheets.Values.Append request =
-                                            service.spreadsheets().values().append(spreadsheetId, range, body);
+                                            service.spreadsheets().values().append(spreadsheetId, range, body).setValueInputOption("RAW");
 
                                     AppendValuesResponse response = request.setInsertDataOption("INSERT_ROWS").execute();
-                                    // TODO: Change code below to process the `response` object:
-                                    System.out.println(response);
                                     return "successful";
                                 } catch (Exception e) {
                                     mLastError = e;
@@ -196,6 +270,19 @@ public class AddBundleActivity extends Activity {
                                     return "failure";
                                 }
 
+                            }
+
+                            @Override
+                            protected void onPostExecute(String output) {
+                                if(output.equals("successful")){
+                                    MyAlertDialog.setTitle("Message");
+                                    MyAlertDialog.setMessage("新增成功");
+                                    MyAlertDialog.show();
+                                }else{
+                                    MyAlertDialog.setTitle("Message");
+                                    MyAlertDialog.setMessage("新增失敗");
+                                    MyAlertDialog.show();
+                                }
                             }
                         };
 
@@ -205,28 +292,16 @@ public class AddBundleActivity extends Activity {
                         e.printStackTrace();
                     }
                 }
-
             }
         });
-
-        // Initialize credentials and service object.
-        // Google Accounts
-        credential = GoogleAccountCredential.usingOAuth2(
-                getApplicationContext(), Arrays.asList(SCOPES))
-                .setBackOff(new ExponentialBackOff());
-        SharedPreferences allSettings = getPreferences(Context.MODE_PRIVATE);
-        credential.setSelectedAccountName(allSettings.getString(PREF_ACCOUNT_NAME, null));
     }
 
 
     private String setDateFormat(int year,int monthOfYear,int dayOfMonth){
-        cYear = year-1911;
-        cMonth = monthOfYear;
-        String adjMonthOfYear = String.valueOf(cMonth + 1).length() == 1 ? "0" + String.valueOf(cMonth + 1) : String.valueOf(cMonth + 1);
-
-        return String.valueOf(cYear)
-                + adjMonthOfYear
-                + String.valueOf(dayOfMonth);
+        cYear = year - 1911;
+        cMonth = monthOfYear + 1;
+        String adjMonthOfYear = String.valueOf(cMonth).length() == 1 ? "0" + String.valueOf(cMonth) : String.valueOf(cMonth);
+        cDay = String.valueOf(dayOfMonth).length() == 1 ? "0" + String.valueOf(dayOfMonth) : String.valueOf(dayOfMonth);
+        return cYear + adjMonthOfYear + cDay;
     }
-
 }
