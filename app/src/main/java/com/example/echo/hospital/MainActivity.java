@@ -32,6 +32,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ImageView;
+import android.text.method.PasswordTransformationMethod;
 import android.accounts.Account;
 import android.util.Log;
 
@@ -111,6 +112,7 @@ public class MainActivity extends Activity{
         password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         password.setLayoutParams(tlp);
         password.setHint("password");
+        password.setTransformationMethod(new PasswordTransformationMethod());
         activityLayout.addView(password);
 
         mCallApiButton = new Button(this);
@@ -218,8 +220,6 @@ public class MainActivity extends Activity{
                 .setBackOff(new ExponentialBackOff());
         SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
         credential.setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
-
-
 
     }
 }

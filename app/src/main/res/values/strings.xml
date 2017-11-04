@@ -19,4 +19,6 @@
     <string name="title_activity_add_bundle">AddBundleActivity</string>
     <string name="title_activity_foley_bundle">FoleyBundleActivity</string>
     <string name="title_activity_add_foley_bundle">AddFoleyBundleActivity</string>
+    <string name="title_activity_wash">WashActivity</string>
+    <string name="title_activity_add_wash">AddWashActivity</string>
 </resources>

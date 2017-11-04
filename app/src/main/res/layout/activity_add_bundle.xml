@@ -31,7 +31,7 @@
 
             <TextView
                 android:id="@+id/TextView0"
-                android:text="Bundle完整性稽表"
+                android:text="Bundle完整性稽核表"
                 android:layout_weight="1"
                 android:background="#b0b0b0"
                 android:textColor="#000000"

@@ -53,6 +53,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".wash.WashActivity"
+            android:label="@string/title_activity_wash"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".wash.AddWashActivity"
+            android:label="@string/title_activity_add_wash"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

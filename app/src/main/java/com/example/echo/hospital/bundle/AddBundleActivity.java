@@ -1,6 +1,7 @@
 package com.example.echo.hospital.bundle;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -72,7 +73,6 @@ public class AddBundleActivity extends Activity{
     ValueRange body = new ValueRange();
     //google sheet api -----end
     final Calendar c = Calendar.getInstance();
-    int correntYear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -92,9 +92,9 @@ public class AddBundleActivity extends Activity{
 
         if(date.getText().length() == 0){
             mYear = c.get(Calendar.YEAR);
-            correntYear = mYear;
             mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
+            date.setText(setDateFormat(mYear, mMonth, mDay));//default today
         }
 
         date.setOnClickListener(new View.OnClickListener(){
@@ -113,6 +113,7 @@ public class AddBundleActivity extends Activity{
             }
 
         });
+
 
         //set unit
         unitOne = (RadioButton) findViewById(R.id.RadioButton1);
@@ -179,7 +180,7 @@ public class AddBundleActivity extends Activity{
                             protected String doInBackground(Void... params) {
                                 List<String> results = new ArrayList<String>();
                                 Exception mLastError = null;
-                                String sheetName = correntYear-1911+ MenuActivity.bundleName;
+                                String sheetName = cYear+ MenuActivity.bundleName;
                                 range = sheetName+"!A:J";
                                 try {
                                     Spreadsheet sheet_metadata = service.spreadsheets().get(spreadsheetId).execute();
@@ -279,9 +280,12 @@ public class AddBundleActivity extends Activity{
                             @Override
                             protected void onPostExecute(String output) {
                                 if(output.equals("successful")){
-                                    MyAlertDialog.setTitle("Message");
+                                    Intent intent = new Intent();
+                                    intent.setClass(AddBundleActivity.this, BundleActivity.class);
+                                    startActivity(intent);
+                                    /*MyAlertDialog.setTitle("Message");
                                     MyAlertDialog.setMessage("新增成功");
-                                    MyAlertDialog.show();
+                                    MyAlertDialog.show();*/
                                 }else{
                                     MyAlertDialog.setTitle("Message");
                                     MyAlertDialog.setMessage("新增失敗");
