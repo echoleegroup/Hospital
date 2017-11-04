@@ -14,6 +14,11 @@ public class User{
     public static final String PREF_PASSWORD = "Password";
     public static final String PREF_NAME = "Username";
     public static final String PREF_IDENTITY = "Identity";
+    public static final String GOOGLE_NAME = "google";
+    public static final String GOOGLE_ACCOUNT = "Account";
+    public static final String GOOGLE_TYPE = "Type";
+    private String googleAccName;
+    private String googleAccType;
 
     public User(){
 
@@ -58,5 +63,21 @@ public class User{
 
     public void setIdentity(int identity) {
         this.identity = identity;
+    }
+
+    public String getGoogleAccType() {
+        return googleAccType;
+    }
+
+    public void setGoogleAccType(String googleAccType) {
+        this.googleAccType = googleAccType;
+    }
+
+    public String getGoogleAccName() {
+        return googleAccName;
+    }
+
+    public void setGoogleAccName(String googleAccName) {
+        this.googleAccName = googleAccName;
     }
 }

@@ -14,6 +14,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private ListView listView;
     private ArrayAdapter adapter;
+    public static String bundleName;
 
 
     @Override
@@ -25,10 +26,14 @@ public class MenuActivity extends AppCompatActivity {
         adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1);
         //0-洗手稽核表
-        //1-Bundle稽核表
-        //2-MDRO稽核表
+        //1- Bundle c稽核表
+        //2- Bundle f稽核表
+        //3- Bundle Vap稽核表
+        //4-MDRO稽核表
         adapter.add("洗手稽核表");
-        adapter.add("Bundle稽核表");
+        adapter.add("Bundle C稽核表");
+        adapter.add("Bundle Foley稽核表");
+        adapter.add("Bundle VAP稽核表");
         adapter.add("MDRO稽核表");
         listView.setAdapter(adapter);
 
@@ -46,11 +51,22 @@ public class MenuActivity extends AppCompatActivity {
                 if(arg3 == 0L){//洗手稽核表
 
                 }
-                else if(arg3 == 1L){//Bundle稽核表
+                else if(arg3 == 1L){//Bundle c稽核表
+                    bundleName = "c";
                     Intent intent = new Intent();
                     intent.setClass(MenuActivity.this, BundleActivity.class);
                     startActivity(intent);
-                }else if(arg3 == 2L){//MDRO稽核表
+                }else if(arg3 == 2L){//Bundle Foley稽核表
+                    bundleName = "Foley";
+                    Intent intent = new Intent();
+                    intent.setClass(MenuActivity.this, BundleActivity.class);
+                    startActivity(intent);
+                }else if(arg3 == 3L){//Bundle VAP稽核表
+                    bundleName = "VAP";
+                    Intent intent = new Intent();
+                    intent.setClass(MenuActivity.this, BundleActivity.class);
+                    startActivity(intent);
+                }else if(arg3 == 4L){//MDRO稽核表
 
                 }
             }

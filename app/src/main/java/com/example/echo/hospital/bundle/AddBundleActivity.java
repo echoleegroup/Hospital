@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Calendar;
 
 import com.example.echo.hospital.MainActivity;
+import com.example.echo.hospital.MenuActivity;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -39,7 +40,7 @@ import com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest;
 import com.example.echo.hospital.R;
 import com.example.echo.hospital.model.User;
 
-public class AddVapBundleActivity extends Activity{
+public class AddBundleActivity extends Activity{
     private EditText date, bed, patient, comment, auditor;
     private RadioButton unitOne, unitTwo, doctorSignTrue, doctorSignFalse, nurseSignTrue, nurseSignFalse;
     private String dateValue, unitValue, bedValue, patientValue, doctorSignValue, nurseSignValue, commentValue, completeValue, auditorValue;
@@ -76,7 +77,7 @@ public class AddVapBundleActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_vap_bundle);
+        setContentView(R.layout.activity_add_bundle);
 
         //init
         MyAlertDialog = new AlertDialog.Builder(this);
@@ -99,7 +100,7 @@ public class AddVapBundleActivity extends Activity{
         date.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(AddVapBundleActivity.this, new DatePickerDialog.OnDateSetListener() {
+                new DatePickerDialog(AddBundleActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         String format = setDateFormat(year,month,day);
@@ -178,16 +179,19 @@ public class AddVapBundleActivity extends Activity{
                             protected String doInBackground(Void... params) {
                                 List<String> results = new ArrayList<String>();
                                 Exception mLastError = null;
-                                String sheetName = correntYear-1911+"VAP";
+                                String sheetName = correntYear-1911+ MenuActivity.bundleName;
                                 range = sheetName+"!A:J";
                                 try {
                                     Spreadsheet sheet_metadata = service.spreadsheets().get(spreadsheetId).execute();
                                     List<Sheet> sheetList = sheet_metadata.getSheets();
-                                    if(!sheetList.contains(sheetName)){//沒有此年度的VAP Bundle
-                                        /*Sheets.Spreadsheets.Create request = service.spreadsheets().create(requestBody);
-                                        new Request().setAddSheet(new AddSheetRequest()
-                                                .setProperties(new SheetProperties().setTitle("scstc")))
-                                        Spreadsheet response = request.execute();*/
+                                    boolean matchSheetName = false;
+                                    for(Sheet sheet:sheetList){
+                                        if(sheetName.equals(sheet.getProperties().getTitle())) {
+                                            matchSheetName = true;
+                                        }
+                                    }
+                                    if(!matchSheetName){//沒有此年度的Bundle, 先建立此年度的sheet
+
                                         //Create a new AddSheetRequest
                                         AddSheetRequest addSheetRequest = new AddSheetRequest();
                                         SheetProperties sheetProperties = new SheetProperties();

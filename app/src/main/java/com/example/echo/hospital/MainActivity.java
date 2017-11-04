@@ -14,6 +14,7 @@ import com.google.api.services.sheets.v4.model.*;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.auth.api.Auth;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -32,7 +33,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -40,9 +40,9 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity{
 
-    private static GoogleAccountCredential credential;
+    public static GoogleAccountCredential credential;
     private com.google.api.services.sheets.v4.Sheets service = null;
 
     //google sheet api -----start
@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 
     private static final String BUTTON_TEXT = "Login";
     private static final String PREF_ACCOUNT_NAME = "accountName";
-    private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS_READONLY };
+    private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS};
     final HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
     final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
     //google sheet api -----end
@@ -74,6 +74,9 @@ public class MainActivity extends Activity {
     private String NameValue;
     private int IdentityValue;
     //store account and password -----end
+
+    private static final java.io.File DATA_STORE_DIR = new java.io.File(
+            System.getProperty("user.home"), ".credentials/drive-java-quickstart");
 
     /**
      * Create the main activity.
@@ -136,7 +139,11 @@ public class MainActivity extends Activity {
                                     }
                                 }
                                 return results;
-                            } catch (Exception e) {
+                            }catch (UserRecoverableAuthIOException e) {
+                                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
+                                return null;
+                            }
+                            catch (Exception e) {
                                 mLastError = e;
                                 cancel(true);
                                 return null;
@@ -174,14 +181,15 @@ public class MainActivity extends Activity {
                                         editor.putInt(User.PREF_IDENTITY, IdentityValue);
                                         editor.commit();
                                         //store input account and password  ---- end
-                                        /*
+
                                         Intent intent = new Intent();
                                         intent.setClass(MainActivity.this, MenuActivity.class);
-                                        startActivity(intent);*/
+                                        //startActivity(intent);
+                                        startActivityForResult(intent, REQUEST_AUTHORIZATION);
                                         break;
                                     }
                                 }
-                            }//
+                            }
                         }
                     };
                     task.execute();
@@ -210,59 +218,8 @@ public class MainActivity extends Activity {
                 .setBackOff(new ExponentialBackOff());
         SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
         credential.setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
-    }
 
-    private boolean setGoogleAccountNameSettings(String accountName){
-        try{
-            SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putString(PREF_ACCOUNT_NAME, accountName);
-            editor.apply();
-            Log.d("ACCOUNT_DEBUG", "FUNC: setGoogleAccountNameSettings --> " + accountName);
-        }catch (Exception exc){
-            Log.e("ACCOUNT_DEBUG", "FUNC: setGoogleAccountNameSettings --> ERROR");
-            return false;
-        }finally {
-            Log.e("ACCOUNT_DEBUG", "FUNC: setGoogleAccountNameSettings --> ERROR");
-            return true;
-        }
 
 
     }
-    /*
-    @Override
-    protected void onActivityResult(
-            int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case REQUEST_GOOGLE_PLAY_SERVICES:
-                if (resultCode != RESULT_OK) {
-                    //mOutputText.setText(
-                    //         "This app requires Google Play Services. Please install " +
-                    //                 "Google Play Services on your device and relaunch this app.");
-                } else {
-                    //getResultsFromApi();
-                }
-                break;
-            case REQUEST_ACCOUNT_PICKER:
-                if (resultCode == RESULT_OK && data != null && data.getExtras() != null) {
-                    String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-                    if (accountName != null) {
-                        setGoogleAccountNameSettings(accountName);
-                        credential.setSelectedAccountName(accountName);
-                        Log.d("AUTH_DEBUG", "Authed after Picker -->" + accountName +  " | " + credential.getScope());
-                        this.startService(new Intent(this, MenuActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                        finish();
-                    }
-                }
-                break;
-            case REQUEST_AUTHORIZATION:
-                if (resultCode == RESULT_OK) {
-                    Log.d("AUTH_DEBUG", "started after authorization -->" + resultCode +  " | " + credential.getScope());
-                    this.startService(new Intent(this, MenuActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                    finish();
-                }
-                break;
-        }
-    }*/
 }
