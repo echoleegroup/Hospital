@@ -74,10 +74,10 @@ public class WashActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
         adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1);
-/* TODO
+
         //get wash data
         AsyncTask<Void, Void, List<String>> task = new AsyncTask<Void, Void, List<String>>() {
-            private com.google.api.services.sheets.v4.Sheets service = new com.google.api.services.sheets.v4.Sheets.Builder(httpTransport, jsonFactory, MainActivity.credential)
+            private com.google.api.services.sheets.v4.Sheets service = new com.google.api.services.sheets.v4.Sheets.Builder(httpTransport, jsonFactory, MainActivity.mCredential)
                     .setApplicationName("Google Sheets API Android Quickstart").build();
 
             @Override
@@ -98,7 +98,7 @@ public class WashActivity extends AppCompatActivity {
                             break;
                         }
                     }
-                    if(!matchSheetName){//沒有此年度的Bundle
+                    if(!matchSheetName){//沒有此年度的 wash
                         //Do nothing
                     }else{
                         ValueRange response = service.spreadsheets().values()
@@ -166,7 +166,7 @@ public class WashActivity extends AppCompatActivity {
             }
         };
         task.execute();
-*/
+
         //get input account and password  ---- start
         SharedPreferences settings = getSharedPreferences(User.PREFS_NAME,
                 Context.MODE_PRIVATE);

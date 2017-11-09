@@ -73,7 +73,7 @@ public class BundleActivity extends AppCompatActivity {
 
         //get bundle data
         AsyncTask<Void, Void, List<String>> task = new AsyncTask<Void, Void, List<String>>() {
-            private com.google.api.services.sheets.v4.Sheets service = new com.google.api.services.sheets.v4.Sheets.Builder(httpTransport, jsonFactory, MainActivity.credential)
+            private com.google.api.services.sheets.v4.Sheets service = new com.google.api.services.sheets.v4.Sheets.Builder(httpTransport, jsonFactory, MainActivity.mCredential)
                     .setApplicationName("Google Sheets API Android Quickstart").build();
 
             @Override

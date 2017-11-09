@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.echo.hospital.bundle.BundleActivity;
+import com.example.echo.hospital.wash.WashActivity;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -49,7 +50,9 @@ public class MenuActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
                 */
                 if(arg3 == 0L){//洗手稽核表
-
+                    Intent intent = new Intent();
+                    intent.setClass(MenuActivity.this, WashActivity.class);
+                    startActivity(intent);
                 }
                 else if(arg3 == 1L){//Bundle c稽核表
                     bundleName = "c";

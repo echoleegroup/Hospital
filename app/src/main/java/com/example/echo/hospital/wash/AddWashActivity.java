@@ -3,7 +3,9 @@ package com.example.echo.hospital.wash;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -11,33 +13,55 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.app.DatePickerDialog;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
+import android.widget.TableRow;
 
+import com.example.echo.hospital.MainActivity;
+import com.example.echo.hospital.MenuActivity;
 import com.example.echo.hospital.R;
 import com.example.echo.hospital.bundle.AddBundleActivity;
+import com.example.echo.hospital.bundle.BundleActivity;
 import com.example.echo.hospital.model.User;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.sheets.v4.Sheets;
+import com.google.api.services.sheets.v4.model.AddSheetRequest;
+import com.google.api.services.sheets.v4.model.AppendValuesResponse;
+import com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest;
+import com.google.api.services.sheets.v4.model.Request;
+import com.google.api.services.sheets.v4.model.Sheet;
+import com.google.api.services.sheets.v4.model.SheetProperties;
+import com.google.api.services.sheets.v4.model.Spreadsheet;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class AddWashActivity extends AppCompatActivity {
-    private EditText date, unit, title;
-    private RadioButton handWashTrue, handWashFalse, equipmentTrue, equipmentFalse, tissueTrue, tissueFalse, washTypeW, washTypeA, contactPatientTrue, contactPatientFalse, executeTrue, executeFalse, bodyFluidTrue, bodyFluidFalse, contactPatientAfterTrue, contactPatientAfterFalse;
+    private EditText date, unit, title, auditor;
+    private RadioButton handWashTrue, handWashFalse, equipmentTrue, equipmentFalse, tissueTrue, tissueFalse, washTypeW, washTypeA, contactPatientTrue, contactPatientFalse;
+    private RadioButton executeTrue, executeFalse, bodyFluidTrue, bodyFluidFalse, contactPatientAfterTrue, contactPatientAfterFalse;
     private RadioButton surroundingTrue, surroundingFalse, openFaucetTrue, openFaucetFalse, useWashHandTrue, useWashHandFalse, soupHandKeepDownTrue, soupHandKeepDownFalse;
     private RadioButton heartToHeartTrue, heartToHeartFalse, heartToBackTrue, heartToBackFalse, sewToSewTrue, sewToSewFalse;
     private RadioButton backToHeartTrue, backToHeartFalse, handToThumbTrue, handToThumbFalse, sharpToHeartTrue, sharpToHeartFalse, fifteensecTrue, fifteensecFalse;
     private RadioButton washHandTrue, washHandFalse, wipeTrue, wipeFalse, closeFaucetTrue, closeFaucetFalse, completeTrue, completeFalse;
+    private String dateValue, unitValue, titleValue, handWashValue, equipmentValue, tissueValue, washTypeValue, contactPatientValue, executeValue, bodyFluidValue, contactPatientAfterValue;
+    private String surroundingValue, openFaucetValue, useWashHandValue, soupHandKeepDownValue, heartToHeartValue, heartToBackValue, sewToSewValue, backToHeartValue;
+    private String handToThumbValue, sharpToHeartValue, fifteensecValue, washHandValue, wipeValue, closeFaucetValue, completeValue, correctValue, complianceRateValue, auditorValue;
+    private TableRow washSecond, washFourth, washFourthA, washFourthB, washFourthC, washFourthD, washFourthE, washFourthF, washFourthG, washEighth;
+    private Button saveBtn;
     private int mYear, mMonth, mDay; //西元年
     private int cYear, cMonth; //民國年月
     private String cDay; //民國日
     private AlertDialog.Builder MyAlertDialog;
+    private AsyncTask<Void, Void, String> task;
 
     //store account and password -----start
     private final String DefaultNameValue = "";
@@ -54,7 +78,7 @@ public class AddWashActivity extends AppCompatActivity {
     //private GoogleAccountCredential credential;
     final HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
     final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
-    String spreadsheetId = "1ythc41RFh9JmO0hXyZYNghXfXNPn7-NcPbRHosof_sE";
+    String spreadsheetId = "1eBs1lDRIRBhbLqwn7FU8yfef9Znqu-185b7WILrLwW8";
     // The A1 notation of a range to search for a logical table of data.
     // Values will be appended after the last row of the table.
     String range;
@@ -76,6 +100,18 @@ public class AddWashActivity extends AppCompatActivity {
                 dialog.cancel();
             }
         });
+
+        //set rows
+        washSecond = (TableRow) findViewById(R.id.tableRow15);
+        washFourth = (TableRow) findViewById(R.id.tableRow18);
+        washFourthA = (TableRow) findViewById(R.id.tableRow19);
+        washFourthB = (TableRow) findViewById(R.id.tableRow20);
+        washFourthC = (TableRow) findViewById(R.id.tableRow21);
+        washFourthD = (TableRow) findViewById(R.id.tableRow22);
+        washFourthE = (TableRow) findViewById(R.id.tableRow23);
+        washFourthF = (TableRow) findViewById(R.id.tableRow24);
+        washFourthG = (TableRow) findViewById(R.id.tableRow25);
+        washEighth = (TableRow) findViewById(R.id.tableRow29);
 
         //set datePicker
         date = (EditText)findViewById(R.id.EditText1);
@@ -105,10 +141,10 @@ public class AddWashActivity extends AppCompatActivity {
         });
 
         //set unit
-        unit = (EditText) findViewById(R.id.EditText3);
+        unit = (EditText) findViewById(R.id.EditText2);
 
         //set title
-        title = (EditText) findViewById(R.id.EditText4);
+        title = (EditText) findViewById(R.id.EditText3);
 
         //set hand wash radiobutton
         handWashTrue = (RadioButton) findViewById(R.id.RadioButton1);
@@ -124,8 +160,19 @@ public class AddWashActivity extends AppCompatActivity {
 
         //set choose hand wash type radiobutton
         washTypeW = (RadioButton) findViewById(R.id.RadioButton7);
+        washTypeW.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                changeWashType(true);
+            }
+        });
         washTypeA = (RadioButton) findViewById(R.id.RadioButton8);
-
+        washTypeA.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                changeWashType(false);
+            }
+        });
         //wash time
         //set contact patient before radiobutton
         contactPatientTrue = (RadioButton) findViewById(R.id.RadioButton9);
@@ -203,12 +250,260 @@ public class AddWashActivity extends AppCompatActivity {
         completeTrue = (RadioButton) findViewById(R.id.RadioButton45);
         completeFalse = (RadioButton) findViewById(R.id.RadioButton46);
 
-        //TODO
-
         //set auditor name
         //get input account and password  ---- start
         SharedPreferences settings = getSharedPreferences(User.PREFS_NAME,
                 Context.MODE_PRIVATE);
+        //Get value
+        NameValue = settings.getString(User.PREF_NAME, DefaultNameValue);
+        //get input account and password  ---- end
+
+        auditor = (EditText) findViewById(R.id.EditText4);
+        auditor.setText(NameValue);
+
+        //save button click event
+        saveBtn = (Button) findViewById(R.id.save);
+        saveBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                //get all fill value
+                dateValue = date.getText().toString();
+                unitValue = unit.getText().toString();
+                titleValue = title.getText().toString();
+                handWashValue = handWashTrue.isChecked() ? handWashTrue.getText().toString() :  handWashFalse.isChecked() ? handWashFalse.getText().toString() : "";
+                equipmentValue = equipmentTrue.isChecked() ? equipmentTrue.getText().toString() : equipmentFalse.isChecked() ? equipmentFalse.getText().toString() : "";
+                tissueValue = tissueTrue.isChecked() ? tissueTrue.getText().toString() : tissueFalse.isChecked() ? tissueFalse.getText().toString() : "";
+                washTypeValue = washTypeW.isChecked() ? washTypeW.getText().toString() : washTypeA.isChecked() ? washTypeA.getText().toString() : "";
+                contactPatientValue = contactPatientTrue.isChecked() ? contactPatientTrue.getText().toString(): contactPatientFalse.isChecked() ? contactPatientFalse.getText().toString() : "";
+                executeValue = executeTrue.isChecked() ? executeTrue.getText().toString() :  executeFalse.isChecked() ? executeFalse.getText().toString() : "";
+                bodyFluidValue = bodyFluidTrue.isChecked() ? bodyFluidTrue.getText().toString() : bodyFluidFalse.isChecked() ? bodyFluidFalse.getText().toString() : "";
+                contactPatientAfterValue = contactPatientAfterTrue.isChecked() ? contactPatientAfterTrue.getText().toString() : contactPatientAfterFalse.isChecked() ? contactPatientAfterFalse.getText().toString() : "";
+                surroundingValue = surroundingTrue.isChecked() ? surroundingTrue.getText().toString(): surroundingFalse.isChecked() ? surroundingFalse.getText().toString() : "";
+                openFaucetValue = openFaucetTrue.isChecked() ? openFaucetTrue.getText().toString(): openFaucetFalse.isChecked() ? openFaucetFalse.getText().toString() : "";
+                useWashHandValue = washTypeA.isChecked() ? "" : useWashHandTrue.isChecked() ? useWashHandTrue.getText().toString(): useWashHandFalse.isChecked() ? useWashHandFalse.getText().toString() : "";
+                soupHandKeepDownValue = soupHandKeepDownTrue.isChecked() ? soupHandKeepDownTrue.getText().toString() :  soupHandKeepDownFalse.isChecked() ? soupHandKeepDownFalse.getText().toString() : "";
+                heartToHeartValue = washTypeA.isChecked() ? "" : heartToHeartTrue.isChecked() ? heartToHeartTrue.getText().toString() : heartToHeartFalse.isChecked() ? heartToHeartFalse.getText().toString() : "";
+                heartToBackValue = washTypeA.isChecked() ? "" : heartToBackTrue.isChecked() ? heartToBackTrue.getText().toString() : heartToBackFalse.isChecked() ? heartToBackFalse.getText().toString() : "";
+                sewToSewValue = washTypeA.isChecked() ? "" : sewToSewTrue.isChecked() ? sewToSewTrue.getText().toString(): sewToSewFalse.isChecked() ? sewToSewFalse.getText().toString() : "";
+                backToHeartValue = washTypeA.isChecked() ? "" : backToHeartTrue.isChecked() ? backToHeartTrue.getText().toString(): backToHeartFalse.isChecked() ? backToHeartFalse.getText().toString() : "";
+                handToThumbValue = washTypeA.isChecked() ? "" : handToThumbTrue.isChecked() ? handToThumbTrue.getText().toString() :  handToThumbFalse.isChecked() ? handToThumbFalse.getText().toString() : "";
+                sharpToHeartValue = washTypeA.isChecked() ? "" : sharpToHeartTrue.isChecked() ? sharpToHeartTrue.getText().toString() : sharpToHeartFalse.isChecked() ? sharpToHeartFalse.getText().toString() : "";
+                fifteensecValue = washTypeA.isChecked() ? "" : fifteensecTrue.isChecked() ? fifteensecTrue.getText().toString() : fifteensecFalse.isChecked() ? fifteensecFalse.getText().toString() : "";
+                washHandValue = washHandTrue.isChecked() ? washHandTrue.getText().toString(): washHandFalse.isChecked() ? washHandFalse.getText().toString() : "";
+                wipeValue = wipeTrue.isChecked() ? wipeTrue.getText().toString(): wipeFalse.isChecked() ? wipeFalse.getText().toString() : "";
+                closeFaucetValue = closeFaucetTrue.isChecked() ? closeFaucetTrue.getText().toString() :  closeFaucetFalse.isChecked() ? closeFaucetFalse.getText().toString() : "";
+                completeValue = washTypeA.isChecked() ? "" : completeTrue.isChecked() ? completeTrue.getText().toString() : completeFalse.isChecked() ? completeFalse.getText().toString() : "";
+                //TODO
+                correctValue = "";
+                complianceRateValue = "";
+                //
+                auditorValue = NameValue.toString();
+
+                //add value to google sheet
+                try{
+                    //save to excel
+                    task = new AsyncTask<Void, Void, String>() {
+                        private com.google.api.services.sheets.v4.Sheets service = new com.google.api.services.sheets.v4.Sheets.Builder(httpTransport, jsonFactory, MainActivity.mCredential)
+                                .setApplicationName("Google Sheets API Android Quickstart").build();
+
+                        @Override
+                        protected String doInBackground(Void... params) {
+                            List<String> results = new ArrayList<String>();
+                            Exception mLastError = null;
+                            String sheetName = String.valueOf(cYear);
+                            range = sheetName+"!A:AC";
+                            try {
+                                Spreadsheet sheet_metadata = service.spreadsheets().get(spreadsheetId).execute();
+                                List<Sheet> sheetList = sheet_metadata.getSheets();
+                                boolean matchSheetName = false;
+                                for(Sheet sheet:sheetList){
+                                    if(sheetName.equals(sheet.getProperties().getTitle())) {
+                                        matchSheetName = true;
+                                    }
+                                }
+                                if(!matchSheetName){//沒有此年度的wash, 先建立此年度的sheet
+
+                                    //Create a new AddSheetRequest
+                                    AddSheetRequest addSheetRequest = new AddSheetRequest();
+                                    SheetProperties sheetProperties = new SheetProperties();
+
+                                    //Add the sheetName to the sheetProperties
+                                    addSheetRequest.setProperties(sheetProperties);
+                                    addSheetRequest.setProperties(sheetProperties.setTitle(sheetName));
+
+                                    //Create batchUpdateSpreadsheetRequest
+                                    BatchUpdateSpreadsheetRequest batchUpdateSpreadsheetRequest = new BatchUpdateSpreadsheetRequest();
+                                    //Create requestList and set it on the batchUpdateSpreadsheetRequest
+                                    List<Request> requestsList = new ArrayList<Request>();
+                                    batchUpdateSpreadsheetRequest.setRequests(requestsList);
+
+                                    //Create a new request with containing the addSheetRequest and add it to the requestList
+                                    Request request = new Request();
+                                    request.setAddSheet(addSheetRequest);
+                                    requestsList.add(request);
+
+                                    //Add the requestList to the batchUpdateSpreadsheetRequest
+                                    batchUpdateSpreadsheetRequest.setRequests(requestsList);
+
+                                    //Call the sheets API to execute the batchUpdate
+                                    service.spreadsheets().batchUpdate(spreadsheetId,batchUpdateSpreadsheetRequest).execute();
+
+                                    List<Object> data1 = new ArrayList<Object>();
+                                    data1.add("月份");//月份
+                                    //data1.add("稽核日期");//稽核日期
+                                    data1.add("單位");//單位
+                                    data1.add("職稱");//職稱
+                                    data1.add("設備1");//設備1
+                                    data1.add("設備2");//設備2
+                                    data1.add("設備3");//設備3
+                                    data1.add("方式");//方式
+                                    data1.add("1病人前");//1病人前
+                                    data1.add("2清潔無菌技術前");//2清潔無菌技術前
+                                    data1.add("3體液後");//3體液後
+                                    data1.add("4病人後");//4病人後
+                                    data1.add("5環境後");//5環境後
+                                    data1.add("步驟1");//步驟1
+                                    data1.add("步驟2");//步驟2
+                                    data1.add("步驟3");//步驟3
+                                    data1.add("步驟4A");//步驟4A
+                                    data1.add("步驟4B");//步驟4B
+                                    data1.add("步驟4C");//步驟4C
+                                    data1.add("步驟4D");//步驟4D
+                                    data1.add("步驟4E");//步驟4E
+                                    data1.add("步驟4F");//步驟4F
+                                    data1.add("步驟4G");//步驟4G
+                                    data1.add("步驟5");//步驟5
+                                    data1.add("步驟6");//步驟6
+                                    data1.add("步驟7");//步驟7
+                                    data1.add("步驟8");//步驟8
+                                    data1.add("正確率");//正確率
+                                    data1.add("遵從率");//遵從率
+                                    data1.add("稽核者");//稽核者
+
+                                    List<List<Object>> data = new ArrayList<List<Object>>();
+                                    data.add (data1);
+
+                                    List<List<Object>> values = data;
+
+                                    body = new ValueRange()
+                                            .setValues(values);
+                                    Sheets.Spreadsheets.Values.Append requestAddFirstColumnName =
+                                            service.spreadsheets().values().append(spreadsheetId, range, body).setValueInputOption("RAW");
+
+                                    AppendValuesResponse response = requestAddFirstColumnName.setInsertDataOption("INSERT_ROWS").execute();
+                                }
+
+                                List<Object> data1 = new ArrayList<Object>();
+                                data1.add(cMonth);//月份
+                                //data1.add("稽核日期");//稽核日期
+                                data1.add(unitValue);//單位
+                                data1.add(titleValue);//職稱
+                                data1.add(handWashValue);//設備1
+                                data1.add(equipmentValue);//設備2
+                                data1.add(tissueValue);//設備3
+                                data1.add(washTypeValue);//方式
+                                data1.add(contactPatientValue);//1病人前
+                                data1.add(executeValue);//2清潔無菌技術前
+                                data1.add(bodyFluidValue);//3體液後
+                                data1.add(contactPatientAfterValue);//4病人後
+                                data1.add(surroundingValue);//5環境後
+                                data1.add(openFaucetValue);//步驟1
+                                data1.add(useWashHandValue);//步驟2
+                                data1.add(soupHandKeepDownValue);//步驟3
+                                data1.add(heartToHeartValue);//步驟4A
+                                data1.add(heartToBackValue);//步驟4B
+                                data1.add(sewToSewValue);//步驟4C
+                                data1.add(backToHeartValue);//步驟4D
+                                data1.add(handToThumbValue);//步驟4E
+                                data1.add(sharpToHeartValue);//步驟4F
+                                data1.add(fifteensecValue);//步驟4G
+                                data1.add(washHandValue);//步驟5
+                                data1.add(wipeValue);//步驟6
+                                data1.add(closeFaucetValue);//步驟7
+                                data1.add(completeValue);//步驟8
+                                //TODO 確認 correctValue, complianceRateValue 邏輯待處理
+                                data1.add(correctValue);//正確率
+                                data1.add(complianceRateValue);//遵從率
+                                //
+                                data1.add(auditorValue);//稽核者
+
+
+                                List<List<Object>> data = new ArrayList<List<Object>>();
+                                data.add (data1);
+
+                                List<List<Object>> values = data;
+
+                                body = new ValueRange()
+                                        .setValues(values);
+
+                                Sheets.Spreadsheets.Values.Append request =
+                                        service.spreadsheets().values().append(spreadsheetId, range, body).setValueInputOption("RAW");
+
+                                AppendValuesResponse response = request.setInsertDataOption("INSERT_ROWS").execute();
+                                return "successful";
+                            } catch (Exception e) {
+                                mLastError = e;
+                                cancel(true);
+                                return "failure";
+                            }
+
+                        }
+
+                        @Override
+                        protected void onPostExecute(String output) {
+                            if(output.equals("successful")){
+                                Intent intent = new Intent();
+                                intent.setClass(AddWashActivity.this, WashActivity.class);
+                                startActivity(intent);
+                                    /*MyAlertDialog.setTitle("Message");
+                                    MyAlertDialog.setMessage("新增成功");
+                                    MyAlertDialog.show();*/
+                            }else{
+                                MyAlertDialog.setTitle("Message");
+                                MyAlertDialog.setMessage("新增失敗");
+                                MyAlertDialog.show();
+                            }
+                        }
+                    };
+
+
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+
+                //validate
+                //choose w all value must be filled, otherwise 2, 4, 8 don't filled
+                if(washTypeValue.equals("W")){
+                    if(dateValue.length() == 0 || unitValue.length() == 0 || titleValue.length() == 0 || handWashValue.length() == 0 || equipmentValue.length() == 0 || tissueValue.length() == 0
+                            || washTypeValue.length() == 0 || contactPatientValue.length() == 0 || executeValue.length() == 0 || handWashValue.length() == 0 || bodyFluidValue.length() == 0
+                            || contactPatientAfterValue.length() == 0 || surroundingValue.length() == 0 || openFaucetValue.length() == 0 || useWashHandValue.length() == 0
+                            || soupHandKeepDownValue.length() == 0 || heartToHeartValue.length() == 0 || heartToBackValue.length() == 0 || sewToSewValue.length() == 0 || backToHeartValue.length() == 0
+                            || handToThumbValue.length() == 0 || sharpToHeartValue.length() == 0 || fifteensecValue.length() == 0 || washHandValue.length() == 0 || wipeValue.length() == 0
+                            || closeFaucetValue.length() == 0 || completeValue.length() == 0){
+
+                        MyAlertDialog.setTitle("Message");
+                        MyAlertDialog.setMessage("請填寫正確資料");
+                        MyAlertDialog.show();
+                    }else{
+                        task.execute();
+                    }
+                }else{//choose wash a
+                    if(dateValue.length() == 0 || unitValue.length() == 0 || titleValue.length() == 0 || handWashValue.length() == 0 || equipmentValue.length() == 0 || tissueValue.length() == 0
+                            || washTypeValue.length() == 0 || contactPatientValue.length() == 0 || executeValue.length() == 0 || handWashValue.length() == 0 || bodyFluidValue.length() == 0
+                            || contactPatientAfterValue.length() == 0 || surroundingValue.length() == 0 || openFaucetValue.length() == 0 || soupHandKeepDownValue.length() == 0
+                            || washHandValue.length() == 0 || wipeValue.length() == 0 || closeFaucetValue.length() == 0){
+                        MyAlertDialog.setTitle("Message");
+                        MyAlertDialog.setMessage("請填寫正確資料");
+                        MyAlertDialog.show();
+                    }else{
+                        task.execute();
+                    }
+                }
+
+
+            }
+        });
     }
 
     private String setDateFormat(int year,int monthOfYear,int dayOfMonth){
@@ -217,5 +512,31 @@ public class AddWashActivity extends AppCompatActivity {
         String adjMonthOfYear = String.valueOf(cMonth).length() == 1 ? "0" + String.valueOf(cMonth) : String.valueOf(cMonth);
         cDay = String.valueOf(dayOfMonth).length() == 1 ? "0" + String.valueOf(dayOfMonth) : String.valueOf(dayOfMonth);
         return cYear + adjMonthOfYear + cDay;
+    }
+
+    private void changeWashType(boolean wash){
+        if(wash){//show 2, 4, 8
+            washSecond.setVisibility(View.VISIBLE);
+            washFourth.setVisibility(View.VISIBLE);
+            washFourthA.setVisibility(View.VISIBLE);
+            washFourthB.setVisibility(View.VISIBLE);
+            washFourthC.setVisibility(View.VISIBLE);
+            washFourthD.setVisibility(View.VISIBLE);
+            washFourthE.setVisibility(View.VISIBLE);
+            washFourthF.setVisibility(View.VISIBLE);
+            washFourthG.setVisibility(View.VISIBLE);
+            washEighth.setVisibility(View.VISIBLE);
+        }else{//hide 2, 4,8
+            washSecond.setVisibility(View.INVISIBLE);
+            washFourth.setVisibility(View.INVISIBLE);
+            washFourthA.setVisibility(View.INVISIBLE);
+            washFourthB.setVisibility(View.INVISIBLE);
+            washFourthC.setVisibility(View.INVISIBLE);
+            washFourthD.setVisibility(View.INVISIBLE);
+            washFourthE.setVisibility(View.INVISIBLE);
+            washFourthF.setVisibility(View.INVISIBLE);
+            washFourthG.setVisibility(View.INVISIBLE);
+            washEighth.setVisibility(View.INVISIBLE);
+        }
     }
 }

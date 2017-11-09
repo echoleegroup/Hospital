@@ -1,7 +1,6 @@
 package com.example.echo.hospital;
 
 import com.example.echo.hospital.model.User;
-import com.example.echo.hospital.model.Google;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.HttpTransport;
@@ -41,7 +40,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class MainActivity extends Activity{
+public class MainActivityBackup extends Activity{
 
     public static GoogleAccountCredential credential;
     private com.google.api.services.sheets.v4.Sheets service = null;
@@ -185,7 +184,7 @@ public class MainActivity extends Activity{
                                         //store input account and password  ---- end
 
                                         Intent intent = new Intent();
-                                        intent.setClass(MainActivity_.this, MenuActivity.class);
+                                        intent.setClass(MainActivityBackup.this, MenuActivity.class);
                                         //startActivity(intent);
                                         startActivityForResult(intent, REQUEST_AUTHORIZATION);
                                         break;

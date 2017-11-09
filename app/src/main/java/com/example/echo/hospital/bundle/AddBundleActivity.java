@@ -173,7 +173,7 @@ public class AddBundleActivity extends Activity{
                     try{
                         //save to excel
                         AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
-                            private com.google.api.services.sheets.v4.Sheets service = new com.google.api.services.sheets.v4.Sheets.Builder(httpTransport, jsonFactory, MainActivity.credential)
+                            private com.google.api.services.sheets.v4.Sheets service = new com.google.api.services.sheets.v4.Sheets.Builder(httpTransport, jsonFactory, MainActivity.mCredential)
                                     .setApplicationName("Google Sheets API Android Quickstart").build();
 
                             @Override

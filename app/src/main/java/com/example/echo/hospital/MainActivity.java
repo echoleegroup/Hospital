@@ -51,11 +51,11 @@ import java.util.List;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class MainActivity_backup extends Activity
+public class MainActivity extends Activity
         implements EasyPermissions.PermissionCallbacks{
 
     //google sheet api -----start
-    GoogleAccountCredential mCredential;
+    public static GoogleAccountCredential mCredential;
     private TextView mOutputText;
     private Button mCallApiButton;
     private EditText account, password;
@@ -343,7 +343,7 @@ public class MainActivity_backup extends Activity
             final int connectionStatusCode) {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         Dialog dialog = apiAvailability.getErrorDialog(
-                MainActivity_backup.this,
+                MainActivity.this,
                 connectionStatusCode,
                 REQUEST_GOOGLE_PLAY_SERVICES);
         dialog.show();
@@ -446,7 +446,7 @@ public class MainActivity_backup extends Activity
                         //store input account and password  ---- end
 
                         Intent intent = new Intent();
-                        intent.setClass(MainActivity_backup.this, MenuActivity.class);
+                        intent.setClass(MainActivity.this, MenuActivity.class);
                         startActivity(intent);
                         break;
                     }
@@ -466,7 +466,7 @@ public class MainActivity_backup extends Activity
                 } else if (mLastError instanceof UserRecoverableAuthIOException) {
                     startActivityForResult(
                             ((UserRecoverableAuthIOException) mLastError).getIntent(),
-                            MainActivity_.REQUEST_AUTHORIZATION);
+                            MainActivity.REQUEST_AUTHORIZATION);
                 } else {
                     mOutputText.setText("The following error occurred:\n"
                             + mLastError.getMessage());
