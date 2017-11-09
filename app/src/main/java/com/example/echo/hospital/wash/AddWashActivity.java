@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,10 @@ import java.util.Calendar;
 public class AddWashActivity extends AppCompatActivity {
     private EditText date, unit, title;
     private RadioButton handWashTrue, handWashFalse, equipmentTrue, equipmentFalse, tissueTrue, tissueFalse, washTypeW, washTypeA, contactPatientTrue, contactPatientFalse, executeTrue, executeFalse, bodyFluidTrue, bodyFluidFalse, contactPatientAfterTrue, contactPatientAfterFalse;
+    private RadioButton surroundingTrue, surroundingFalse, openFaucetTrue, openFaucetFalse, useWashHandTrue, useWashHandFalse, soupHandKeepDownTrue, soupHandKeepDownFalse;
+    private RadioButton heartToHeartTrue, heartToHeartFalse, heartToBackTrue, heartToBackFalse, sewToSewTrue, sewToSewFalse;
+    private RadioButton backToHeartTrue, backToHeartFalse, handToThumbTrue, handToThumbFalse, sharpToHeartTrue, sharpToHeartFalse, fifteensecTrue, fifteensecFalse;
+    private RadioButton washHandTrue, washHandFalse, wipeTrue, wipeFalse, closeFaucetTrue, closeFaucetFalse, completeTrue, completeFalse;
     private int mYear, mMonth, mDay; //西元年
     private int cYear, cMonth; //民國年月
     private String cDay; //民國日
@@ -138,10 +143,67 @@ public class AddWashActivity extends AppCompatActivity {
         contactPatientAfterTrue = (RadioButton) findViewById(R.id.RadioButton15);
         contactPatientAfterFalse = (RadioButton) findViewById(R.id.RadioButton16);
 
-        //set surround radiobutton
-        bodyFluidTrue = (RadioButton) findViewById(R.id.RadioButton13);
-        bodyFluidFalse = (RadioButton) findViewById(R.id.RadioButton14);
+        //set surrounding radiobutton
+        surroundingTrue = (RadioButton) findViewById(R.id.RadioButton17);
+        surroundingFalse = (RadioButton) findViewById(R.id.RadioButton18);
 
+        //set 1 open faucet radiobutton
+        openFaucetTrue = (RadioButton) findViewById(R.id.RadioButton19);
+        openFaucetFalse = (RadioButton) findViewById(R.id.RadioButton20);
+
+        //set 2 use wash hand radiobutton
+        useWashHandTrue = (RadioButton) findViewById(R.id.RadioButton21);
+        useWashHandFalse = (RadioButton) findViewById(R.id.RadioButton22);
+
+        //set 3 soup and hand keep down radiobutton
+        soupHandKeepDownTrue = (RadioButton) findViewById(R.id.RadioButton23);
+        soupHandKeepDownFalse = (RadioButton) findViewById(R.id.RadioButton24);
+
+        //set 4a heart to heart radiobutton
+        heartToHeartTrue = (RadioButton) findViewById(R.id.RadioButton25);
+        heartToHeartFalse = (RadioButton) findViewById(R.id.RadioButton26);
+
+        //set 4b heart to back radiobutton
+        heartToBackTrue = (RadioButton) findViewById(R.id.RadioButton27);
+        heartToBackFalse = (RadioButton) findViewById(R.id.RadioButton28);
+
+        //set 4c sew to sew radiobutton
+        sewToSewTrue = (RadioButton) findViewById(R.id.RadioButton29);
+        sewToSewFalse = (RadioButton) findViewById(R.id.RadioButton30);
+
+        //set 4d back to heart radiobutton
+        backToHeartTrue = (RadioButton) findViewById(R.id.RadioButton31);
+        backToHeartFalse = (RadioButton) findViewById(R.id.RadioButton32);
+
+        //set 4e hand to thumb radiobutton
+        handToThumbTrue = (RadioButton) findViewById(R.id.RadioButton33);
+        handToThumbFalse = (RadioButton) findViewById(R.id.RadioButton34);
+
+        //set 4f sharp to heart radiobutton
+        sharpToHeartTrue = (RadioButton) findViewById(R.id.RadioButton35);
+        sharpToHeartFalse = (RadioButton) findViewById(R.id.RadioButton36);
+
+        //set 4g fifteensec radiobutton
+        fifteensecTrue = (RadioButton) findViewById(R.id.RadioButton37);
+        fifteensecFalse = (RadioButton) findViewById(R.id.RadioButton38);
+
+        //set 5 wash hand radiobutton
+        washHandTrue = (RadioButton) findViewById(R.id.RadioButton39);
+        washHandFalse = (RadioButton) findViewById(R.id.RadioButton40);
+
+        //set 6 wipe radiobutton
+        wipeTrue = (RadioButton) findViewById(R.id.RadioButton41);
+        wipeFalse = (RadioButton) findViewById(R.id.RadioButton42);
+
+        //set 7 close faucet radiobutton
+        closeFaucetTrue = (RadioButton) findViewById(R.id.RadioButton43);
+        closeFaucetFalse = (RadioButton) findViewById(R.id.RadioButton44);
+
+        //set 8 complete radiobutton
+        completeTrue = (RadioButton) findViewById(R.id.RadioButton45);
+        completeFalse = (RadioButton) findViewById(R.id.RadioButton46);
+
+        //TODO
 
         //set auditor name
         //get input account and password  ---- start
