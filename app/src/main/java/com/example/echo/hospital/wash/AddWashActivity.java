@@ -27,9 +27,11 @@ import com.example.echo.hospital.bundle.AddBundleActivity;
 import com.example.echo.hospital.bundle.BundleActivity;
 import com.example.echo.hospital.model.User;
 import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.AddSheetRequest;
 import com.google.api.services.sheets.v4.model.AppendValuesResponse;
@@ -299,178 +301,6 @@ public class AddWashActivity extends AppCompatActivity {
                 //
                 auditorValue = NameValue.toString();
 
-                //add value to google sheet
-                try{
-                    //save to excel
-                    task = new AsyncTask<Void, Void, String>() {
-                        private com.google.api.services.sheets.v4.Sheets service = new com.google.api.services.sheets.v4.Sheets.Builder(httpTransport, jsonFactory, MainActivity.mCredential)
-                                .setApplicationName("Google Sheets API Android Quickstart").build();
-
-                        @Override
-                        protected String doInBackground(Void... params) {
-                            List<String> results = new ArrayList<String>();
-                            Exception mLastError = null;
-                            String sheetName = String.valueOf(cYear);
-                            range = sheetName+"!A:AC";
-                            try {
-                                Spreadsheet sheet_metadata = service.spreadsheets().get(spreadsheetId).execute();
-                                List<Sheet> sheetList = sheet_metadata.getSheets();
-                                boolean matchSheetName = false;
-                                for(Sheet sheet:sheetList){
-                                    if(sheetName.equals(sheet.getProperties().getTitle())) {
-                                        matchSheetName = true;
-                                    }
-                                }
-                                if(!matchSheetName){//沒有此年度的wash, 先建立此年度的sheet
-
-                                    //Create a new AddSheetRequest
-                                    AddSheetRequest addSheetRequest = new AddSheetRequest();
-                                    SheetProperties sheetProperties = new SheetProperties();
-
-                                    //Add the sheetName to the sheetProperties
-                                    addSheetRequest.setProperties(sheetProperties);
-                                    addSheetRequest.setProperties(sheetProperties.setTitle(sheetName));
-
-                                    //Create batchUpdateSpreadsheetRequest
-                                    BatchUpdateSpreadsheetRequest batchUpdateSpreadsheetRequest = new BatchUpdateSpreadsheetRequest();
-                                    //Create requestList and set it on the batchUpdateSpreadsheetRequest
-                                    List<Request> requestsList = new ArrayList<Request>();
-                                    batchUpdateSpreadsheetRequest.setRequests(requestsList);
-
-                                    //Create a new request with containing the addSheetRequest and add it to the requestList
-                                    Request request = new Request();
-                                    request.setAddSheet(addSheetRequest);
-                                    requestsList.add(request);
-
-                                    //Add the requestList to the batchUpdateSpreadsheetRequest
-                                    batchUpdateSpreadsheetRequest.setRequests(requestsList);
-
-                                    //Call the sheets API to execute the batchUpdate
-                                    service.spreadsheets().batchUpdate(spreadsheetId,batchUpdateSpreadsheetRequest).execute();
-
-                                    List<Object> data1 = new ArrayList<Object>();
-                                    data1.add("月份");//月份
-                                    //data1.add("稽核日期");//稽核日期
-                                    data1.add("單位");//單位
-                                    data1.add("職稱");//職稱
-                                    data1.add("設備1");//設備1
-                                    data1.add("設備2");//設備2
-                                    data1.add("設備3");//設備3
-                                    data1.add("方式");//方式
-                                    data1.add("1病人前");//1病人前
-                                    data1.add("2清潔無菌技術前");//2清潔無菌技術前
-                                    data1.add("3體液後");//3體液後
-                                    data1.add("4病人後");//4病人後
-                                    data1.add("5環境後");//5環境後
-                                    data1.add("步驟1");//步驟1
-                                    data1.add("步驟2");//步驟2
-                                    data1.add("步驟3");//步驟3
-                                    data1.add("步驟4A");//步驟4A
-                                    data1.add("步驟4B");//步驟4B
-                                    data1.add("步驟4C");//步驟4C
-                                    data1.add("步驟4D");//步驟4D
-                                    data1.add("步驟4E");//步驟4E
-                                    data1.add("步驟4F");//步驟4F
-                                    data1.add("步驟4G");//步驟4G
-                                    data1.add("步驟5");//步驟5
-                                    data1.add("步驟6");//步驟6
-                                    data1.add("步驟7");//步驟7
-                                    data1.add("步驟8");//步驟8
-                                    data1.add("正確率");//正確率
-                                    data1.add("遵從率");//遵從率
-                                    data1.add("稽核者");//稽核者
-
-                                    List<List<Object>> data = new ArrayList<List<Object>>();
-                                    data.add (data1);
-
-                                    List<List<Object>> values = data;
-
-                                    body = new ValueRange()
-                                            .setValues(values);
-                                    Sheets.Spreadsheets.Values.Append requestAddFirstColumnName =
-                                            service.spreadsheets().values().append(spreadsheetId, range, body).setValueInputOption("RAW");
-
-                                    AppendValuesResponse response = requestAddFirstColumnName.setInsertDataOption("INSERT_ROWS").execute();
-                                }
-
-                                List<Object> data1 = new ArrayList<Object>();
-                                data1.add(cMonth);//月份
-                                //data1.add("稽核日期");//稽核日期
-                                data1.add(unitValue);//單位
-                                data1.add(titleValue);//職稱
-                                data1.add(handWashValue);//設備1
-                                data1.add(equipmentValue);//設備2
-                                data1.add(tissueValue);//設備3
-                                data1.add(washTypeValue);//方式
-                                data1.add(contactPatientValue);//1病人前
-                                data1.add(executeValue);//2清潔無菌技術前
-                                data1.add(bodyFluidValue);//3體液後
-                                data1.add(contactPatientAfterValue);//4病人後
-                                data1.add(surroundingValue);//5環境後
-                                data1.add(openFaucetValue);//步驟1
-                                data1.add(useWashHandValue);//步驟2
-                                data1.add(soupHandKeepDownValue);//步驟3
-                                data1.add(heartToHeartValue);//步驟4A
-                                data1.add(heartToBackValue);//步驟4B
-                                data1.add(sewToSewValue);//步驟4C
-                                data1.add(backToHeartValue);//步驟4D
-                                data1.add(handToThumbValue);//步驟4E
-                                data1.add(sharpToHeartValue);//步驟4F
-                                data1.add(fifteensecValue);//步驟4G
-                                data1.add(washHandValue);//步驟5
-                                data1.add(wipeValue);//步驟6
-                                data1.add(closeFaucetValue);//步驟7
-                                data1.add(completeValue);//步驟8
-                                //TODO 確認 correctValue, complianceRateValue 邏輯待處理
-                                data1.add(correctValue);//正確率
-                                data1.add(complianceRateValue);//遵從率
-                                //
-                                data1.add(auditorValue);//稽核者
-
-
-                                List<List<Object>> data = new ArrayList<List<Object>>();
-                                data.add (data1);
-
-                                List<List<Object>> values = data;
-
-                                body = new ValueRange()
-                                        .setValues(values);
-
-                                Sheets.Spreadsheets.Values.Append request =
-                                        service.spreadsheets().values().append(spreadsheetId, range, body).setValueInputOption("RAW");
-
-                                AppendValuesResponse response = request.setInsertDataOption("INSERT_ROWS").execute();
-                                return "successful";
-                            } catch (Exception e) {
-                                mLastError = e;
-                                cancel(true);
-                                return "failure";
-                            }
-
-                        }
-
-                        @Override
-                        protected void onPostExecute(String output) {
-                            if(output.equals("successful")){
-                                Intent intent = new Intent();
-                                intent.setClass(AddWashActivity.this, WashActivity.class);
-                                startActivity(intent);
-                                    /*MyAlertDialog.setTitle("Message");
-                                    MyAlertDialog.setMessage("新增成功");
-                                    MyAlertDialog.show();*/
-                            }else{
-                                MyAlertDialog.setTitle("Message");
-                                MyAlertDialog.setMessage("新增失敗");
-                                MyAlertDialog.show();
-                            }
-                        }
-                    };
-
-
-                }
-                catch(Exception e){
-                    e.printStackTrace();
-                }
 
                 //validate
                 //choose w all value must be filled, otherwise 2, 4, 8 don't filled
@@ -481,12 +311,12 @@ public class AddWashActivity extends AppCompatActivity {
                             || soupHandKeepDownValue.length() == 0 || heartToHeartValue.length() == 0 || heartToBackValue.length() == 0 || sewToSewValue.length() == 0 || backToHeartValue.length() == 0
                             || handToThumbValue.length() == 0 || sharpToHeartValue.length() == 0 || fifteensecValue.length() == 0 || washHandValue.length() == 0 || wipeValue.length() == 0
                             || closeFaucetValue.length() == 0 || completeValue.length() == 0){
-
                         MyAlertDialog.setTitle("Message");
                         MyAlertDialog.setMessage("請填寫正確資料");
                         MyAlertDialog.show();
                     }else{
-                        task.execute();
+                        //add value to google sheet
+                        new MakeRequestTask(MainActivity.mCredential).execute();
                     }
                 }else{//choose wash a
                     if(dateValue.length() == 0 || unitValue.length() == 0 || titleValue.length() == 0 || handWashValue.length() == 0 || equipmentValue.length() == 0 || tissueValue.length() == 0
@@ -497,11 +327,10 @@ public class AddWashActivity extends AppCompatActivity {
                         MyAlertDialog.setMessage("請填寫正確資料");
                         MyAlertDialog.show();
                     }else{
-                        task.execute();
+                        //add value to google sheet
+                        new MakeRequestTask(MainActivity.mCredential).execute();
                     }
                 }
-
-
             }
         });
     }
@@ -539,4 +368,188 @@ public class AddWashActivity extends AppCompatActivity {
             washEighth.setVisibility(View.INVISIBLE);
         }
     }
+
+    /**
+     * An asynchronous task that handles the Google Sheets API call.
+     * Placing the API calls in their own task ensures the UI stays responsive.
+     */
+    private class MakeRequestTask extends AsyncTask<Void, Void, String> {
+        private com.google.api.services.sheets.v4.Sheets mService = null;
+        private Exception mLastError = null;
+
+        MakeRequestTask(GoogleAccountCredential credential) {
+            HttpTransport transport = AndroidHttp.newCompatibleTransport();
+            JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+            mService = new com.google.api.services.sheets.v4.Sheets.Builder(
+                    transport, jsonFactory, credential)
+                    .setApplicationName("Google Sheets API Android Quickstart")
+                    .build();
+        }
+
+        /**
+         * Background task to call Google Sheets API.
+         * @param params no parameters needed for this task.
+         */
+        @Override
+        protected String doInBackground(Void... params) {
+            List<String> results = new ArrayList<String>();
+            Exception mLastError = null;
+            String sheetName = String.valueOf(cYear);
+            range = sheetName+"!A:AC";
+            try {
+                Spreadsheet sheet_metadata = mService.spreadsheets().get(spreadsheetId).execute();
+                List<Sheet> sheetList = sheet_metadata.getSheets();
+                boolean matchSheetName = false;
+                for(Sheet sheet:sheetList){
+                    if(sheetName.equals(sheet.getProperties().getTitle())) {
+                        matchSheetName = true;
+                    }
+                }
+                if(!matchSheetName){//沒有此年度的wash, 先建立此年度的sheet
+
+                    //Create a new AddSheetRequest
+                    AddSheetRequest addSheetRequest = new AddSheetRequest();
+                    SheetProperties sheetProperties = new SheetProperties();
+
+                    //Add the sheetName to the sheetProperties
+                    addSheetRequest.setProperties(sheetProperties);
+                    addSheetRequest.setProperties(sheetProperties.setTitle(sheetName));
+
+                    //Create batchUpdateSpreadsheetRequest
+                    BatchUpdateSpreadsheetRequest batchUpdateSpreadsheetRequest = new BatchUpdateSpreadsheetRequest();
+                    //Create requestList and set it on the batchUpdateSpreadsheetRequest
+                    List<Request> requestsList = new ArrayList<Request>();
+                    batchUpdateSpreadsheetRequest.setRequests(requestsList);
+
+                    //Create a new request with containing the addSheetRequest and add it to the requestList
+                    Request request = new Request();
+                    request.setAddSheet(addSheetRequest);
+                    requestsList.add(request);
+
+                    //Add the requestList to the batchUpdateSpreadsheetRequest
+                    batchUpdateSpreadsheetRequest.setRequests(requestsList);
+
+                    //Call the sheets API to execute the batchUpdate
+                    mService.spreadsheets().batchUpdate(spreadsheetId,batchUpdateSpreadsheetRequest).execute();
+
+                    List<Object> data1 = new ArrayList<Object>();
+                    data1.add("月份");//月份
+                    //data1.add("稽核日期");//稽核日期
+                    data1.add("單位");//單位
+                    data1.add("職稱");//職稱
+                    data1.add("設備1");//設備1
+                    data1.add("設備2");//設備2
+                    data1.add("設備3");//設備3
+                    data1.add("方式");//方式
+                    data1.add("1病人前");//1病人前
+                    data1.add("2清潔無菌技術前");//2清潔無菌技術前
+                    data1.add("3體液後");//3體液後
+                    data1.add("4病人後");//4病人後
+                    data1.add("5環境後");//5環境後
+                    data1.add("步驟1");//步驟1
+                    data1.add("步驟2");//步驟2
+                    data1.add("步驟3");//步驟3
+                    data1.add("步驟4A");//步驟4A
+                    data1.add("步驟4B");//步驟4B
+                    data1.add("步驟4C");//步驟4C
+                    data1.add("步驟4D");//步驟4D
+                    data1.add("步驟4E");//步驟4E
+                    data1.add("步驟4F");//步驟4F
+                    data1.add("步驟4G");//步驟4G
+                    data1.add("步驟5");//步驟5
+                    data1.add("步驟6");//步驟6
+                    data1.add("步驟7");//步驟7
+                    data1.add("步驟8");//步驟8
+                    data1.add("正確率");//正確率
+                    data1.add("遵從率");//遵從率
+                    data1.add("稽核者");//稽核者
+
+                    List<List<Object>> data = new ArrayList<List<Object>>();
+                    data.add (data1);
+
+                    List<List<Object>> values = data;
+
+                    body = new ValueRange()
+                            .setValues(values);
+                    Sheets.Spreadsheets.Values.Append requestAddFirstColumnName =
+                            mService.spreadsheets().values().append(spreadsheetId, range, body).setValueInputOption("RAW");
+
+                    AppendValuesResponse response = requestAddFirstColumnName.setInsertDataOption("INSERT_ROWS").execute();
+                }
+
+                List<Object> data1 = new ArrayList<Object>();
+                data1.add(cMonth);//月份
+                //data1.add("稽核日期");//稽核日期
+                data1.add(unitValue);//單位
+                data1.add(titleValue);//職稱
+                data1.add(handWashValue);//設備1
+                data1.add(equipmentValue);//設備2
+                data1.add(tissueValue);//設備3
+                data1.add(washTypeValue);//方式
+                data1.add(contactPatientValue);//1病人前
+                data1.add(executeValue);//2清潔無菌技術前
+                data1.add(bodyFluidValue);//3體液後
+                data1.add(contactPatientAfterValue);//4病人後
+                data1.add(surroundingValue);//5環境後
+                data1.add(openFaucetValue);//步驟1
+                data1.add(useWashHandValue);//步驟2
+                data1.add(soupHandKeepDownValue);//步驟3
+                data1.add(heartToHeartValue);//步驟4A
+                data1.add(heartToBackValue);//步驟4B
+                data1.add(sewToSewValue);//步驟4C
+                data1.add(backToHeartValue);//步驟4D
+                data1.add(handToThumbValue);//步驟4E
+                data1.add(sharpToHeartValue);//步驟4F
+                data1.add(fifteensecValue);//步驟4G
+                data1.add(washHandValue);//步驟5
+                data1.add(wipeValue);//步驟6
+                data1.add(closeFaucetValue);//步驟7
+                data1.add(completeValue);//步驟8
+                //TODO 確認 correctValue, complianceRateValue 邏輯待處理
+                data1.add(correctValue);//正確率
+                data1.add(complianceRateValue);//遵從率
+                //
+                data1.add(auditorValue);//稽核者
+
+
+                List<List<Object>> data = new ArrayList<List<Object>>();
+                data.add (data1);
+
+                List<List<Object>> values = data;
+
+                body = new ValueRange()
+                        .setValues(values);
+
+                Sheets.Spreadsheets.Values.Append request =
+                        mService.spreadsheets().values().append(spreadsheetId, range, body).setValueInputOption("RAW");
+
+                AppendValuesResponse response = request.setInsertDataOption("INSERT_ROWS").execute();
+                return "successful";
+            } catch (Exception e) {
+                mLastError = e;
+                cancel(true);
+                return "failure";
+            }
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String output) {
+            try {
+                if(output.equals("successful")){
+                    Intent intent = new Intent();
+                    intent.setClass(AddWashActivity.this, WashActivity.class);
+                    startActivity(intent);
+                }else{
+                    MyAlertDialog.setTitle("Message");
+                    MyAlertDialog.setMessage("新增失敗");
+                    MyAlertDialog.show();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

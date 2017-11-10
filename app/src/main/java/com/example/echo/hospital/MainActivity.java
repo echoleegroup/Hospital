@@ -34,6 +34,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,6 +114,7 @@ public class MainActivity extends Activity
         password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         password.setLayoutParams(tlp);
         password.setHint("password");
+        password.setTransformationMethod(new PasswordTransformationMethod());
         activityLayout.addView(password);
 
         mCallApiButton = new Button(this);

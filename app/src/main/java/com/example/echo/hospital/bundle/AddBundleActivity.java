@@ -22,10 +22,14 @@ import java.util.Calendar;
 
 import com.example.echo.hospital.MainActivity;
 import com.example.echo.hospital.MenuActivity;
+import com.example.echo.hospital.wash.AddWashActivity;
+import com.example.echo.hospital.wash.WashActivity;
 import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.AddSheetRequest;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
@@ -169,136 +173,8 @@ public class AddBundleActivity extends Activity{
                     MyAlertDialog.setMessage("請填寫正確資料");
                     MyAlertDialog.show();
                 }else{
-
-                    try{
-                        //save to excel
-                        AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
-                            private com.google.api.services.sheets.v4.Sheets service = new com.google.api.services.sheets.v4.Sheets.Builder(httpTransport, jsonFactory, MainActivity.mCredential)
-                                    .setApplicationName("Google Sheets API Android Quickstart").build();
-
-                            @Override
-                            protected String doInBackground(Void... params) {
-                                List<String> results = new ArrayList<String>();
-                                Exception mLastError = null;
-                                String sheetName = cYear+ MenuActivity.bundleName;
-                                range = sheetName+"!A:J";
-                                try {
-                                    Spreadsheet sheet_metadata = service.spreadsheets().get(spreadsheetId).execute();
-                                    List<Sheet> sheetList = sheet_metadata.getSheets();
-                                    boolean matchSheetName = false;
-                                    for(Sheet sheet:sheetList){
-                                        if(sheetName.equals(sheet.getProperties().getTitle())) {
-                                            matchSheetName = true;
-                                        }
-                                    }
-                                    if(!matchSheetName){//沒有此年度的Bundle, 先建立此年度的sheet
-
-                                        //Create a new AddSheetRequest
-                                        AddSheetRequest addSheetRequest = new AddSheetRequest();
-                                        SheetProperties sheetProperties = new SheetProperties();
-
-                                        //Add the sheetName to the sheetProperties
-                                        addSheetRequest.setProperties(sheetProperties);
-                                        addSheetRequest.setProperties(sheetProperties.setTitle(sheetName));
-
-                                        //Create batchUpdateSpreadsheetRequest
-                                        BatchUpdateSpreadsheetRequest batchUpdateSpreadsheetRequest = new BatchUpdateSpreadsheetRequest();
-                                        //Create requestList and set it on the batchUpdateSpreadsheetRequest
-                                        List<Request> requestsList = new ArrayList<Request>();
-                                        batchUpdateSpreadsheetRequest.setRequests(requestsList);
-
-                                        //Create a new request with containing the addSheetRequest and add it to the requestList
-                                        Request request = new Request();
-                                        request.setAddSheet(addSheetRequest);
-                                        requestsList.add(request);
-
-                                        //Add the requestList to the batchUpdateSpreadsheetRequest
-                                        batchUpdateSpreadsheetRequest.setRequests(requestsList);
-
-                                        //Call the sheets API to execute the batchUpdate
-                                        service.spreadsheets().batchUpdate(spreadsheetId,batchUpdateSpreadsheetRequest).execute();
-
-                                        List<Object> data1 = new ArrayList<Object>();
-                                        data1.add("年度");//年度
-                                        data1.add("月份");//月份
-                                        data1.add("稽核日期");//稽核日期
-                                        data1.add("單位");//單位
-                                        data1.add("床號");//床號
-                                        data1.add("病歷號");//病歷號
-                                        data1.add("醫師/NP");//醫師/NP
-                                        data1.add("護理師");//護理師
-                                        data1.add("總完整");//總完整
-                                        data1.add("稽核者");//稽核者
-
-                                        List<List<Object>> data = new ArrayList<List<Object>>();
-                                        data.add (data1);
-
-                                        List<List<Object>> values = data;
-
-                                        body = new ValueRange()
-                                                .setValues(values);
-                                        Sheets.Spreadsheets.Values.Append requestAddFirstColumnName =
-                                                service.spreadsheets().values().append(spreadsheetId, range, body).setValueInputOption("RAW");
-
-                                        AppendValuesResponse response = requestAddFirstColumnName.setInsertDataOption("INSERT_ROWS").execute();
-                                    }
-
-                                    List<Object> data1 = new ArrayList<Object>();
-                                    data1.add(cYear);//年度
-                                    data1.add(cMonth);//月份
-                                    data1.add(dateValue);//稽核日期
-                                    data1.add(unitValue);//單位 //下拉式選單
-                                    data1.add(bedValue);//床號
-                                    data1.add(patientValue);//病歷號
-                                    data1.add(doctorSignValue);//醫師/NP
-                                    data1.add(nurseSignValue);//護理師
-                                    //TODO 項次 commentValue 下拉式選單
-                                    data1.add(completeValue);//總完整
-                                    data1.add(auditorValue);//稽核者
-
-                                    List<List<Object>> data = new ArrayList<List<Object>>();
-                                    data.add (data1);
-
-                                    List<List<Object>> values = data;
-
-                                    body = new ValueRange()
-                                            .setValues(values);
-
-                                    Sheets.Spreadsheets.Values.Append request =
-                                            service.spreadsheets().values().append(spreadsheetId, range, body).setValueInputOption("RAW");
-
-                                    AppendValuesResponse response = request.setInsertDataOption("INSERT_ROWS").execute();
-                                    return "successful";
-                                } catch (Exception e) {
-                                    mLastError = e;
-                                    cancel(true);
-                                    return "failure";
-                                }
-
-                            }
-
-                            @Override
-                            protected void onPostExecute(String output) {
-                                if(output.equals("successful")){
-                                    Intent intent = new Intent();
-                                    intent.setClass(AddBundleActivity.this, BundleActivity.class);
-                                    startActivity(intent);
-                                    /*MyAlertDialog.setTitle("Message");
-                                    MyAlertDialog.setMessage("新增成功");
-                                    MyAlertDialog.show();*/
-                                }else{
-                                    MyAlertDialog.setTitle("Message");
-                                    MyAlertDialog.setMessage("新增失敗");
-                                    MyAlertDialog.show();
-                                }
-                            }
-                        };
-
-                        task.execute();
-                    }
-                    catch(Exception e){
-                        e.printStackTrace();
-                    }
+                    //save to excel
+                    new MakeRequestTask(MainActivity.mCredential).execute();
                 }
             }
         });
@@ -311,5 +187,146 @@ public class AddBundleActivity extends Activity{
         String adjMonthOfYear = String.valueOf(cMonth).length() == 1 ? "0" + String.valueOf(cMonth) : String.valueOf(cMonth);
         cDay = String.valueOf(dayOfMonth).length() == 1 ? "0" + String.valueOf(dayOfMonth) : String.valueOf(dayOfMonth);
         return cYear + adjMonthOfYear + cDay;
+    }
+
+    /**
+     * An asynchronous task that handles the Google Sheets API call.
+     * Placing the API calls in their own task ensures the UI stays responsive.
+     */
+    private class MakeRequestTask extends AsyncTask<Void, Void, String> {
+        private com.google.api.services.sheets.v4.Sheets mService = null;
+        private Exception mLastError = null;
+
+        MakeRequestTask(GoogleAccountCredential credential) {
+            HttpTransport transport = AndroidHttp.newCompatibleTransport();
+            JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+            mService = new com.google.api.services.sheets.v4.Sheets.Builder(
+                    transport, jsonFactory, credential)
+                    .setApplicationName("Google Sheets API Android Quickstart")
+                    .build();
+        }
+
+        /**
+         * Background task to call Google Sheets API.
+         * @param params no parameters needed for this task.
+         */
+        @Override
+        protected String doInBackground(Void... params) {
+            List<String> results = new ArrayList<String>();
+            Exception mLastError = null;
+            String sheetName = cYear+ MenuActivity.bundleName;
+            range = sheetName+"!A:J";
+            try {
+                Spreadsheet sheet_metadata = mService.spreadsheets().get(spreadsheetId).execute();
+                List<Sheet> sheetList = sheet_metadata.getSheets();
+                boolean matchSheetName = false;
+                for(Sheet sheet:sheetList){
+                    if(sheetName.equals(sheet.getProperties().getTitle())) {
+                        matchSheetName = true;
+                    }
+                }
+                if(!matchSheetName){//沒有此年度的Bundle, 先建立此年度的sheet
+
+                    //Create a new AddSheetRequest
+                    AddSheetRequest addSheetRequest = new AddSheetRequest();
+                    SheetProperties sheetProperties = new SheetProperties();
+
+                    //Add the sheetName to the sheetProperties
+                    addSheetRequest.setProperties(sheetProperties);
+                    addSheetRequest.setProperties(sheetProperties.setTitle(sheetName));
+
+                    //Create batchUpdateSpreadsheetRequest
+                    BatchUpdateSpreadsheetRequest batchUpdateSpreadsheetRequest = new BatchUpdateSpreadsheetRequest();
+                    //Create requestList and set it on the batchUpdateSpreadsheetRequest
+                    List<Request> requestsList = new ArrayList<Request>();
+                    batchUpdateSpreadsheetRequest.setRequests(requestsList);
+
+                    //Create a new request with containing the addSheetRequest and add it to the requestList
+                    Request request = new Request();
+                    request.setAddSheet(addSheetRequest);
+                    requestsList.add(request);
+
+                    //Add the requestList to the batchUpdateSpreadsheetRequest
+                    batchUpdateSpreadsheetRequest.setRequests(requestsList);
+
+                    //Call the sheets API to execute the batchUpdate
+                    mService.spreadsheets().batchUpdate(spreadsheetId,batchUpdateSpreadsheetRequest).execute();
+
+                    List<Object> data1 = new ArrayList<Object>();
+                    data1.add("年度");//年度
+                    data1.add("月份");//月份
+                    data1.add("稽核日期");//稽核日期
+                    data1.add("單位");//單位
+                    data1.add("床號");//床號
+                    data1.add("病歷號");//病歷號
+                    data1.add("醫師/NP");//醫師/NP
+                    data1.add("護理師");//護理師
+                    data1.add("總完整");//總完整
+                    data1.add("稽核者");//稽核者
+
+                    List<List<Object>> data = new ArrayList<List<Object>>();
+                    data.add (data1);
+
+                    List<List<Object>> values = data;
+
+                    body = new ValueRange()
+                            .setValues(values);
+                    Sheets.Spreadsheets.Values.Append requestAddFirstColumnName =
+                            mService.spreadsheets().values().append(spreadsheetId, range, body).setValueInputOption("RAW");
+
+                    AppendValuesResponse response = requestAddFirstColumnName.setInsertDataOption("INSERT_ROWS").execute();
+                }
+
+                List<Object> data1 = new ArrayList<Object>();
+                data1.add(cYear);//年度
+                data1.add(cMonth);//月份
+                data1.add(dateValue);//稽核日期
+                data1.add(unitValue);//單位 //下拉式選單
+                data1.add(bedValue);//床號
+                data1.add(patientValue);//病歷號
+                data1.add(doctorSignValue);//醫師/NP
+                data1.add(nurseSignValue);//護理師
+                //TODO 項次 commentValue 下拉式選單
+                data1.add(completeValue);//總完整
+                data1.add(auditorValue);//稽核者
+
+                List<List<Object>> data = new ArrayList<List<Object>>();
+                data.add (data1);
+
+                List<List<Object>> values = data;
+
+                body = new ValueRange()
+                        .setValues(values);
+
+                Sheets.Spreadsheets.Values.Append request =
+                        mService.spreadsheets().values().append(spreadsheetId, range, body).setValueInputOption("RAW");
+
+                AppendValuesResponse response = request.setInsertDataOption("INSERT_ROWS").execute();
+                return "successful";
+            } catch (Exception e) {
+                mLastError = e;
+                cancel(true);
+                return "failure";
+            }
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String output) {
+            try {
+                if(output.equals("successful")){
+                    Intent intent = new Intent();
+                    intent.setClass(AddBundleActivity.this, BundleActivity.class);
+                    startActivity(intent);
+                }else{
+                    MyAlertDialog.setTitle("Message");
+                    MyAlertDialog.setMessage("新增失敗");
+                    MyAlertDialog.show();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }
