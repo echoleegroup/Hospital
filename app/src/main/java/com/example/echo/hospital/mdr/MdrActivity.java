@@ -1,19 +1,17 @@
-package com.example.echo.hospital.bundle;
+package com.example.echo.hospital.mdr;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
-import android.content.SharedPreferences;
-import android.content.Context;
-import android.view.View;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.echo.hospital.MainActivity;
-import com.example.echo.hospital.MenuActivity;
 import com.example.echo.hospital.R;
 import com.example.echo.hospital.model.User;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -29,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class BundleActivity extends AppCompatActivity {
+public class MdrActivity extends AppCompatActivity {
 
     //store account and password -----start
     private final String DefaultAccountValue = "";
@@ -52,7 +50,7 @@ public class BundleActivity extends AppCompatActivity {
     private ArrayAdapter adapter;
 
     //google sheet api -----start
-    String spreadsheetId = "1ythc41RFh9JmO0hXyZYNghXfXNPn7-NcPbRHosof_sE";
+    String spreadsheetId = "1HS0viTR_5v7KenH0ExQszyLJ0z2dE3-VYXJJW4WbRQw";
     // The A1 notation of a range to search for a logical table of data.
     // Values will be appended after the last row of the table.
     String range;
@@ -62,7 +60,7 @@ public class BundleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bundle);
+        setContentView(R.layout.activity_mdr);
 
         listView = (ListView) findViewById(R.id.listView);
         adapter = new ArrayAdapter(this,
@@ -95,7 +93,7 @@ public class BundleActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent();
-                    intent.setClass(BundleActivity.this, AddBundleActivity.class);
+                    intent.setClass(MdrActivity.this, AddMdrActivity.class);
                     startActivity(intent);
                 }
             });
@@ -130,8 +128,8 @@ public class BundleActivity extends AppCompatActivity {
             Exception mLastError = null;
             try {
                 int correntYear = Calendar.getInstance().get(Calendar.YEAR);
-                String sheetName = correntYear-1911+MenuActivity.bundleName;
-                range = sheetName+"!C2:J";
+                String sheetName = String.valueOf(correntYear-1911);
+                range = sheetName+"!C2:V";
 
                 Spreadsheet sheet_metadata = mService.spreadsheets().get(spreadsheetId).execute();
                 List<Sheet> sheetList = sheet_metadata.getSheets();
@@ -151,7 +149,10 @@ public class BundleActivity extends AppCompatActivity {
                     List<List<Object>> values = response.getValues();
                     if (values != null) {
                         for (List row : values) {
-                            results.add(row.get(0) + ", " + row.get(1) + ", " + row.get(2) + ", " + row.get(3) + ", " + row.get(4) + ", " + row.get(5) + ", " + row.get(6) + ", " + row.get(7));
+                            results.add(row.get(0) + ", " + row.get(1) + ", " + row.get(2) + ", " + row.get(3) + ", " + row.get(4) + ", " + row.get(5) + ", " + row.get(6) + ", " + row.get(7)
+                                    + ", " + row.get(8) + ", " + row.get(9) + ", " + row.get(10) + ", " + row.get(11) + ", " + row.get(12) + ", " + row.get(13) + ", " + row.get(14)
+                                    + ", " + row.get(15) + ", " + row.get(16) + ", " + row.get(17) + ", " + row.get(18) + ", " + row.get(19)
+                            );
                         }
                     }
                 }
@@ -169,24 +170,23 @@ public class BundleActivity extends AppCompatActivity {
         protected void onPostExecute(List<String> output) {
             try {
                 if (output.size() == 0) {
-                    adapter.add("目前本年度尚未未有" + MenuActivity.bundleName + "稽核表");
+                    adapter.add("目前本年度尚未未有MDR稽核表");
                 } else {
                     //title
-                    adapter.add(MenuActivity.bundleName +" Bundle稽核列表");
+                    adapter.add("MDR稽核列表");
                     for (String str : output) {
-                        //稽核日期, 單位, 床號, 病歷號, 醫師/NP, 護理師, 總完整, 稽核者
+                        //稽核日期, 單位, 床號, 病歷號, 1~15, 達成, 稽核者
                         String[] array = str.split(",");
                         String dateValue = array[0].trim();
                         String unitValue = array[1].trim();
                         String bedValue = array[2].trim();
-                        String patientValue = array[3].trim();
-                        /*String doctorSignValue = array[4].trim();
-                        String nurseSignValue = array[5].trim();*/
-                        //TODO 項次 commentValue 下拉式選單
-                        String completeValue = array[6].trim();
-                        String auditorValue = array[7].trim();
+                        /*String firstValue = array[3].trim();
+                        String secondValue = array[4].trim();
+                        String thirdValue = array[5].trim();*/
+                        String completeValue = array[18].trim();
+                        String auditorValue = array[19].trim();
 
-                        adapter.add(dateValue + ", 單位：" + unitValue + ", 床位：" + bedValue + ", 病歷號：" + patientValue + ", 總完整：" + completeValue  + ", 稽核者：" + auditorValue);
+                        adapter.add(dateValue + ", 單位：" + unitValue + ", 床位：" + bedValue + ", 達成：" + completeValue + ", 稽核者：" + auditorValue);
                     }
                         /*TODO:需要檢視？！
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -209,5 +209,4 @@ public class BundleActivity extends AppCompatActivity {
             }
         }
     }
-
 }

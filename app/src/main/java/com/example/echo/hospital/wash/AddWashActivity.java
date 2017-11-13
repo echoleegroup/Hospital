@@ -48,15 +48,14 @@ import java.util.List;
 
 public class AddWashActivity extends AppCompatActivity {
     private EditText date, unit, title, auditor;
-    private RadioButton handWashTrue, handWashFalse, equipmentTrue, equipmentFalse, tissueTrue, tissueFalse, washTypeW, washTypeA, contactPatientTrue, contactPatientFalse;
-    private RadioButton executeTrue, executeFalse, bodyFluidTrue, bodyFluidFalse, contactPatientAfterTrue, contactPatientAfterFalse;
-    private RadioButton surroundingTrue, surroundingFalse, openFaucetTrue, openFaucetFalse, useWashHandTrue, useWashHandFalse, soupHandKeepDownTrue, soupHandKeepDownFalse;
-    private RadioButton heartToHeartTrue, heartToHeartFalse, heartToBackTrue, heartToBackFalse, sewToSewTrue, sewToSewFalse;
-    private RadioButton backToHeartTrue, backToHeartFalse, handToThumbTrue, handToThumbFalse, sharpToHeartTrue, sharpToHeartFalse, fifteensecTrue, fifteensecFalse;
-    private RadioButton washHandTrue, washHandFalse, wipeTrue, wipeFalse, closeFaucetTrue, closeFaucetFalse, completeTrue, completeFalse;
-    private String dateValue, unitValue, titleValue, handWashValue, equipmentValue, tissueValue, washTypeValue, contactPatientValue, executeValue, bodyFluidValue, contactPatientAfterValue;
-    private String surroundingValue, openFaucetValue, useWashHandValue, soupHandKeepDownValue, heartToHeartValue, heartToBackValue, sewToSewValue, backToHeartValue;
-    private String handToThumbValue, sharpToHeartValue, fifteensecValue, washHandValue, wipeValue, closeFaucetValue, completeValue, correctValue, complianceRateValue, auditorValue;
+    private RadioButton handWashTrue, handWashFalse, equipmentTrue, equipmentFalse, tissueTrue, tissueFalse, washTypeW, washTypeA, contactPatientTrue, contactPatientFalse,
+        executeTrue, executeFalse, bodyFluidTrue, bodyFluidFalse, contactPatientAfterTrue, contactPatientAfterFalse, surroundingTrue, surroundingFalse,
+        openFaucetTrue, openFaucetFalse, useWashHandTrue, useWashHandFalse, soupHandKeepDownTrue, soupHandKeepDownFalse, heartToHeartTrue, heartToHeartFalse,
+        heartToBackTrue, heartToBackFalse, sewToSewTrue, sewToSewFalse, backToHeartTrue, backToHeartFalse, handToThumbTrue, handToThumbFalse, sharpToHeartTrue,
+        sharpToHeartFalse, fifteensecTrue, fifteensecFalse, washHandTrue, washHandFalse, wipeTrue, wipeFalse, closeFaucetTrue, closeFaucetFalse, completeTrue, completeFalse;
+    private String dateValue, unitValue, titleValue, handWashValue, equipmentValue, tissueValue, washTypeValue, contactPatientValue, executeValue, bodyFluidValue,
+        contactPatientAfterValue, surroundingValue, openFaucetValue, useWashHandValue, soupHandKeepDownValue, heartToHeartValue, heartToBackValue, sewToSewValue, backToHeartValue,
+        handToThumbValue, sharpToHeartValue, fifteensecValue, washHandValue, wipeValue, closeFaucetValue, completeValue, correctValue, complianceRateValue, auditorValue;
     private TableRow washSecond, washFourth, washFourthA, washFourthB, washFourthC, washFourthD, washFourthE, washFourthF, washFourthG, washEighth;
     private Button saveBtn;
     private int mYear, mMonth, mDay; //西元年
@@ -71,15 +70,7 @@ public class AddWashActivity extends AppCompatActivity {
     //store account and password -----end
 
     //google sheet api -----start
-    static final int REQUEST_ACCOUNT_PICKER = 1000;
-    static final int REQUEST_AUTHORIZATION = 1001;
-    static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
-    static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
-
     // The ID of the spreadsheet to update.
-    //private GoogleAccountCredential credential;
-    final HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
-    final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
     String spreadsheetId = "1eBs1lDRIRBhbLqwn7FU8yfef9Znqu-185b7WILrLwW8";
     // The A1 notation of a range to search for a logical table of data.
     // Values will be appended after the last row of the table.
@@ -259,7 +250,6 @@ public class AddWashActivity extends AppCompatActivity {
         //Get value
         NameValue = settings.getString(User.PREF_NAME, DefaultNameValue);
         //get input account and password  ---- end
-
         auditor = (EditText) findViewById(R.id.EditText4);
         auditor.setText(NameValue);
 
@@ -268,69 +258,69 @@ public class AddWashActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                //get all fill value
-                dateValue = date.getText().toString();
-                unitValue = unit.getText().toString();
-                titleValue = title.getText().toString();
-                handWashValue = handWashTrue.isChecked() ? handWashTrue.getText().toString() :  handWashFalse.isChecked() ? handWashFalse.getText().toString() : "";
-                equipmentValue = equipmentTrue.isChecked() ? equipmentTrue.getText().toString() : equipmentFalse.isChecked() ? equipmentFalse.getText().toString() : "";
-                tissueValue = tissueTrue.isChecked() ? tissueTrue.getText().toString() : tissueFalse.isChecked() ? tissueFalse.getText().toString() : "";
-                washTypeValue = washTypeW.isChecked() ? washTypeW.getText().toString() : washTypeA.isChecked() ? washTypeA.getText().toString() : "";
-                contactPatientValue = contactPatientTrue.isChecked() ? contactPatientTrue.getText().toString(): contactPatientFalse.isChecked() ? contactPatientFalse.getText().toString() : "";
-                executeValue = executeTrue.isChecked() ? executeTrue.getText().toString() :  executeFalse.isChecked() ? executeFalse.getText().toString() : "";
-                bodyFluidValue = bodyFluidTrue.isChecked() ? bodyFluidTrue.getText().toString() : bodyFluidFalse.isChecked() ? bodyFluidFalse.getText().toString() : "";
-                contactPatientAfterValue = contactPatientAfterTrue.isChecked() ? contactPatientAfterTrue.getText().toString() : contactPatientAfterFalse.isChecked() ? contactPatientAfterFalse.getText().toString() : "";
-                surroundingValue = surroundingTrue.isChecked() ? surroundingTrue.getText().toString(): surroundingFalse.isChecked() ? surroundingFalse.getText().toString() : "";
-                openFaucetValue = openFaucetTrue.isChecked() ? openFaucetTrue.getText().toString(): openFaucetFalse.isChecked() ? openFaucetFalse.getText().toString() : "";
-                useWashHandValue = washTypeA.isChecked() ? "" : useWashHandTrue.isChecked() ? useWashHandTrue.getText().toString(): useWashHandFalse.isChecked() ? useWashHandFalse.getText().toString() : "";
-                soupHandKeepDownValue = soupHandKeepDownTrue.isChecked() ? soupHandKeepDownTrue.getText().toString() :  soupHandKeepDownFalse.isChecked() ? soupHandKeepDownFalse.getText().toString() : "";
-                heartToHeartValue = washTypeA.isChecked() ? "" : heartToHeartTrue.isChecked() ? heartToHeartTrue.getText().toString() : heartToHeartFalse.isChecked() ? heartToHeartFalse.getText().toString() : "";
-                heartToBackValue = washTypeA.isChecked() ? "" : heartToBackTrue.isChecked() ? heartToBackTrue.getText().toString() : heartToBackFalse.isChecked() ? heartToBackFalse.getText().toString() : "";
-                sewToSewValue = washTypeA.isChecked() ? "" : sewToSewTrue.isChecked() ? sewToSewTrue.getText().toString(): sewToSewFalse.isChecked() ? sewToSewFalse.getText().toString() : "";
-                backToHeartValue = washTypeA.isChecked() ? "" : backToHeartTrue.isChecked() ? backToHeartTrue.getText().toString(): backToHeartFalse.isChecked() ? backToHeartFalse.getText().toString() : "";
-                handToThumbValue = washTypeA.isChecked() ? "" : handToThumbTrue.isChecked() ? handToThumbTrue.getText().toString() :  handToThumbFalse.isChecked() ? handToThumbFalse.getText().toString() : "";
-                sharpToHeartValue = washTypeA.isChecked() ? "" : sharpToHeartTrue.isChecked() ? sharpToHeartTrue.getText().toString() : sharpToHeartFalse.isChecked() ? sharpToHeartFalse.getText().toString() : "";
-                fifteensecValue = washTypeA.isChecked() ? "" : fifteensecTrue.isChecked() ? fifteensecTrue.getText().toString() : fifteensecFalse.isChecked() ? fifteensecFalse.getText().toString() : "";
-                washHandValue = washHandTrue.isChecked() ? washHandTrue.getText().toString(): washHandFalse.isChecked() ? washHandFalse.getText().toString() : "";
-                wipeValue = wipeTrue.isChecked() ? wipeTrue.getText().toString(): wipeFalse.isChecked() ? wipeFalse.getText().toString() : "";
-                closeFaucetValue = closeFaucetTrue.isChecked() ? closeFaucetTrue.getText().toString() :  closeFaucetFalse.isChecked() ? closeFaucetFalse.getText().toString() : "";
-                completeValue = washTypeA.isChecked() ? "" : completeTrue.isChecked() ? completeTrue.getText().toString() : completeFalse.isChecked() ? completeFalse.getText().toString() : "";
-                //TODO
-                correctValue = "";
-                complianceRateValue = "";
-                //
-                auditorValue = NameValue.toString();
+            //get all fill value
+            dateValue = date.getText().toString();
+            unitValue = unit.getText().toString();
+            titleValue = title.getText().toString();
+            handWashValue = handWashTrue.isChecked() ? handWashTrue.getText().toString() :  handWashFalse.isChecked() ? handWashFalse.getText().toString() : "";
+            equipmentValue = equipmentTrue.isChecked() ? equipmentTrue.getText().toString() : equipmentFalse.isChecked() ? equipmentFalse.getText().toString() : "";
+            tissueValue = tissueTrue.isChecked() ? tissueTrue.getText().toString() : tissueFalse.isChecked() ? tissueFalse.getText().toString() : "";
+            washTypeValue = washTypeW.isChecked() ? washTypeW.getText().toString() : washTypeA.isChecked() ? washTypeA.getText().toString() : "";
+            contactPatientValue = contactPatientTrue.isChecked() ? contactPatientTrue.getText().toString(): contactPatientFalse.isChecked() ? contactPatientFalse.getText().toString() : "";
+            executeValue = executeTrue.isChecked() ? executeTrue.getText().toString() :  executeFalse.isChecked() ? executeFalse.getText().toString() : "";
+            bodyFluidValue = bodyFluidTrue.isChecked() ? bodyFluidTrue.getText().toString() : bodyFluidFalse.isChecked() ? bodyFluidFalse.getText().toString() : "";
+            contactPatientAfterValue = contactPatientAfterTrue.isChecked() ? contactPatientAfterTrue.getText().toString() : contactPatientAfterFalse.isChecked() ? contactPatientAfterFalse.getText().toString() : "";
+            surroundingValue = surroundingTrue.isChecked() ? surroundingTrue.getText().toString(): surroundingFalse.isChecked() ? surroundingFalse.getText().toString() : "";
+            openFaucetValue = openFaucetTrue.isChecked() ? openFaucetTrue.getText().toString(): openFaucetFalse.isChecked() ? openFaucetFalse.getText().toString() : "";
+            useWashHandValue = washTypeA.isChecked() ? "" : useWashHandTrue.isChecked() ? useWashHandTrue.getText().toString(): useWashHandFalse.isChecked() ? useWashHandFalse.getText().toString() : "";
+            soupHandKeepDownValue = soupHandKeepDownTrue.isChecked() ? soupHandKeepDownTrue.getText().toString() :  soupHandKeepDownFalse.isChecked() ? soupHandKeepDownFalse.getText().toString() : "";
+            heartToHeartValue = washTypeA.isChecked() ? "" : heartToHeartTrue.isChecked() ? heartToHeartTrue.getText().toString() : heartToHeartFalse.isChecked() ? heartToHeartFalse.getText().toString() : "";
+            heartToBackValue = washTypeA.isChecked() ? "" : heartToBackTrue.isChecked() ? heartToBackTrue.getText().toString() : heartToBackFalse.isChecked() ? heartToBackFalse.getText().toString() : "";
+            sewToSewValue = washTypeA.isChecked() ? "" : sewToSewTrue.isChecked() ? sewToSewTrue.getText().toString(): sewToSewFalse.isChecked() ? sewToSewFalse.getText().toString() : "";
+            backToHeartValue = washTypeA.isChecked() ? "" : backToHeartTrue.isChecked() ? backToHeartTrue.getText().toString(): backToHeartFalse.isChecked() ? backToHeartFalse.getText().toString() : "";
+            handToThumbValue = washTypeA.isChecked() ? "" : handToThumbTrue.isChecked() ? handToThumbTrue.getText().toString() :  handToThumbFalse.isChecked() ? handToThumbFalse.getText().toString() : "";
+            sharpToHeartValue = washTypeA.isChecked() ? "" : sharpToHeartTrue.isChecked() ? sharpToHeartTrue.getText().toString() : sharpToHeartFalse.isChecked() ? sharpToHeartFalse.getText().toString() : "";
+            fifteensecValue = washTypeA.isChecked() ? "" : fifteensecTrue.isChecked() ? fifteensecTrue.getText().toString() : fifteensecFalse.isChecked() ? fifteensecFalse.getText().toString() : "";
+            washHandValue = washHandTrue.isChecked() ? washHandTrue.getText().toString(): washHandFalse.isChecked() ? washHandFalse.getText().toString() : "";
+            wipeValue = wipeTrue.isChecked() ? wipeTrue.getText().toString(): wipeFalse.isChecked() ? wipeFalse.getText().toString() : "";
+            closeFaucetValue = closeFaucetTrue.isChecked() ? closeFaucetTrue.getText().toString() :  closeFaucetFalse.isChecked() ? closeFaucetFalse.getText().toString() : "";
+            completeValue = washTypeA.isChecked() ? "" : completeTrue.isChecked() ? completeTrue.getText().toString() : completeFalse.isChecked() ? completeFalse.getText().toString() : "";
+            //TODO
+            correctValue = "";
+            complianceRateValue = "";
+            //
+            auditorValue = NameValue.toString();
 
 
-                //validate
-                //choose w all value must be filled, otherwise 2, 4, 8 don't filled
-                if(washTypeValue.equals("W")){
-                    if(dateValue.length() == 0 || unitValue.length() == 0 || titleValue.length() == 0 || handWashValue.length() == 0 || equipmentValue.length() == 0 || tissueValue.length() == 0
-                            || washTypeValue.length() == 0 || contactPatientValue.length() == 0 || executeValue.length() == 0 || handWashValue.length() == 0 || bodyFluidValue.length() == 0
-                            || contactPatientAfterValue.length() == 0 || surroundingValue.length() == 0 || openFaucetValue.length() == 0 || useWashHandValue.length() == 0
-                            || soupHandKeepDownValue.length() == 0 || heartToHeartValue.length() == 0 || heartToBackValue.length() == 0 || sewToSewValue.length() == 0 || backToHeartValue.length() == 0
-                            || handToThumbValue.length() == 0 || sharpToHeartValue.length() == 0 || fifteensecValue.length() == 0 || washHandValue.length() == 0 || wipeValue.length() == 0
-                            || closeFaucetValue.length() == 0 || completeValue.length() == 0){
-                        MyAlertDialog.setTitle("Message");
-                        MyAlertDialog.setMessage("請填寫正確資料");
-                        MyAlertDialog.show();
-                    }else{
-                        //add value to google sheet
-                        new MakeRequestTask(MainActivity.mCredential).execute();
-                    }
-                }else{//choose wash a
-                    if(dateValue.length() == 0 || unitValue.length() == 0 || titleValue.length() == 0 || handWashValue.length() == 0 || equipmentValue.length() == 0 || tissueValue.length() == 0
-                            || washTypeValue.length() == 0 || contactPatientValue.length() == 0 || executeValue.length() == 0 || handWashValue.length() == 0 || bodyFluidValue.length() == 0
-                            || contactPatientAfterValue.length() == 0 || surroundingValue.length() == 0 || openFaucetValue.length() == 0 || soupHandKeepDownValue.length() == 0
-                            || washHandValue.length() == 0 || wipeValue.length() == 0 || closeFaucetValue.length() == 0){
-                        MyAlertDialog.setTitle("Message");
-                        MyAlertDialog.setMessage("請填寫正確資料");
-                        MyAlertDialog.show();
-                    }else{
-                        //add value to google sheet
-                        new MakeRequestTask(MainActivity.mCredential).execute();
-                    }
+            //validate
+            //choose w all value must be filled, otherwise 2, 4, 8 don't filled
+            if(washTypeValue.equals("W")){
+                if(dateValue.length() == 0 || unitValue.length() == 0 || titleValue.length() == 0 || handWashValue.length() == 0 || equipmentValue.length() == 0 || tissueValue.length() == 0
+                        || washTypeValue.length() == 0 || contactPatientValue.length() == 0 || executeValue.length() == 0 || handWashValue.length() == 0 || bodyFluidValue.length() == 0
+                        || contactPatientAfterValue.length() == 0 || surroundingValue.length() == 0 || openFaucetValue.length() == 0 || useWashHandValue.length() == 0
+                        || soupHandKeepDownValue.length() == 0 || heartToHeartValue.length() == 0 || heartToBackValue.length() == 0 || sewToSewValue.length() == 0 || backToHeartValue.length() == 0
+                        || handToThumbValue.length() == 0 || sharpToHeartValue.length() == 0 || fifteensecValue.length() == 0 || washHandValue.length() == 0 || wipeValue.length() == 0
+                        || closeFaucetValue.length() == 0 || completeValue.length() == 0){
+                    MyAlertDialog.setTitle("Message");
+                    MyAlertDialog.setMessage("請填寫正確資料");
+                    MyAlertDialog.show();
+                }else{
+                    //add value to google sheet
+                    new MakeRequestTask(MainActivity.mCredential).execute();
                 }
+            }else{//choose wash a
+                if(dateValue.length() == 0 || unitValue.length() == 0 || titleValue.length() == 0 || handWashValue.length() == 0 || equipmentValue.length() == 0 || tissueValue.length() == 0
+                        || washTypeValue.length() == 0 || contactPatientValue.length() == 0 || executeValue.length() == 0 || handWashValue.length() == 0 || bodyFluidValue.length() == 0
+                        || contactPatientAfterValue.length() == 0 || surroundingValue.length() == 0 || openFaucetValue.length() == 0 || soupHandKeepDownValue.length() == 0
+                        || washHandValue.length() == 0 || wipeValue.length() == 0 || closeFaucetValue.length() == 0){
+                    MyAlertDialog.setTitle("Message");
+                    MyAlertDialog.setMessage("請填寫正確資料");
+                    MyAlertDialog.show();
+                }else{
+                    //add value to google sheet
+                    new MakeRequestTask(MainActivity.mCredential).execute();
+                }
+            }
             }
         });
     }

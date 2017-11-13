@@ -376,7 +376,12 @@ public class MainActivity extends Activity
         protected List<String> doInBackground(Void... params) {
             try {
                 return getDataFromApi();
-            } catch (Exception e) {
+            }
+            catch (UserRecoverableAuthIOException e) {
+                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
+                return null;
+            }
+            catch (Exception e) {
                 mLastError = e;
                 cancel(true);
                 return null;

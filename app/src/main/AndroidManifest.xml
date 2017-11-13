@@ -60,6 +60,14 @@
         <activity
             android:name=".wash.AddWashActivity"
             android:label="@string/title_activity_add_wash"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".mdr.AddMdrActivity"
+            android:label="@string/title_activity_add_mdro"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".mdr.MdrActivity"
+            android:label="@string/title_activity_mdro"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

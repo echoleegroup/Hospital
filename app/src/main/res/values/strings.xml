@@ -21,4 +21,6 @@
     <string name="title_activity_add_foley_bundle">AddFoleyBundleActivity</string>
     <string name="title_activity_wash">WashActivity</string>
     <string name="title_activity_add_wash">AddWashActivity</string>
+    <string name="title_activity_add_mdro">AddMdroActivity</string>
+    <string name="title_activity_mdro">MdroActivity</string>
 </resources>

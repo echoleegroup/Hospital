@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 
 import com.example.echo.hospital.bundle.BundleActivity;
 import com.example.echo.hospital.wash.WashActivity;
+import com.example.echo.hospital.mdr.MdrActivity;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -26,16 +27,16 @@ public class MenuActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list);
         adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1);
-        //0-洗手稽核表
+        //0- 洗手稽核表
         //1- Bundle c稽核表
         //2- Bundle f稽核表
         //3- Bundle Vap稽核表
-        //4-MDRO稽核表
+        //4- MDRO稽核表
         adapter.add("洗手稽核表");
         adapter.add("Bundle C稽核表");
         adapter.add("Bundle Foley稽核表");
         adapter.add("Bundle VAP稽核表");
-        adapter.add("MDRO稽核表");
+        adapter.add("MDR稽核表");
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,8 +70,10 @@ public class MenuActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(MenuActivity.this, BundleActivity.class);
                     startActivity(intent);
-                }else if(arg3 == 4L){//MDRO稽核表
-
+                }else if(arg3 == 4L){//MDR稽核表
+                    Intent intent = new Intent();
+                    intent.setClass(MenuActivity.this, MdrActivity.class);
+                    startActivity(intent);
                 }
             }
         });
