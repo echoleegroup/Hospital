@@ -46,7 +46,7 @@ import java.util.List;
 
 public class AddVAPBundleActivity extends AppCompatActivity {
 
-    private EditText date, bed, patient, comment, auditor;
+    private EditText date, bed, patient, auditor;
     private RadioButton unitOne, unitTwo, evaluateTrue, evaluateFalse, palliativeTrue, palliativeFalse, mouthTrue, mouthFalse, bedHeadTrue, bedHeadFalse,
             waterTrue, waterFalse, doctorSignTrue, doctorSignFalse, nurseSignTrue, nurseSignFalse;
     private Spinner unitSpinner;

@@ -16,6 +16,7 @@ import com.example.echo.hospital.R;
 import com.example.echo.hospital.model.User;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -50,6 +51,7 @@ public class MdrActivity extends AppCompatActivity {
     private ArrayAdapter adapter;
 
     //google sheet api -----start
+    static final int REQUEST_AUTHORIZATION = 1001;
     String spreadsheetId = "1HS0viTR_5v7KenH0ExQszyLJ0z2dE3-VYXJJW4WbRQw";
     // The A1 notation of a range to search for a logical table of data.
     // Values will be appended after the last row of the table.
@@ -157,8 +159,10 @@ public class MdrActivity extends AppCompatActivity {
                     }
                 }
                 return results;
-            }
-            catch (Exception e) {
+            }catch (UserRecoverableAuthIOException e) {
+                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
+                return null;
+            }catch (Exception e) {
                 mLastError = e;
                 cancel(true);
                 return null;

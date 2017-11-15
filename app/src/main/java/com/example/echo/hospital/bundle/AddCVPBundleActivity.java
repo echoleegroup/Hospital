@@ -9,13 +9,17 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.support.design.widget.CoordinatorLayout;
 
 import com.example.echo.hospital.MainActivity;
 import com.example.echo.hospital.MenuActivity;
@@ -23,6 +27,7 @@ import com.example.echo.hospital.R;
 import com.example.echo.hospital.model.User;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -61,6 +66,7 @@ public class AddCVPBundleActivity extends AppCompatActivity {
     //store account and password -----end
 
     //google sheet api -----start
+    private TextView mOutputText;
     static final int REQUEST_AUTHORIZATION = 1001;
     // The ID of the spreadsheet to update.
     String spreadsheetId = "1ythc41RFh9JmO0hXyZYNghXfXNPn7-NcPbRHosof_sE";
@@ -75,6 +81,10 @@ public class AddCVPBundleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_cvp_bundle);
+
+        //set errorText
+        mOutputText = (TextView)findViewById(R.id.errorOutput);
+
 
         //init
         MyAlertDialog = new AlertDialog.Builder(this);
@@ -366,6 +376,21 @@ public class AddCVPBundleActivity extends AppCompatActivity {
                 }
             }catch (Exception e){
                 e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            if (mLastError != null) {
+                if (mLastError instanceof UserRecoverableAuthIOException) {
+                    startActivityForResult(
+                            ((UserRecoverableAuthIOException) mLastError).getIntent(), REQUEST_AUTHORIZATION);
+                } else {
+                    mOutputText.setText("The following error occurred:\n"
+                            + mLastError.getMessage());
+                }
+            } else {
+                mOutputText.setText("Request cancelled.");
             }
         }
     }

@@ -293,7 +293,6 @@ public class AddBundleActivity extends Activity{
                 data1.add(patientValue);//病歷號
                 data1.add(doctorSignValue);//醫師/NP
                 data1.add(nurseSignValue);//護理師
-                //TODO 項次 commentValue 下拉式選單
                 data1.add(completeValue);//總完整
                 data1.add(auditorValue);//稽核者
 
