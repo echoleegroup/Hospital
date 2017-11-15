@@ -70,7 +70,7 @@ public class MainActivity extends Activity
 
     private static final String BUTTON_TEXT = "Login";
     private static final String PREF_ACCOUNT_NAME = "accountName";
-    private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS_READONLY };
+    private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS };
     //google sheet api -----end
 
     //store account and password -----start

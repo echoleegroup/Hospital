@@ -161,10 +161,7 @@ public class VAPBundleActivity extends AppCompatActivity {
                     }
                 }
                 return results;
-            }catch (UserRecoverableAuthIOException e) {
-                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
-                return null;
-            }catch (Exception e) {
+            } catch (Exception e) {
                 mLastError = e;
                 cancel(true);
                 return null;

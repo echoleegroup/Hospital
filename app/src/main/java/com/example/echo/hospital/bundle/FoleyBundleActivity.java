@@ -162,9 +162,6 @@ public class FoleyBundleActivity extends AppCompatActivity {
                     }
                 }
                 return results;
-            } catch (UserRecoverableAuthIOException e) {
-                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
-                return null;
             } catch (Exception e) {
                 mLastError = e;
                 cancel(true);

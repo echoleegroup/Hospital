@@ -336,9 +336,6 @@ public class AddFoleyBundleActivity extends AppCompatActivity {
 
                 AppendValuesResponse response = request.setInsertDataOption("INSERT_ROWS").execute();
                 return "successful";
-            } catch (UserRecoverableAuthIOException e) {
-                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
-                return null;
             } catch (Exception e) {
                 mLastError = e;
                 cancel(true);

@@ -85,7 +85,6 @@ public class AddCVPBundleActivity extends AppCompatActivity {
         //set errorText
         mOutputText = (TextView)findViewById(R.id.errorOutput);
 
-
         //init
         MyAlertDialog = new AlertDialog.Builder(this);
         MyAlertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -376,19 +375,5 @@ public class AddCVPBundleActivity extends AppCompatActivity {
             }
         }
 
-        @Override
-        protected void onCancelled() {
-            if (mLastError != null) {
-                if (mLastError instanceof UserRecoverableAuthIOException) {
-                    startActivityForResult(
-                            ((UserRecoverableAuthIOException) mLastError).getIntent(), REQUEST_AUTHORIZATION);
-                } else {
-                    mOutputText.setText("The following error occurred:\n"
-                            + mLastError.getMessage());
-                }
-            } else {
-                mOutputText.setText("Request cancelled.");
-            }
-        }
     }
 }
