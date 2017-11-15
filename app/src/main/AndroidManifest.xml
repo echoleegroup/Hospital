@@ -68,6 +68,30 @@
         <activity
             android:name=".mdr.MdrActivity"
             android:label="@string/title_activity_mdro"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".bundle.CVPBundleActivity"
+            android:label="@string/title_activity_bundle_cvp"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".bundle.AddCVPBundleActivity"
+            android:label="@string/title_activity_add_bundle_cvp"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".bundle.VAPBundleActivity"
+            android:label="@string/title_activity_vap_bundle"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".bundle.AddVAPBundleActivity"
+            android:label="@string/title_activity_add_vap_bundle"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".bundle.AddFoleyBundleActivity"
+            android:label="@string/title_activity_add_foley"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".bundle.FoleyBundleActivity"
+            android:label="@string/title_activity_foley_bundle"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

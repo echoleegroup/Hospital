@@ -23,4 +23,9 @@
     <string name="title_activity_add_wash">AddWashActivity</string>
     <string name="title_activity_add_mdro">AddMdroActivity</string>
     <string name="title_activity_mdro">MdroActivity</string>
+    <string name="title_activity_bundle_cvp">BundleCVPActivity</string>
+    <string name="title_activity_add_bundle_cvp">AddBundleCVPActivity</string>
+    <string name="title_activity_vap_bundle">VapBundleActivity</string>
+    <string name="title_activity_add_vap_bundle">AddVapBundleActivity</string>
+    <string name="title_activity_add_foley">AddFoleyActivity</string>
 </resources>

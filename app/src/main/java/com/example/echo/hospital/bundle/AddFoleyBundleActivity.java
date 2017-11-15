@@ -1,63 +1,62 @@
 package com.example.echo.hospital.bundle;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.EditText;
-import android.app.DatePickerDialog;
-import android.widget.DatePicker;
-import android.widget.RadioButton;
-import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.ArrayAdapter;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Calendar;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 
 import com.example.echo.hospital.MainActivity;
 import com.example.echo.hospital.MenuActivity;
-import com.example.echo.hospital.wash.AddWashActivity;
-import com.example.echo.hospital.wash.WashActivity;
+import com.example.echo.hospital.R;
+import com.example.echo.hospital.model.User;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.AddSheetRequest;
-import com.google.api.services.sheets.v4.model.Spreadsheet;
 import com.google.api.services.sheets.v4.model.AppendValuesResponse;
-import com.google.api.services.sheets.v4.model.ValueRange;
-import com.google.api.services.sheets.v4.model.Sheet;
-import com.google.api.services.sheets.v4.model.Request;
-import com.google.api.services.sheets.v4.model.SheetProperties;
 import com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetRequest;
+import com.google.api.services.sheets.v4.model.Request;
+import com.google.api.services.sheets.v4.model.Sheet;
+import com.google.api.services.sheets.v4.model.SheetProperties;
+import com.google.api.services.sheets.v4.model.Spreadsheet;
+import com.google.api.services.sheets.v4.model.ValueRange;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
+public class AddFoleyBundleActivity extends AppCompatActivity {
 
-import com.example.echo.hospital.R;
-import com.example.echo.hospital.model.User;
-
-public class AddBundleActivity extends Activity{
     private EditText date, bed, patient, comment, auditor;
-    private RadioButton unitOne, unitTwo, doctorSignTrue, doctorSignFalse, nurseSignTrue, nurseSignFalse;
+    private RadioButton unitOne, unitTwo, evaluateTrue, evaluateFalse, handTrue, handFalse, positionTrue, positionFalse, asepsisTrue, asepsisFalse,
+            urethraTrue, urethraFalse, doctorSignTrue, doctorSignFalse, nurseSignTrue, nurseSignFalse;
     private Spinner unitSpinner;
-    private String dateValue, unitValue, bedValue, patientValue, doctorSignValue, nurseSignValue, commentValue, completeValue, auditorValue;
+    private String dateValue, unitValue, bedValue, patientValue, evaluateValue, handValue, positionValue, asepsisValue, urethraValue, doctorSignValue, nurseSignValue,
+            completeValue, auditorValue;
     private Button saveBtn;
     private int mYear, mMonth, mDay; //西元年
     private int cYear, cMonth; //民國年月
     private String cDay; //民國日
-    private Builder MyAlertDialog;
+    private AlertDialog.Builder MyAlertDialog;
 
     //store account and password -----start
     private final String DefaultNameValue = "";
@@ -76,9 +75,9 @@ public class AddBundleActivity extends Activity{
     final Calendar c = Calendar.getInstance();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_bundle);
+        setContentView(R.layout.activity_add_foley);
 
         //init
         MyAlertDialog = new AlertDialog.Builder(this);
@@ -101,7 +100,7 @@ public class AddBundleActivity extends Activity{
         date.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(AddBundleActivity.this, new DatePickerDialog.OnDateSetListener() {
+                new DatePickerDialog(AddFoleyBundleActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         String format = setDateFormat(year,month,day);
@@ -114,7 +113,6 @@ public class AddBundleActivity extends Activity{
             }
 
         });
-
 
         //set unit
         //unitOne = (RadioButton) findViewById(R.id.RadioButton1);
@@ -134,16 +132,33 @@ public class AddBundleActivity extends Activity{
         //set patient
         patient = (EditText) findViewById(R.id.EditText3);
 
+        //評估適應症 radiobutton
+        evaluateTrue = (RadioButton) findViewById(R.id.RadioButton3);
+        evaluateFalse = (RadioButton) findViewById(R.id.RadioButton4);
+
+        //手部衛生 radiobutton
+        handTrue = (RadioButton) findViewById(R.id.RadioButton5);
+        handFalse = (RadioButton) findViewById(R.id.RadioButton6);
+
+        //固定位置 radiobutton
+        positionTrue = (RadioButton) findViewById(R.id.RadioButton7);
+        positionFalse = (RadioButton) findViewById(R.id.RadioButton8);
+
+        //無菌通暢 radiobutton
+        asepsisTrue = (RadioButton) findViewById(R.id.RadioButton9);
+        asepsisFalse = (RadioButton) findViewById(R.id.RadioButton10);
+
+        //尿道口清潔 radiobutton
+        urethraTrue = (RadioButton) findViewById(R.id.RadioButton11);
+        urethraFalse = (RadioButton) findViewById(R.id.RadioButton12);
+
         //set doctor sign radiobutton
-        doctorSignTrue = (RadioButton) findViewById(R.id.RadioButton3);
-        doctorSignFalse = (RadioButton) findViewById(R.id.RadioButton4);
+        doctorSignTrue = (RadioButton) findViewById(R.id.RadioButton13);
+        doctorSignFalse = (RadioButton) findViewById(R.id.RadioButton14);
 
         //set nurse sign radiobutton
-        nurseSignTrue = (RadioButton) findViewById(R.id.RadioButton5);
-        nurseSignFalse = (RadioButton) findViewById(R.id.RadioButton6);
-
-        //set comment
-        comment = (EditText) findViewById(R.id.EditText4);
+        nurseSignTrue = (RadioButton) findViewById(R.id.RadioButton15);
+        nurseSignFalse = (RadioButton) findViewById(R.id.RadioButton16);
 
         //set auditor name
         //get input account and password  ---- start
@@ -153,7 +168,7 @@ public class AddBundleActivity extends Activity{
         NameValue = settings.getString(User.PREF_NAME, DefaultNameValue);
         //get input account and password  ---- end
 
-        auditor = (EditText) findViewById(R.id.EditText5);
+        auditor = (EditText) findViewById(R.id.EditText4);
         auditor.setText(NameValue);
 
         //save button click event
@@ -161,32 +176,35 @@ public class AddBundleActivity extends Activity{
         saveBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-            //get all fill value
-            dateValue = date.getText().toString();
-            //unitValue = unitOne.isChecked() ? "ICU-1": unitTwo.isChecked() ? "ICU-2" : "";
-            unitValue = unitSpinner.getSelectedItem().toString();
-            bedValue = bed.getText().toString();
-            patientValue = patient.getText().toString();
-            doctorSignValue = doctorSignTrue.isChecked() ? "Y": doctorSignFalse.isChecked() ? "N" : "";
-            nurseSignValue = nurseSignTrue.isChecked() ? "Y": nurseSignFalse.isChecked() ? "N" : "";
-            commentValue = comment.getText().toString().equals("") ? "NA" : "";
-            completeValue = doctorSignValue.equals("Y") && nurseSignValue.equals("Y") ? "Y" : "N";
-            auditorValue = NameValue.toString();
+                //get all fill value
+                dateValue = date.getText().toString();
+                //unitValue = unitOne.isChecked() ? "ICU-1": unitTwo.isChecked() ? "ICU-2" : "";
+                unitValue = unitSpinner.getSelectedItem().toString();
+                bedValue = bed.getText().toString();
+                patientValue = patient.getText().toString();
+                evaluateValue = evaluateTrue.isChecked() ? "Y": evaluateFalse.isChecked() ? "N" : "";
+                handValue = handTrue.isChecked() ? "Y": handFalse.isChecked() ? "N" : "";
+                positionValue = positionTrue.isChecked() ? "Y": positionFalse.isChecked() ? "N" : "";
+                asepsisValue = asepsisTrue.isChecked() ? "Y": asepsisFalse.isChecked() ? "N" : "";
+                urethraValue = urethraTrue.isChecked() ? "Y": urethraFalse.isChecked() ? "N" : "";
+                doctorSignValue = doctorSignTrue.isChecked() ? "Y": doctorSignFalse.isChecked() ? "N" : "";
+                nurseSignValue = nurseSignTrue.isChecked() ? "Y": nurseSignFalse.isChecked() ? "N" : "";
+                completeValue = doctorSignValue.equals("Y") && nurseSignValue.equals("Y") ? "Y" : "N";
+                auditorValue = NameValue.toString();
 
-            //validate
-            if(dateValue.length() == 0 || unitValue.length() == 0 || bedValue.length() == 0 || patientValue.length() == 0 || doctorSignValue.length() == 0 ||
-                    nurseSignValue.length() == 0  || auditorValue.length() == 0){
-                MyAlertDialog.setTitle("Message");
-                MyAlertDialog.setMessage("請填寫正確資料");
-                MyAlertDialog.show();
-            }else{
-                //save to excel
-                new MakeRequestTask(MainActivity.mCredential).execute();
-            }
+                //validate
+                if(dateValue.length() == 0 || unitValue.length() == 0 || bedValue.length() == 0 || patientValue.length() == 0 || doctorSignValue.length() == 0 ||
+                        nurseSignValue.length() == 0  || auditorValue.length() == 0){
+                    MyAlertDialog.setTitle("Message");
+                    MyAlertDialog.setMessage("請填寫正確資料");
+                    MyAlertDialog.show();
+                }else{
+                    //save to excel
+                    new MakeRequestTask(MainActivity.mCredential).execute();
+                }
             }
         });
     }
-
 
     private String setDateFormat(int year,int monthOfYear,int dayOfMonth){
         cYear = year - 1911;
@@ -195,7 +213,6 @@ public class AddBundleActivity extends Activity{
         cDay = String.valueOf(dayOfMonth).length() == 1 ? "0" + String.valueOf(dayOfMonth) : String.valueOf(dayOfMonth);
         return cYear + adjMonthOfYear + cDay;
     }
-
     /**
      * An asynchronous task that handles the Google Sheets API call.
      * Placing the API calls in their own task ensures the UI stays responsive.
@@ -222,7 +239,7 @@ public class AddBundleActivity extends Activity{
             List<String> results = new ArrayList<String>();
             Exception mLastError = null;
             String sheetName = cYear+ MenuActivity.bundleName;
-            range = sheetName+"!A:J";
+            range = sheetName+"!A:O";
             try {
                 Spreadsheet sheet_metadata = mService.spreadsheets().get(spreadsheetId).execute();
                 List<Sheet> sheetList = sheet_metadata.getSheets();
@@ -266,6 +283,11 @@ public class AddBundleActivity extends Activity{
                     data1.add("單位");//單位
                     data1.add("床號");//床號
                     data1.add("病歷號");//病歷號
+                    data1.add("評估適應症");//評估適應症
+                    data1.add("手部衛生");//手部衛生
+                    data1.add("固定位置");//固定位置
+                    data1.add("無菌通暢");//無菌通暢
+                    data1.add("尿道口清潔");//尿道口清潔
                     data1.add("醫師/NP");//醫師/NP
                     data1.add("護理師");//護理師
                     data1.add("總完整");//總完整
@@ -291,9 +313,13 @@ public class AddBundleActivity extends Activity{
                 data1.add(unitValue);//單位 //下拉式選單
                 data1.add(bedValue);//床號
                 data1.add(patientValue);//病歷號
+                data1.add(evaluateValue);//評估適應症
+                data1.add(handValue);//手部衛生
+                data1.add(positionValue);//固定位置
+                data1.add(asepsisValue);//無菌通暢
+                data1.add(urethraValue);//尿道口清潔
                 data1.add(doctorSignValue);//醫師/NP
                 data1.add(nurseSignValue);//護理師
-                //TODO 項次 commentValue 下拉式選單
                 data1.add(completeValue);//總完整
                 data1.add(auditorValue);//稽核者
 
@@ -318,16 +344,14 @@ public class AddBundleActivity extends Activity{
                 cancel(true);
                 return "failure";
             }
-
         }
-
 
         @Override
         protected void onPostExecute(String output) {
             try {
                 if(output.equals("successful")){
                     Intent intent = new Intent();
-                    intent.setClass(AddBundleActivity.this, BundleActivity.class);
+                    intent.setClass(AddFoleyBundleActivity.this, FoleyBundleActivity.class);
                     startActivity(intent);
                 }else{
                     MyAlertDialog.setTitle("Message");
@@ -339,4 +363,5 @@ public class AddBundleActivity extends Activity{
             }
         }
     }
+
 }

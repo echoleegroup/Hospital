@@ -8,7 +8,9 @@ import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.example.echo.hospital.bundle.BundleActivity;
+import com.example.echo.hospital.bundle.VAPBundleActivity;
+import com.example.echo.hospital.bundle.CVPBundleActivity;
+import com.example.echo.hospital.bundle.FoleyBundleActivity;
 import com.example.echo.hospital.wash.WashActivity;
 import com.example.echo.hospital.mdr.MdrActivity;
 
@@ -28,15 +30,15 @@ public class MenuActivity extends AppCompatActivity {
         adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1);
         //0- 洗手稽核表
-        //1- Bundle c稽核表
-        //2- Bundle f稽核表
-        //3- Bundle Vap稽核表
-        //4- MDRO稽核表
+        //1- MDRO稽核表
+        //2- Bundle CVP稽核表
+        //3- Bundle Foley稽核表
+        //4- Bundle VAP稽核表
         adapter.add("洗手稽核表");
-        adapter.add("Bundle C稽核表");
-        adapter.add("Bundle Foley稽核表");
+        adapter.add("MDRO稽核表");
+        adapter.add("Bundle CVP稽核表");
         adapter.add("Bundle VAP稽核表");
-        adapter.add("MDR稽核表");
+        adapter.add("Bundle Foley稽核表");
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -54,25 +56,25 @@ public class MenuActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(MenuActivity.this, WashActivity.class);
                     startActivity(intent);
-                }
-                else if(arg3 == 1L){//Bundle c稽核表
-                    bundleName = "c";
+                }else if(arg3 == 1L){//MDRO稽核表
                     Intent intent = new Intent();
-                    intent.setClass(MenuActivity.this, BundleActivity.class);
+                    intent.setClass(MenuActivity.this, MdrActivity.class);
                     startActivity(intent);
-                }else if(arg3 == 2L){//Bundle Foley稽核表
-                    bundleName = "Foley";
+                }
+                else if(arg3 == 2L){//Bundle CVP稽核表
+                    bundleName = "CVP";
                     Intent intent = new Intent();
-                    intent.setClass(MenuActivity.this, BundleActivity.class);
+                    intent.setClass(MenuActivity.this, CVPBundleActivity.class);
                     startActivity(intent);
                 }else if(arg3 == 3L){//Bundle VAP稽核表
                     bundleName = "VAP";
                     Intent intent = new Intent();
-                    intent.setClass(MenuActivity.this, BundleActivity.class);
+                    intent.setClass(MenuActivity.this, VAPBundleActivity.class);
                     startActivity(intent);
-                }else if(arg3 == 4L){//MDR稽核表
+                }else if(arg3 == 4L){//Bundle Foley稽核表
+                    bundleName = "Foley";
                     Intent intent = new Intent();
-                    intent.setClass(MenuActivity.this, MdrActivity.class);
+                    intent.setClass(MenuActivity.this, FoleyBundleActivity.class);
                     startActivity(intent);
                 }
             }

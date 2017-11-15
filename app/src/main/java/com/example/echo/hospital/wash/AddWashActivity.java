@@ -28,6 +28,7 @@ import com.example.echo.hospital.bundle.BundleActivity;
 import com.example.echo.hospital.model.User;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
@@ -70,6 +71,7 @@ public class AddWashActivity extends AppCompatActivity {
     //store account and password -----end
 
     //google sheet api -----start
+    static final int REQUEST_AUTHORIZATION = 1001;
     // The ID of the spreadsheet to update.
     String spreadsheetId = "1eBs1lDRIRBhbLqwn7FU8yfef9Znqu-185b7WILrLwW8";
     // The A1 notation of a range to search for a logical table of data.
@@ -515,7 +517,10 @@ public class AddWashActivity extends AppCompatActivity {
 
                 AppendValuesResponse response = request.setInsertDataOption("INSERT_ROWS").execute();
                 return "successful";
-            } catch (Exception e) {
+            }catch (UserRecoverableAuthIOException e) {
+                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
+                return null;
+            }catch (Exception e) {
                 mLastError = e;
                 cancel(true);
                 return "failure";
