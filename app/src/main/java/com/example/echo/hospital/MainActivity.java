@@ -20,6 +20,7 @@ import com.google.api.services.sheets.v4.SheetsScopes;
 
 import com.google.api.services.sheets.v4.model.*;
 
+import android.graphics.Typeface;
 import android.Manifest;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -41,8 +42,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.ImageView;
+import android.view.Gravity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +60,7 @@ public class MainActivity extends Activity
 
     //google sheet api -----start
     public static GoogleAccountCredential mCredential;
-    private TextView mOutputText;
+    private TextView mOutputText, title, space;
     private Button mCallApiButton;
     private EditText account, password;
     private ImageView logo;
@@ -78,7 +81,6 @@ public class MainActivity extends Activity
     private String PasswordValue;
     private String NameValue;
     private int IdentityValue;
-
     //store account and password -----end
 
     /**
@@ -89,46 +91,69 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //set layout
         LinearLayout activityLayout = new LinearLayout(this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams.FILL_PARENT,
+                LinearLayout.LayoutParams.FILL_PARENT);
         activityLayout.setLayoutParams(lp);
         activityLayout.setOrientation(LinearLayout.VERTICAL);
-        activityLayout.setPadding(16, 16, 16, 16);
+        activityLayout.setPadding(16, 16, 16, 16);//left, top, right, bottom
 
         ViewGroup.LayoutParams tlp = new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 80);
+        layoutParams.gravity = Gravity.CENTER;
+
         logo = new ImageView(this);
         logo.setImageResource(R.drawable.hospital);
         activityLayout.addView(logo);
 
+        title = new TextView(this);
+        title.setGravity(Gravity.CENTER);
+        /*title.setTypeface(Typeface.createFromAsset(getAssets()
+                , "fonts/MicrosoftJhengHei.ttf"));*/
+        title.setText("感染科稽核系統");
+        title.setTextSize(32);
+        title.setPadding(0, 100, 0, 100);//left, top, right, bottom
+        activityLayout.addView(title);
+
         account = new EditText(this);
-        account.setLayoutParams(tlp);
+        account.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         account.setHint("account");
+        account.setLayoutParams(layoutParams);
+        account.setGravity(Gravity.CENTER);
         activityLayout.addView(account);
 
         password = new EditText(this);
         password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        password.setLayoutParams(tlp);
+        password.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         password.setHint("password");
+        password.setLayoutParams(layoutParams);
+        password.setGravity(Gravity.CENTER);
         password.setTransformationMethod(new PasswordTransformationMethod());
         activityLayout.addView(password);
+
+        //left spacing
+        space = new TextView(this);
+        space.setGravity(Gravity.CENTER);
+        space.setText("");
+        space.setPadding(0, 100, 0, 0);//left, top, right, bottom
+        activityLayout.addView(space);
 
         mCallApiButton = new Button(this);
         mCallApiButton.setText(BUTTON_TEXT);
         mCallApiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!account.getText().toString().trim().equals("") && !password.getText().toString().trim().equals("")){
-                    mCallApiButton.setEnabled(false);
-                    mOutputText.setText("");
-                    getResultsFromApi();
-                    mCallApiButton.setEnabled(true);
-                }
-
+            if(!account.getText().toString().trim().equals("") && !password.getText().toString().trim().equals("")){
+                mCallApiButton.setEnabled(false);
+                mOutputText.setText("");
+                getResultsFromApi();
+                mCallApiButton.setEnabled(true);
+            }
             }
         });
         activityLayout.addView(mCallApiButton);
@@ -150,8 +175,6 @@ public class MainActivity extends Activity
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
     }
-
-
 
     /**
      * Attempt to call the API, after verifying that all the preconditions are
