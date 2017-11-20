@@ -4,13 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.example.echo.hospital.bundle.VAPBundleActivity;
 import com.example.echo.hospital.bundle.CVPBundleActivity;
 import com.example.echo.hospital.bundle.FoleyBundleActivity;
+import com.example.echo.hospital.utils.FontManager;
 import com.example.echo.hospital.wash.WashActivity;
 import com.example.echo.hospital.mdr.MdrActivity;
 
@@ -18,6 +21,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private ListView listView;
     private View headerView;
+    private TextView headerTextView;
     private ArrayAdapter adapter;
     public static String bundleName;
 
@@ -32,9 +36,11 @@ public class MenuActivity extends AppCompatActivity {
         //set header
         headerView = (View)getLayoutInflater().inflate(R.layout.menu_header_view, null);
         listView.addHeaderView(headerView);
+        headerTextView = (TextView)findViewById(R.id.menuHeader);
+        headerTextView.setText("感染科稽核系統主選單");
 
         //set menu
-        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
+        adapter = new ArrayAdapter(this, R.layout.menu_adapter);
         //0- 洗手稽核表
         //1- MDRO稽核表
         //2- Bundle CVP稽核表
@@ -79,5 +85,4 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
     }
-
 }

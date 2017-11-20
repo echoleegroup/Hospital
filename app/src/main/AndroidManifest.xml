@@ -34,26 +34,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".bundle.BundleActivity"
-            android:label="@string/title_activity_bundle"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".bundle.AddBundleActivity"
-            android:label="@string/title_activity_add_bundle"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".wash.WashActivity"
             android:label="@string/title_activity_wash"
             android:theme="@style/AppTheme.NoActionBar" />

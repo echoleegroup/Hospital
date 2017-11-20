@@ -3,6 +3,7 @@ package com.example.echo.hospital.bundle;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,7 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.echo.hospital.MainActivity;
 import com.example.echo.hospital.MenuActivity;
@@ -52,6 +55,9 @@ public class VAPBundleActivity extends AppCompatActivity {
     private FloatingActionButton addBtn;
     private ListView listView;
     private ArrayAdapter adapter;
+    private View headerView;
+    private TextView headerTextView;
+    private LinearLayout menuLayout;
 
     //google sheet api -----start
     static final int REQUEST_AUTHORIZATION = 1001;
@@ -62,16 +68,27 @@ public class VAPBundleActivity extends AppCompatActivity {
     ValueRange body = new ValueRange();
     //google sheet api -----end
 
+    private String backgroundColor = "#fda085";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vap_bundle);
 
+        //init view
         listView = (ListView) findViewById(R.id.listView);
-        adapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1);
 
-        //get bundle data
+        //set header
+        headerView = (View)getLayoutInflater().inflate(R.layout.menu_header_view, null);
+        listView.addHeaderView(headerView);
+        headerTextView = (TextView)findViewById(R.id.menuHeader);
+        menuLayout = (LinearLayout)findViewById(R.id.menuLayout);
+        menuLayout.setBackgroundColor(Color.parseColor(backgroundColor));
+
+        //set VAP bundle adapter
+        adapter = new ArrayAdapter(this, R.layout.menu_adapter);
+
+        //get VAP bundle data
         new MakeRequestTask(MainActivity.mCredential).execute();
 
         //get input account and password  ---- start
@@ -97,12 +114,11 @@ public class VAPBundleActivity extends AppCompatActivity {
             addBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent();
-                    intent.setClass(VAPBundleActivity.this, AddVAPBundleActivity.class);
-                    startActivity(intent);
+                Intent intent = new Intent();
+                intent.setClass(VAPBundleActivity.this, AddVAPBundleActivity.class);
+                startActivity(intent);
                 }
             });
-
         }
     }
 
@@ -118,9 +134,9 @@ public class VAPBundleActivity extends AppCompatActivity {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.sheets.v4.Sheets.Builder(
-                    transport, jsonFactory, credential)
-                    .setApplicationName("Google Sheets API Android Quickstart")
-                    .build();
+                transport, jsonFactory, credential)
+                .setApplicationName("Google Sheets API Android Quickstart")
+                .build();
         }
 
         /**
@@ -173,39 +189,18 @@ public class VAPBundleActivity extends AppCompatActivity {
         protected void onPostExecute(List<String> output) {
             try {
                 if (output.size() == 0) {
-                    adapter.add("目前本年度尚未未有" + MenuActivity.bundleName + "稽核表");
+                    //header
+                    headerTextView.setText("目前本年度尚未未有" + MenuActivity.bundleName + "稽核表");
                 } else {
-                    //title
-                    adapter.add(MenuActivity.bundleName +" Bundle稽核列表");
+                    //header
+                    headerTextView.setText(MenuActivity.bundleName +" Bundle稽核列表");
                     for (String str : output) {
                         //稽核日期, 單位, 床號, 病歷號, 評估適應症, 暫停鎮靜劑, 口腔照護, 床頭抬高, 排空積水, 醫師/NP, 護理師, 總完整, 稽核者
                         String[] array = str.split(",");
                         String dateValue = array[0].trim();
                         String unitValue = array[1].trim();
-                        /*String bedValue = array[2].trim();
-                        String patientValue = array[3].trim();
-                        String doctorSignValue = array[4].trim();
-                        String nurseSignValue = array[5].trim();
-                        String completeValue = array[6].trim();
-                        String auditorValue = array[7].trim();*/
-
-                        //adapter.add(dateValue + ", 單位：" + unitValue + ", 床位：" + bedValue + ", 病歷號：" + patientValue + ", 總完整：" + completeValue  + ", 稽核者：" + auditorValue);
                         adapter.add(dateValue + ", 單位：" + unitValue);
                     }
-                        /*TODO:需要檢視？！
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView arg0, View arg1, int arg2,
-                                                    long arg3) {
-
-                                if(arg3 != 0L){//洗手稽核表
-                                    Intent intent = new Intent();
-                                    intent.setClass(MenuActivity.this, BundleActivity.class);
-                                    startActivity(intent);
-                                }
-
-                            }
-                        });*/
                 }
                 listView.setAdapter(adapter);
             }catch (Exception e){

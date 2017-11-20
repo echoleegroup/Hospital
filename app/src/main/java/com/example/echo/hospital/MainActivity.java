@@ -117,12 +117,13 @@ public class MainActivity extends Activity
                 , "fonts/MicrosoftJhengHei.ttf"));*/
         title.setText("感染科稽核系統");
         title.setTextSize(32);
-        title.setPadding(0, 100, 0, 100);//left, top, right, bottom
+        title.setPadding(0, 100, 0, 80);//left, top, right, bottom
         activityLayout.addView(title);
 
         account = new EditText(this);
         account.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         account.setHint("account");
+        account.setTextSize(20);
         account.setLayoutParams(layoutParams);
         account.setGravity(Gravity.CENTER);
         activityLayout.addView(account);
@@ -131,6 +132,7 @@ public class MainActivity extends Activity
         password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         password.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         password.setHint("password");
+        password.setTextSize(20);
         password.setLayoutParams(layoutParams);
         password.setGravity(Gravity.CENTER);
         password.setTransformationMethod(new PasswordTransformationMethod());

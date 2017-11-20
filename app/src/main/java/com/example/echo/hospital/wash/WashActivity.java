@@ -11,6 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.LinearLayout;
+import android.graphics.Color;
 
 import com.example.echo.hospital.MainActivity;
 import com.example.echo.hospital.R;
@@ -51,7 +54,9 @@ public class WashActivity extends AppCompatActivity {
     private FloatingActionButton addBtn;
     private ListView listView;
     private ArrayAdapter adapter;
-
+    private View headerView;
+    private TextView headerTextView;
+    private LinearLayout menuLayout;
     // The ID of the spreadsheet to update.
     static final int REQUEST_AUTHORIZATION = 1001;
     String spreadsheetId = "1eBs1lDRIRBhbLqwn7FU8yfef9Znqu-185b7WILrLwW8";
@@ -61,16 +66,25 @@ public class WashActivity extends AppCompatActivity {
     ValueRange body = new ValueRange();
     //google sheet api -----end
 
+    private String backgroundColor = "#fda085";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wash);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+        //init view
         listView = (ListView) findViewById(R.id.listView);
-        adapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1);
+
+        //set header
+        headerView = (View)getLayoutInflater().inflate(R.layout.menu_header_view, null);
+        listView.addHeaderView(headerView);
+        headerTextView = (TextView)findViewById(R.id.menuHeader);
+        menuLayout = (LinearLayout)findViewById(R.id.menuLayout);
+        menuLayout.setBackgroundColor(Color.parseColor(backgroundColor));
+
+        //set wash adapter
+        adapter = new ArrayAdapter(this, R.layout.menu_adapter);
 
         //get input account and password  ---- start
         SharedPreferences settings = getSharedPreferences(User.PREFS_NAME,
@@ -95,14 +109,12 @@ public class WashActivity extends AppCompatActivity {
             addBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent();
-                    intent.setClass(WashActivity.this, AddWashActivity.class);
-                    startActivity(intent);
+                Intent intent = new Intent();
+                intent.setClass(WashActivity.this, AddWashActivity.class);
+                startActivity(intent);
                 }
             });
-
         }
-
         //get wash data
         new MakeRequestTask(MainActivity.mCredential).execute();
     }
@@ -120,9 +132,9 @@ public class WashActivity extends AppCompatActivity {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.sheets.v4.Sheets.Builder(
-                    transport, jsonFactory, credential)
-                    .setApplicationName("Google Sheets API Android Quickstart")
-                    .build();
+                transport, jsonFactory, credential)
+                .setApplicationName("Google Sheets API Android Quickstart")
+                .build();
         }
 
         /**
@@ -180,32 +192,18 @@ public class WashActivity extends AppCompatActivity {
         protected void onPostExecute(List<String> output) {
             try {
                 if (output.size() == 0) {
-                    adapter.add("目前本年度尚未未有洗手稽核表");
+                    //header
+                    headerTextView.setText("目前本年度尚未未有洗手稽核表");
                 } else {
-                    //title
-                    adapter.add("洗手稽核列表");
+                    //header
+                    headerTextView.setText("洗手稽核列表");
                     for (String str : output) {
                         String[] array = str.split(",");
                         String monthValue = array[0].trim();//月份
                         String unitValue = array[1].trim();//單位
                         String titleValue = array[2].trim();//職稱
-
                         adapter.add(monthValue + ", 單位：" + unitValue + ", 職稱：" + titleValue);
                     }
-                        /*TODO:需要檢視？！
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView arg0, View arg1, int arg2,
-                                                    long arg3) {
-
-                                if(arg3 != 0L){//洗手稽核表
-                                    Intent intent = new Intent();
-                                    intent.setClass(MenuActivity.this, BundleActivity.class);
-                                    startActivity(intent);
-                                }
-
-                            }
-                        });*/
                 }
                 listView.setAdapter(adapter);
             }catch (Exception e){

@@ -3,13 +3,16 @@ package com.example.echo.hospital.mdr;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.echo.hospital.MainActivity;
 import com.example.echo.hospital.R;
@@ -49,6 +52,9 @@ public class MdrActivity extends AppCompatActivity {
     private FloatingActionButton addBtn;
     private ListView listView;
     private ArrayAdapter adapter;
+    private View headerView;
+    private TextView headerTextView;
+    private LinearLayout menuLayout;
 
     //google sheet api -----start
     static final int REQUEST_AUTHORIZATION = 1001;
@@ -59,16 +65,27 @@ public class MdrActivity extends AppCompatActivity {
     ValueRange body = new ValueRange();
     //google sheet api -----end
 
+    private String backgroundColor = "#fda085";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mdro);
 
+        //init view
         listView = (ListView) findViewById(R.id.listView);
-        adapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1);
 
-        //get bundle data
+        //set header
+        headerView = (View)getLayoutInflater().inflate(R.layout.menu_header_view, null);
+        listView.addHeaderView(headerView);
+        headerTextView = (TextView)findViewById(R.id.menuHeader);
+        menuLayout = (LinearLayout)findViewById(R.id.menuLayout);
+        menuLayout.setBackgroundColor(Color.parseColor(backgroundColor));
+
+        //set MDRO adapter
+        adapter = new ArrayAdapter(this, R.layout.menu_adapter);
+
+        //get MDRO data
         new MakeRequestTask(MainActivity.mCredential).execute();
 
         //get input account and password  ---- start
@@ -94,12 +111,11 @@ public class MdrActivity extends AppCompatActivity {
             addBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent();
-                    intent.setClass(MdrActivity.this, AddMdrActivity.class);
-                    startActivity(intent);
+                Intent intent = new Intent();
+                intent.setClass(MdrActivity.this, AddMdrActivity.class);
+                startActivity(intent);
                 }
             });
-
         }
     }
 
@@ -115,9 +131,9 @@ public class MdrActivity extends AppCompatActivity {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.sheets.v4.Sheets.Builder(
-                    transport, jsonFactory, credential)
-                    .setApplicationName("Google Sheets API Android Quickstart")
-                    .build();
+                transport, jsonFactory, credential)
+                .setApplicationName("Google Sheets API Android Quickstart")
+                .build();
         }
 
         /**
@@ -142,7 +158,7 @@ public class MdrActivity extends AppCompatActivity {
                         break;
                     }
                 }
-                if(!matchSheetName){//沒有此年度的Bundle
+                if(!matchSheetName){//沒有此年度的MDRO
                     //Do nothing
                 }else{
                     ValueRange response = mService.spreadsheets().values()
@@ -171,10 +187,11 @@ public class MdrActivity extends AppCompatActivity {
         protected void onPostExecute(List<String> output) {
             try {
                 if (output.size() == 0) {
-                    adapter.add("目前本年度尚未未有MDR稽核表");
+                    //header
+                    headerTextView.setText("目前本年度尚未未有MDRO稽核表");
                 } else {
-                    //title
-                    adapter.add("MDR稽核列表");
+                    //header
+                    headerTextView.setText("MDRO稽核列表");
                     for (String str : output) {
                         //稽核日期, 單位, 床號, 病歷號, 1~15, 達成, 稽核者
                         String[] array = str.split(",");
@@ -186,23 +203,8 @@ public class MdrActivity extends AppCompatActivity {
                         String thirdValue = array[5].trim();*/
                         String completeValue = array[18].trim();
                         String auditorValue = array[19].trim();
-
                         adapter.add(dateValue + ", 單位：" + unitValue + ", 床位：" + bedValue + ", 達成：" + completeValue + ", 稽核者：" + auditorValue);
                     }
-                        /*TODO:需要檢視？！
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView arg0, View arg1, int arg2,
-                                                    long arg3) {
-
-                                if(arg3 != 0L){//洗手稽核表
-                                    Intent intent = new Intent();
-                                    intent.setClass(MenuActivity.this, BundleActivity.class);
-                                    startActivity(intent);
-                                }
-
-                            }
-                        });*/
                 }
                 listView.setAdapter(adapter);
             }catch (Exception e){
