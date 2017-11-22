@@ -111,16 +111,16 @@ public class AddWashActivity extends AppCompatActivity {
         date.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(AddWashActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int day) {
-                        String format = setDateFormat(year,month,day);
-                        mYear = year;
-                        mMonth = month;
-                        mDay = day;
-                        date.setText(format);
-                    }
-                }, mYear,mMonth, mDay).show();
+            new DatePickerDialog(AddWashActivity.this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int day) {
+                String format = setDateFormat(year,month,day);
+                mYear = year;
+                mMonth = month;
+                mDay = day;
+                date.setText(format);
+                }
+            }, mYear,mMonth, mDay).show();
             }
 
         });

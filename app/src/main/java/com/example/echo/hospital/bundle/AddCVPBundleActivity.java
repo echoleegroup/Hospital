@@ -109,11 +109,11 @@ public class AddCVPBundleActivity extends AppCompatActivity {
             new DatePickerDialog(AddCVPBundleActivity.this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int day) {
-                    String format = setDateFormat(year,month,day);
-                    mYear = year;
-                    mMonth = month;
-                    mDay = day;
-                    date.setText(format);
+                String format = setDateFormat(year,month,day);
+                mYear = year;
+                mMonth = month;
+                mDay = day;
+                date.setText(format);
                 }
             }, mYear,mMonth, mDay).show();
             }
@@ -238,9 +238,9 @@ public class AddCVPBundleActivity extends AppCompatActivity {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.sheets.v4.Sheets.Builder(
-                    transport, jsonFactory, credential)
-                    .setApplicationName("Google Sheets API Android Quickstart")
-                    .build();
+                transport, jsonFactory, credential)
+                .setApplicationName("Google Sheets API Android Quickstart")
+                .build();
         }
 
         /**

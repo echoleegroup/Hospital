@@ -100,16 +100,16 @@ public class AddFoleyBundleActivity extends AppCompatActivity {
         date.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(AddFoleyBundleActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int day) {
-                        String format = setDateFormat(year,month,day);
-                        mYear = year;
-                        mMonth = month;
-                        mDay = day;
-                        date.setText(format);
-                    }
-                }, mYear,mMonth, mDay).show();
+            new DatePickerDialog(AddFoleyBundleActivity.this, new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int day) {
+                String format = setDateFormat(year,month,day);
+                mYear = year;
+                mMonth = month;
+                mDay = day;
+                date.setText(format);
+                }
+            }, mYear,mMonth, mDay).show();
             }
 
         });
@@ -176,32 +176,32 @@ public class AddFoleyBundleActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                //get all fill value
-                dateValue = date.getText().toString();
-                //unitValue = unitOne.isChecked() ? "ICU-1": unitTwo.isChecked() ? "ICU-2" : "";
-                unitValue = unitSpinner.getSelectedItem().toString();
-                bedValue = bed.getText().toString();
-                patientValue = patient.getText().toString();
-                evaluateValue = evaluateTrue.isChecked() ? "Y": evaluateFalse.isChecked() ? "N" : "";
-                handValue = handTrue.isChecked() ? "Y": handFalse.isChecked() ? "N" : "";
-                positionValue = positionTrue.isChecked() ? "Y": positionFalse.isChecked() ? "N" : "";
-                asepsisValue = asepsisTrue.isChecked() ? "Y": asepsisFalse.isChecked() ? "N" : "";
-                urethraValue = urethraTrue.isChecked() ? "Y": urethraFalse.isChecked() ? "N" : "";
-                doctorSignValue = doctorSignTrue.isChecked() ? "Y": doctorSignFalse.isChecked() ? "N" : "";
-                nurseSignValue = nurseSignTrue.isChecked() ? "Y": nurseSignFalse.isChecked() ? "N" : "";
-                completeValue = doctorSignValue.equals("Y") && nurseSignValue.equals("Y") ? "Y" : "N";
-                auditorValue = NameValue.toString();
+            //get all fill value
+            dateValue = date.getText().toString();
+            //unitValue = unitOne.isChecked() ? "ICU-1": unitTwo.isChecked() ? "ICU-2" : "";
+            unitValue = unitSpinner.getSelectedItem().toString();
+            bedValue = bed.getText().toString();
+            patientValue = patient.getText().toString();
+            evaluateValue = evaluateTrue.isChecked() ? "Y": evaluateFalse.isChecked() ? "N" : "";
+            handValue = handTrue.isChecked() ? "Y": handFalse.isChecked() ? "N" : "";
+            positionValue = positionTrue.isChecked() ? "Y": positionFalse.isChecked() ? "N" : "";
+            asepsisValue = asepsisTrue.isChecked() ? "Y": asepsisFalse.isChecked() ? "N" : "";
+            urethraValue = urethraTrue.isChecked() ? "Y": urethraFalse.isChecked() ? "N" : "";
+            doctorSignValue = doctorSignTrue.isChecked() ? "Y": doctorSignFalse.isChecked() ? "N" : "";
+            nurseSignValue = nurseSignTrue.isChecked() ? "Y": nurseSignFalse.isChecked() ? "N" : "";
+            completeValue = doctorSignValue.equals("Y") && nurseSignValue.equals("Y") ? "Y" : "N";
+            auditorValue = NameValue.toString();
 
-                //validate
-                if(dateValue.length() == 0 || unitValue.length() == 0 || bedValue.length() == 0 || patientValue.length() == 0 || doctorSignValue.length() == 0 ||
-                        nurseSignValue.length() == 0  || auditorValue.length() == 0){
-                    MyAlertDialog.setTitle("Message");
-                    MyAlertDialog.setMessage("請填寫正確資料");
-                    MyAlertDialog.show();
-                }else{
-                    //save to excel
-                    new MakeRequestTask(MainActivity.mCredential).execute();
-                }
+            //validate
+            if(dateValue.length() == 0 || unitValue.length() == 0 || bedValue.length() == 0 || patientValue.length() == 0 || doctorSignValue.length() == 0 ||
+                    nurseSignValue.length() == 0  || auditorValue.length() == 0){
+                MyAlertDialog.setTitle("Message");
+                MyAlertDialog.setMessage("請填寫正確資料");
+                MyAlertDialog.show();
+            }else{
+                //save to excel
+                new MakeRequestTask(MainActivity.mCredential).execute();
+            }
             }
         });
     }
@@ -225,9 +225,9 @@ public class AddFoleyBundleActivity extends AppCompatActivity {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.sheets.v4.Sheets.Builder(
-                    transport, jsonFactory, credential)
-                    .setApplicationName("Google Sheets API Android Quickstart")
-                    .build();
+                transport, jsonFactory, credential)
+                .setApplicationName("Google Sheets API Android Quickstart")
+                .build();
         }
 
         /**
