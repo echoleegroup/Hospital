@@ -20,6 +20,7 @@ import com.example.echo.hospital.MainActivity;
 import com.example.echo.hospital.MenuActivity;
 import com.example.echo.hospital.R;
 import com.example.echo.hospital.model.User;
+import com.example.echo.hospital.utils.ListViewAdapter;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
@@ -32,7 +33,9 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FoleyBundleActivity extends AppCompatActivity {
 
@@ -54,8 +57,8 @@ public class FoleyBundleActivity extends AppCompatActivity {
     //view
     private FloatingActionButton addBtn;
     private ListView listView;
-    private ArrayAdapter adapter;
-    private View headerView;
+    //private ArrayAdapter adapter;
+    private View headerView, rowView;
     private TextView headerTextView;
     private LinearLayout menuLayout;
 
@@ -68,7 +71,7 @@ public class FoleyBundleActivity extends AppCompatActivity {
     ValueRange body = new ValueRange();
     //google sheet api -----end
 
-    private String backgroundColor = "#fda085";
+    private String backgroundColor = "#a1c4fd";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +89,7 @@ public class FoleyBundleActivity extends AppCompatActivity {
         menuLayout.setBackgroundColor(Color.parseColor(backgroundColor));
 
         //set Foley bundle adapter
-        adapter = new ArrayAdapter(this, R.layout.menu_adapter);
+        //adapter = new ArrayAdapter(this, R.layout.menu_adapter);
 
         //get Foley bundle data
         new MakeRequestTask(MainActivity.mCredential).execute();
@@ -94,7 +97,6 @@ public class FoleyBundleActivity extends AppCompatActivity {
         //get input account and password  ---- start
         SharedPreferences settings = getSharedPreferences(User.PREFS_NAME,
                 Context.MODE_PRIVATE);
-
         //Get value
         AccountValue = settings.getString(User.PREF_ACCOUNT, DefaultAccountValue);
         PasswordValue = settings.getString(User.PREF_PASSWORD, DefaultPasswordValue);
@@ -114,9 +116,9 @@ public class FoleyBundleActivity extends AppCompatActivity {
             addBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(FoleyBundleActivity.this, AddFoleyBundleActivity.class);
-                startActivity(intent);
+                    Intent intent = new Intent();
+                    intent.setClass(FoleyBundleActivity.this, AddFoleyBundleActivity.class);
+                    startActivity(intent);
                 }
             });
         }
@@ -151,7 +153,7 @@ public class FoleyBundleActivity extends AppCompatActivity {
             try {
                 int correntYear = Calendar.getInstance().get(Calendar.YEAR);
                 String sheetName = correntYear - 1911 + MenuActivity.bundleName;
-                range = sheetName + "!C2:O";
+                range = sheetName + "!B2:D";
 
                 Spreadsheet sheet_metadata = mService.spreadsheets().get(spreadsheetId).execute();
                 List<Sheet> sheetList = sheet_metadata.getSheets();
@@ -171,9 +173,7 @@ public class FoleyBundleActivity extends AppCompatActivity {
                     List<List<Object>> values = response.getValues();
                     if (values != null) {
                         for (List row : values) {
-                            results.add(row.get(0) + ", " + row.get(1) + ", " + row.get(2) + ", " + row.get(3) + ", " + row.get(4) + ", "
-                                    + row.get(5) + ", " + row.get(6) + ", " + row.get(7) + row.get(8) + ", " + row.get(9) + ", " + row.get(10)
-                                    + row.get(11) + ", " + row.get(12));
+                            results.add(row.get(0) + ", " + row.get(1) + ", " + row.get(2));
                         }
                     }
                 }
@@ -185,10 +185,12 @@ public class FoleyBundleActivity extends AppCompatActivity {
             }
         }
 
-
         @Override
         protected void onPostExecute(List<String> output) {
             try {
+                Map<String, Integer> map = new HashMap<String, Integer>();
+                String monthValue, unitValue = "";
+                ArrayList list = new ArrayList<HashMap<String,String>>();
                 if (output.size() == 0) {
                     //header
                     headerTextView.setText("目前本年度尚未未有" + MenuActivity.bundleName + "稽核表");
@@ -196,13 +198,28 @@ public class FoleyBundleActivity extends AppCompatActivity {
                     //header
                     headerTextView.setText(MenuActivity.bundleName +" Bundle稽核列表");
                     for (String str : output) {
-                        //稽核日期, 單位, 床號, 病歷號, 評估適應症, 手部衛生, 固定位置, 無菌通暢, 尿道口清潔, 醫師/NP, 護理師, 總完整, 稽核者
+                        //月份, 稽核日期, 單位
                         String[] array = str.split(",");
-                        String dateValue = array[0].trim();
-                        String unitValue = array[1].trim();
-                        adapter.add(dateValue + ", 單位：" + unitValue);
+                        monthValue = array[0].trim();
+                        unitValue = array[2].trim();
+                        if(!map.containsKey(monthValue+"_"+unitValue))
+                            map.put(monthValue+"_"+unitValue, 0);
+                        map.put(monthValue+"_"+unitValue, map.get(monthValue+"_"+unitValue) + 1);
+                    }
+
+                    for(String key: map.keySet()){
+                        String[] item = key.split("_");
+                        monthValue = item[0];
+                        unitValue = item[1];
+
+                        HashMap<String,String> temp = new HashMap<String, String>();
+                        temp.put(ListViewAdapter.FIRST_COLUMN, monthValue);
+                        temp.put(ListViewAdapter.SECOND_COLUMN, unitValue);
+                        temp.put(ListViewAdapter.THIRD_COLUMN, String.valueOf(map.get(key)));
+                        list.add(temp);
                     }
                 }
+                ListViewAdapter adapter = new ListViewAdapter(FoleyBundleActivity.this, list);
                 listView.setAdapter(adapter);
             } catch (Exception e) {
                 e.printStackTrace();

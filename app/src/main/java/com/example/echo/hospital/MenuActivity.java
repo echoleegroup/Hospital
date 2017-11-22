@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,9 +12,8 @@ import android.widget.TextView;
 import com.example.echo.hospital.bundle.VAPBundleActivity;
 import com.example.echo.hospital.bundle.CVPBundleActivity;
 import com.example.echo.hospital.bundle.FoleyBundleActivity;
-import com.example.echo.hospital.utils.FontManager;
 import com.example.echo.hospital.wash.WashActivity;
-import com.example.echo.hospital.mdr.MdrActivity;
+import com.example.echo.hospital.mdro.MdroActivity;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -63,7 +61,7 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }else if(arg3 == 1L){//MDRO稽核表
                 Intent intent = new Intent();
-                intent.setClass(MenuActivity.this, MdrActivity.class);
+                intent.setClass(MenuActivity.this, MdroActivity.class);
                 startActivity(intent);
             }
             else if(arg3 == 2L){//Bundle CVP稽核表

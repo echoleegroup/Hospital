@@ -42,11 +42,11 @@
             android:label="@string/title_activity_add_wash"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".mdr.AddMdrActivity"
+            android:name=".mdro.AddMdroActivity"
             android:label="@string/title_activity_add_mdro"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".mdr.MdrActivity"
+            android:name=".mdro.MdroActivity"
             android:label="@string/title_activity_mdro"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

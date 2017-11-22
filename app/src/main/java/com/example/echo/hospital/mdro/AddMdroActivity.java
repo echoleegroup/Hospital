@@ -1,4 +1,4 @@
-package com.example.echo.hospital.mdr;
+package com.example.echo.hospital.mdro;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -23,7 +23,6 @@ import com.example.echo.hospital.R;
 import com.example.echo.hospital.model.User;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -41,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class AddMdrActivity extends AppCompatActivity {
+public class AddMdroActivity extends AppCompatActivity {
 
     private EditText date, bed, comment, auditor;
     private RadioButton firstY, firstN, firstNA, secondY, secondN, secondNA, thirdY, thirdN, thirdNA, fourthY, fourthN, fourthNA, fifthY, fifthN, fifthNA,
@@ -78,8 +77,6 @@ public class AddMdrActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_mdro);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         //init
         MyAlertDialog = new AlertDialog.Builder(this);
@@ -102,7 +99,7 @@ public class AddMdrActivity extends AppCompatActivity {
         date.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(AddMdrActivity.this, new DatePickerDialog.OnDateSetListener() {
+                new DatePickerDialog(AddMdroActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         String format = setDateFormat(year,month,day);
@@ -227,7 +224,7 @@ public class AddMdrActivity extends AppCompatActivity {
                 MyAlertDialog.show();
             }else{
                 //save to excel
-                new AddMdrActivity.MakeRequestTask(MainActivity.mCredential).execute();
+                new AddMdroActivity.MakeRequestTask(MainActivity.mCredential).execute();
             }
             }
         });
@@ -393,7 +390,7 @@ public class AddMdrActivity extends AppCompatActivity {
             try {
                 if(output.equals("successful")){
                     Intent intent = new Intent();
-                    intent.setClass(AddMdrActivity.this, MdrActivity.class);
+                    intent.setClass(AddMdroActivity.this, MdroActivity.class);
                     startActivity(intent);
                 }else{
                     MyAlertDialog.setTitle("Message");
