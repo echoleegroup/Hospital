@@ -18,6 +18,7 @@ import com.example.echo.hospital.MainActivity;
 import com.example.echo.hospital.MenuActivity;
 import com.example.echo.hospital.R;
 import com.example.echo.hospital.model.User;
+import com.example.echo.hospital.utils.ListViewAdapter;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
@@ -30,7 +31,9 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CVPBundleActivity extends AppCompatActivity {
 
@@ -52,7 +55,6 @@ public class CVPBundleActivity extends AppCompatActivity {
     //view
     private FloatingActionButton addBtn;
     private ListView listView;
-    private ArrayAdapter adapter;
     private View headerView;
     private TextView headerTextView;
     private LinearLayout menuLayout;
@@ -66,7 +68,7 @@ public class CVPBundleActivity extends AppCompatActivity {
     ValueRange body = new ValueRange();
     //google sheet api -----end
 
-    private String backgroundColor = "#fda085";
+    private String backgroundColor = "#a1c4fd";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +84,6 @@ public class CVPBundleActivity extends AppCompatActivity {
         headerTextView = (TextView)findViewById(R.id.menuHeader);
         menuLayout = (LinearLayout)findViewById(R.id.menuLayout);
         menuLayout.setBackgroundColor(Color.parseColor(backgroundColor));
-
-        //set CVP bundle adapter
-        adapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1);
 
         //get CVP bundle data
         new MakeRequestTask(MainActivity.mCredential).execute();
@@ -113,9 +111,9 @@ public class CVPBundleActivity extends AppCompatActivity {
             addBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(CVPBundleActivity.this, AddCVPBundleActivity.class);
-                startActivity(intent);
+                    Intent intent = new Intent();
+                    intent.setClass(CVPBundleActivity.this, AddCVPBundleActivity.class);
+                    startActivity(intent);
                 }
             });
         }
@@ -149,7 +147,7 @@ public class CVPBundleActivity extends AppCompatActivity {
             try {
                 int correntYear = Calendar.getInstance().get(Calendar.YEAR);
                 String sheetName = correntYear-1911+ MenuActivity.bundleName;
-                range = sheetName+"!C2:P";
+                range = sheetName+"!B2:D";
 
                 Spreadsheet sheet_metadata = mService.spreadsheets().get(spreadsheetId).execute();
                 List<Sheet> sheetList = sheet_metadata.getSheets();
@@ -169,9 +167,7 @@ public class CVPBundleActivity extends AppCompatActivity {
                     List<List<Object>> values = response.getValues();
                     if (values != null) {
                         for (List row : values) {
-                            results.add(row.get(0) + ", " + row.get(1) + ", " + row.get(2) + ", " + row.get(3) + ", " + row.get(4) + ", "
-                                    + row.get(5) + ", " + row.get(6) + ", " + row.get(7) + row.get(8) + ", " + row.get(9) + ", " + row.get(10)
-                                    + row.get(11) + ", " + row.get(12) + ", " + row.get(13));
+                            results.add(row.get(0) + ", " + row.get(1) + ", " + row.get(2));
                         }
                     }
                 }
@@ -183,10 +179,13 @@ public class CVPBundleActivity extends AppCompatActivity {
             }
         }
 
-
         @Override
         protected void onPostExecute(List<String> output) {
             try {
+                Map<String, Integer> map = new HashMap<String, Integer>();
+                String monthValue, unitValue = "";
+                ArrayList list = new ArrayList<HashMap<String,String>>();
+
                 if (output.size() == 0) {
                     //header
                     headerTextView.setText("目前本年度尚未未有" + MenuActivity.bundleName + "稽核表");
@@ -194,14 +193,27 @@ public class CVPBundleActivity extends AppCompatActivity {
                     //header
                     headerTextView.setText(MenuActivity.bundleName +" Bundle稽核列表");
                     for (String str : output) {
-                        //稽核日期, 單位, 床號, 病歷號, 評估適應症, 手部衛生, 檢視敷料日期, 檢視部位, 皮膚消毒, 管路照護, 醫師/NP, 護理師, 總完整, 稽核者
+                        //月份, 稽核日期, 單位
                         String[] array = str.split(",");
-                        String dateValue = array[0].trim();
-                        String unitValue = array[1].trim();
-                        //adapter.add(dateValue + ", 單位：" + unitValue + ", 床位：" + bedValue + ", 病歷號：" + patientValue + ", 總完整：" + completeValue  + ", 稽核者：" + auditorValue);
-                        adapter.add(dateValue + ", 單位：" + unitValue);
+                        monthValue = array[0].trim();
+                        unitValue = array[2].trim();
+                        if(!map.containsKey(monthValue+"_"+unitValue))
+                            map.put(monthValue+"_"+unitValue, 0);
+                        map.put(monthValue+"_"+unitValue, map.get(monthValue+"_"+unitValue)+1);
+                    }
+                    for(String key: map.keySet()){
+                        String[] item = key.split("_");
+                        monthValue = item[0].trim();
+                        unitValue = item[1].trim();
+
+                        HashMap<String,String> temp = new HashMap<String, String>();
+                        temp.put(ListViewAdapter.FIRST_COLUMN, monthValue);
+                        temp.put(ListViewAdapter.SECOND_COLUMN, unitValue);
+                        temp.put(ListViewAdapter.THIRD_COLUMN, String.valueOf(map.get(key)));
+                        list.add(temp);
                     }
                 }
+                ListViewAdapter adapter = new ListViewAdapter(CVPBundleActivity.this, list);
                 listView.setAdapter(adapter);
             }catch (Exception e){
                 e.printStackTrace();

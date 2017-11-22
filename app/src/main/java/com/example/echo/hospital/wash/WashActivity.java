@@ -18,6 +18,7 @@ import android.graphics.Color;
 import com.example.echo.hospital.MainActivity;
 import com.example.echo.hospital.R;
 import com.example.echo.hospital.model.User;
+import com.example.echo.hospital.utils.ListViewWashAdapter;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
@@ -32,6 +33,8 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class WashActivity extends AppCompatActivity {
 
@@ -53,7 +56,6 @@ public class WashActivity extends AppCompatActivity {
     //view
     private FloatingActionButton addBtn;
     private ListView listView;
-    private ArrayAdapter adapter;
     private View headerView;
     private TextView headerTextView;
     private LinearLayout menuLayout;
@@ -66,7 +68,7 @@ public class WashActivity extends AppCompatActivity {
     ValueRange body = new ValueRange();
     //google sheet api -----end
 
-    private String backgroundColor = "#fda085";
+    private String backgroundColor = "#a1c4fd";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +84,6 @@ public class WashActivity extends AppCompatActivity {
         headerTextView = (TextView)findViewById(R.id.menuHeader);
         menuLayout = (LinearLayout)findViewById(R.id.menuLayout);
         menuLayout.setBackgroundColor(Color.parseColor(backgroundColor));
-
-        //set wash adapter
-        adapter = new ArrayAdapter(this, R.layout.menu_adapter);
 
         //get input account and password  ---- start
         SharedPreferences settings = getSharedPreferences(User.PREFS_NAME,
@@ -119,7 +118,6 @@ public class WashActivity extends AppCompatActivity {
         new MakeRequestTask(MainActivity.mCredential).execute();
     }
 
-
     /**
      * An asynchronous task that handles the Google Sheets API call.
      * Placing the API calls in their own task ensures the UI stays responsive.
@@ -147,7 +145,7 @@ public class WashActivity extends AppCompatActivity {
             try {
                 int correntYear = Calendar.getInstance().get(Calendar.YEAR);
                 String sheetName = String.valueOf(correntYear-1911);
-                range = sheetName+"!A2:AC";
+                range = sheetName+"!A2:C";
 
                 Spreadsheet sheet_metadata = mService.spreadsheets().get(spreadsheetId).execute();
                 List<Sheet> sheetList = sheet_metadata.getSheets();
@@ -167,15 +165,7 @@ public class WashActivity extends AppCompatActivity {
                     List<List<Object>> values = response.getValues();
                     if (values != null) {
                         for (List row : values) {
-                            results.add(row.get(0) + ", " + row.get(1) + ", " + row.get(2) + ", " + row.get(3) + ", "
-                                    + row.get(4) + ", " + row.get(5) + ", " + row.get(6) + ", " + row.get(7) + ", "
-                                    + row.get(8) + ", " + row.get(9) + ", " + row.get(10) + ", " + row.get(11) + ", "
-                                    + row.get(12) + ", " + row.get(13) + ", " + row.get(14) + ", " + row.get(15) + ", "
-                                    + row.get(16) + ", " + row.get(17) + ", " + row.get(18) + ", " + row.get(19) + ", "
-                                    + row.get(20) + ", " + row.get(21) + ", " + row.get(22) + ", " + row.get(23) + ", "
-                                    + row.get(24) + ", " + row.get(25) + ", " + row.get(26) + ", " + row.get(27) + ", "
-                                    + row.get(28)
-                            );
+                            results.add(row.get(0) + ", " + row.get(1) + ", " + row.get(2));
                         }
                     }
                 }
@@ -187,10 +177,12 @@ public class WashActivity extends AppCompatActivity {
             }
         }
 
-
         @Override
         protected void onPostExecute(List<String> output) {
             try {
+                Map<String, Integer> map = new HashMap<String, Integer>();
+                String monthValue, unitValue, titleValue = "";
+                ArrayList list = new ArrayList<HashMap<String,String>>();
                 if (output.size() == 0) {
                     //header
                     headerTextView.setText("目前本年度尚未未有洗手稽核表");
@@ -199,12 +191,29 @@ public class WashActivity extends AppCompatActivity {
                     headerTextView.setText("洗手稽核列表");
                     for (String str : output) {
                         String[] array = str.split(",");
-                        String monthValue = array[0].trim();//月份
-                        String unitValue = array[1].trim();//單位
-                        String titleValue = array[2].trim();//職稱
-                        adapter.add(monthValue + ", 單位：" + unitValue + ", 職稱：" + titleValue);
+                        //月份, 單位, 職稱
+                        monthValue = array[0].trim();
+                        unitValue = array[1].trim();
+                        titleValue = array[2].trim();
+                        if(!map.containsKey(monthValue+"_"+unitValue+"_"+titleValue))
+                            map.put(monthValue+"_"+unitValue+"_"+titleValue, 0);
+                        map.put(monthValue+"_"+unitValue+"_"+titleValue, map.get(monthValue+"_"+unitValue+"_"+titleValue) + 1);
+                    }
+                    for(String key: map.keySet()){
+                        String[] item = key.split("_");
+                        monthValue = item[0];
+                        unitValue = item[1];
+                        titleValue = item[2];
+
+                        HashMap<String,String> temp = new HashMap<String, String>();
+                        temp.put(ListViewWashAdapter.FIRST_COLUMN, monthValue);
+                        temp.put(ListViewWashAdapter.SECOND_COLUMN, unitValue);
+                        temp.put(ListViewWashAdapter.THIRD_COLUMN, titleValue);
+                        temp.put(ListViewWashAdapter.FOURTH_COLUMN, String.valueOf(map.get(key)));
+                        list.add(temp);
                     }
                 }
+                ListViewWashAdapter adapter = new ListViewWashAdapter(WashActivity.this, list);
                 listView.setAdapter(adapter);
             }catch (Exception e){
                 e.printStackTrace();
