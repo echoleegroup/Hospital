@@ -23,7 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-
         <TextView
             android:id="@+id/TextView1_1"
             android:text="＊稽核方式：(1)達到請打✓、未達到請打✘、未觀察到請空白(2)洗手方式：W或A請務必勾選一項(3)同一人有二種洗手方式請評二次"

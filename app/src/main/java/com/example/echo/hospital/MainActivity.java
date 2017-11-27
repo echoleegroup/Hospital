@@ -74,6 +74,7 @@ public class MainActivity extends Activity
     private static final String BUTTON_TEXT = "Login";
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS };
+    private String spreadsheetId = "1kvQn6_c6bBiuGZBYnBiTUveFxuXh9eaAom1PkQ8HWjs";
     //google sheet api -----end
 
     //store account and password -----start
@@ -115,7 +116,7 @@ public class MainActivity extends Activity
         title.setGravity(Gravity.CENTER);
         /*title.setTypeface(Typeface.createFromAsset(getAssets()
                 , "fonts/MicrosoftJhengHei.ttf"));*/
-        title.setText("感染科稽核系統");
+        title.setText("感染控制稽核系統");
         title.setTextSize(32);
         title.setPadding(0, 100, 0, 80);//left, top, right, bottom
         activityLayout.addView(title);
@@ -388,9 +389,9 @@ public class MainActivity extends Activity
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.sheets.v4.Sheets.Builder(
-                    transport, jsonFactory, credential)
-                    .setApplicationName("Google Sheets API Android Quickstart")
-                    .build();
+                transport, jsonFactory, credential)
+                .setApplicationName("Google Sheets API Android Quickstart")
+                .build();
         }
 
         /**
@@ -420,7 +421,6 @@ public class MainActivity extends Activity
          * @throws IOException
          */
         private List<String> getDataFromApi() throws IOException {
-            String spreadsheetId = "1IvyIKcyzlAqlsbMuoB78Y7LYDkqWkc9iMeUwQ4TaVtA";
             String range = "Account!A2:D";
             List<String> results = new ArrayList<String>();
             ValueRange response = this.mService.spreadsheets().values()
