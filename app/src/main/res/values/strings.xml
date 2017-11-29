@@ -28,4 +28,5 @@
     <string name="title_activity_vap_bundle">VapBundleActivity</string>
     <string name="title_activity_add_vap_bundle">AddVapBundleActivity</string>
     <string name="title_activity_add_foley">AddFoleyActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

@@ -12,7 +12,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Google Sheets API Android Quickstart"
+        android:label="首頁"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
@@ -25,7 +25,7 @@
         </activity>
         <activity
             android:name=".MenuActivity"
-            android:label="@string/title_activity_menu"
+            android:label="主選單"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,44 +35,44 @@
         </activity>
         <activity
             android:name=".wash.WashActivity"
-            android:label="@string/title_activity_wash"
+            android:label="洗手稽核列表"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".wash.AddWashActivity"
-            android:label="@string/title_activity_add_wash"
+            android:label="新增洗手稽核表"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".mdro.AddMdroActivity"
-            android:label="@string/title_activity_add_mdro"
+            android:label="新增MDRO稽核表"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".mdro.MdroActivity"
-            android:label="@string/title_activity_mdro"
+            android:label="MDRO稽核列表"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".bundle.CVPBundleActivity"
-            android:label="@string/title_activity_bundle_cvp"
+            android:label="Bundle CVP稽核列表"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".bundle.AddCVPBundleActivity"
-            android:label="@string/title_activity_add_bundle_cvp"
+            android:label="新增Bundle CVP稽核表"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".bundle.VAPBundleActivity"
-            android:label="@string/title_activity_vap_bundle"
+            android:label="Bundle VAP稽核列表"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".bundle.AddVAPBundleActivity"
-            android:label="@string/title_activity_add_vap_bundle"
+            android:label="新增Bundle VAP稽核表"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".bundle.AddFoleyBundleActivity"
-            android:label="@string/title_activity_add_foley"
+            android:label="新增Bundle Foley稽核表"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".bundle.FoleyBundleActivity"
-            android:label="@string/title_activity_foley_bundle"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="Bundle Foley稽核列表"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

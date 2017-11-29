@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.echo.hospital.bundle.AddCVPBundleActivity"
+    tools:showIn="@layout/activity_add_cvp_bundle">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ScrollView01"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:textSize="24dp">
+
+            <TableRow
+                android:id="@+id/tableRow0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView0"
+                    android:text="Bundle CVP完整性稽核表"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:padding="18dip"
+                    android:gravity="center"
+                    android:textSize="22dp"/>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView1"
+                    android:text="稽核日期"
+                    android:textStyle="bold"
+                    android:padding="18dip"
+                    android:gravity="right"
+                    android:textSize="18dp"/>
+
+                <EditText
+                    android:id="@+id/EditText1"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:textSize="18dp"
+                    />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView2"
+                    android:text="單位"
+                    android:textStyle="bold"
+                    android:padding="18dip"
+                    android:gravity="right"
+                    android:textSize="18dp"/>
+
+                <!--<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/RadioButton1"
+                        android:text="ICU-1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"/>
+
+                    <RadioButton
+                        android:id="@+id/RadioButton2"
+                        android:text="ICU-2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RadioGroup>
+                -->
+                <Spinner
+                    android:id="@+id/spinner1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown"
+                    />
+
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView3"
+                    android:text="床號"
+                    android:textStyle="bold"
+                    android:padding="18dip"
+                    android:gravity="right"
+                    android:textSize="18dp"/>
+
+                <EditText
+                    android:id="@+id/EditText2"
+                    android:inputType="textVisiblePassword"
+                    android:textSize="18dp"/>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView4"
+                    android:text="病人"
+                    android:textStyle="bold"
+                    android:padding="18dip"
+                    android:gravity="right"
+                    android:textSize="18dp"/>
+
+                <EditText
+                    android:id="@+id/EditText3"
+                    android:inputType="number"
+                    android:textSize="18dp"
+                    />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView5"
+                    android:text="適應症評估"
+                    android:textStyle="bold"
+                    android:padding="18dip"
+                    android:gravity="right"
+                    android:textSize="18dp"/>
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/RadioButton3"
+                        android:text="是"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
+
+                    <RadioButton
+                        android:id="@+id/RadioButton4"
+                        android:text="否"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
+                </RadioGroup>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView6"
+                    android:text="手部衛生"
+                    android:textStyle="bold"
+                    android:padding="18dip"
+                    android:gravity="right"
+                    android:textSize="18dp"/>
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/RadioButton5"
+                        android:text="是"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
+
+                    <RadioButton
+                        android:id="@+id/RadioButton6"
+                        android:text="否"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
+                </RadioGroup>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView7"
+                    android:text="檢視敷料日期"
+                    android:textStyle="bold"
+                    android:padding="18dip"
+                    android:gravity="right"
+                    android:textSize="18dp"/>
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/RadioButton7"
+                        android:text="是"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
+
+                    <RadioButton
+                        android:id="@+id/RadioButton8"
+                        android:text="否"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
+                </RadioGroup>
+
+            </TableRow>
+
+
+            <TableRow
+                android:id="@+id/tableRow8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView8"
+                    android:text="檢視部位"
+                    android:textStyle="bold"
+                    android:padding="18dip"
+                    android:gravity="right"
+                    android:textSize="18dp"/>
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/RadioButton9"
+                        android:text="是"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
+
+                    <RadioButton
+                        android:id="@+id/RadioButton10"
+                        android:text="否"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
+                </RadioGroup>
+
+            </TableRow>
+
+
+            <TableRow
+                android:id="@+id/tableRow9"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView9"
+                    android:text="皮膚消毒"
+                    android:textStyle="bold"
+                    android:padding="18dip"
+                    android:gravity="right"
+                    android:textSize="18dp"/>
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/RadioButton11"
+                        android:text="是"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
+
+                    <RadioButton
+                        android:id="@+id/RadioButton12"
+                        android:text="否"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
+                </RadioGroup>
+
+            </TableRow>
+
+
+            <TableRow
+                android:id="@+id/tableRow10"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView10"
+                    android:text="管路照護"
+                    android:textStyle="bold"
+                    android:padding="18dip"
+                    android:gravity="right"
+                    android:textSize="18dp"/>
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/RadioButton13"
+                        android:text="是"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
+
+                    <RadioButton
+                        android:id="@+id/RadioButton14"
+                        android:text="否"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
+                </RadioGroup>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow11"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView11"
+                    android:text="醫師/專科護理師每日評估導管是否留置並簽章"
+                    android:textStyle="bold"
+                    android:padding="18dip"
+                    android:gravity="right"
+                    android:textSize="18dp"/>
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/RadioButton15"
+                        android:text="是"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
+
+                    <RadioButton
+                        android:id="@+id/RadioButton16"
+                        android:text="否"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
+                </RadioGroup>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow12"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView12"
+                    android:text="護理師每日常規照護均確實執行並簽章"
+                    android:textStyle="bold"
+                    android:padding="18dip"
+                    android:gravity="right"
+                    android:textSize="18dp"/>
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/RadioButton17"
+                        android:text="是"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
+
+                    <RadioButton
+                        android:id="@+id/RadioButton18"
+                        android:text="否"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
+                </RadioGroup>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow13"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView13"
+                    android:text="稽核者"
+                    android:textStyle="bold"
+                    android:padding="18dip"
+                    android:gravity="right"
+                    android:textSize="18dp"/>
+
+                <EditText
+                    android:id="@+id/EditText4"
+                    android:enabled="false"
+                    android:textSize="18dp"
+                    />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow14"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:text="Submit"
+                    android:clickable="true"
+                    android:id="@+id/save"
+                    android:gravity="center"
+                    android:layout_weight="1">
+                </Button>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow15"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text=""
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:id="@+id/errorOutput"
+                    android:textColor="#ac1c1c"
+                    android:layout_weight="1"
+                    android:padding="18dip"
+                    android:gravity="center">
+                </TextView>
+
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

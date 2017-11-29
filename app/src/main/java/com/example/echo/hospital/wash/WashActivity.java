@@ -14,17 +14,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.graphics.Color;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 
 import com.example.echo.hospital.MainActivity;
+import com.example.echo.hospital.MenuActivity;
 import com.example.echo.hospital.R;
+import com.example.echo.hospital.bundle.CVPBundleActivity;
+import com.example.echo.hospital.bundle.FoleyBundleActivity;
+import com.example.echo.hospital.bundle.VAPBundleActivity;
+import com.example.echo.hospital.mdro.MdroActivity;
 import com.example.echo.hospital.model.User;
 import com.example.echo.hospital.utils.ListViewWashAdapter;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.sheets.v4.model.Sheet;
 import com.google.api.services.sheets.v4.model.Spreadsheet;
@@ -56,9 +63,9 @@ public class WashActivity extends AppCompatActivity {
     //view
     private FloatingActionButton addBtn;
     private ListView listView;
-    private View headerView;
-    private TextView headerTextView;
-    private LinearLayout menuLayout;
+    //private View headerView;
+    //private TextView headerTextView;
+    //private LinearLayout menuLayout;
     // The ID of the spreadsheet to update.
     static final int REQUEST_AUTHORIZATION = 1001;
     String spreadsheetId = "1MniPeatGluYz89kmMzbndpPXjIpU7vJ7JRVgq6Bvzsk";
@@ -74,16 +81,18 @@ public class WashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wash);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         //init view
         listView = (ListView) findViewById(R.id.listView);
 
         //set header
-        headerView = (View)getLayoutInflater().inflate(R.layout.menu_header_view, null);
+        /*headerView = (View)getLayoutInflater().inflate(R.layout.menu_header_view, null);
         listView.addHeaderView(headerView);
         headerTextView = (TextView)findViewById(R.id.menuHeader);
         menuLayout = (LinearLayout)findViewById(R.id.menuLayout);
-        menuLayout.setBackgroundColor(Color.parseColor(backgroundColor));
+        menuLayout.setBackgroundColor(Color.parseColor(backgroundColor));*/
 
         //get input account and password  ---- start
         SharedPreferences settings = getSharedPreferences(User.PREFS_NAME,
@@ -116,6 +125,70 @@ public class WashActivity extends AppCompatActivity {
         }
         //get wash data
         new MakeRequestTask(MainActivity.mCredential).execute();
+    }
+
+    //set tool bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //參數1:群組id, 參數2:itemId, 參數3:item順序, 參數4:item名稱
+        menu.add(0, 0, 0, "主選單");
+        menu.add(0, 1, 1, "洗手稽核列表");
+        menu.add(0, 2, 2, "MDRO稽核列表");
+        menu.add(0, 3, 3, "Bundle CVP稽核列表");
+        menu.add(0, 4, 4, "Bundle VAP稽核列表");
+        menu.add(0, 5, 5, "Bundle Foley稽核列表");
+        menu.add(0, 6, 6, "登出");
+        menu.add(0, 7, 7, "離開");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //依據itemId來判斷使用者點選哪一個item
+        switch(item.getItemId()) {
+            case 0:
+                Intent intent = new Intent();
+                intent.setClass(WashActivity.this, MenuActivity.class);
+                startActivity(intent);
+                break;
+            case 1:
+                intent = new Intent();
+                intent.setClass(WashActivity.this, WashActivity.class);
+                startActivity(intent);
+                break;
+            case 2:
+                intent = new Intent();
+                intent.setClass(WashActivity.this, MdroActivity.class);
+                startActivity(intent);
+                break;
+            case 3:
+                MenuActivity.bundleName = "CVP";
+                intent = new Intent();
+                intent.setClass(WashActivity.this, CVPBundleActivity.class);
+                startActivity(intent);
+                break;
+            case 4:
+                MenuActivity.bundleName = "VAP";
+                intent = new Intent();
+                intent.setClass(WashActivity.this, VAPBundleActivity.class);
+                startActivity(intent);
+                break;
+            case 5:
+                MenuActivity.bundleName = "Foley";
+                intent = new Intent();
+                intent.setClass(WashActivity.this, FoleyBundleActivity.class);
+                startActivity(intent);
+                break;
+            case 6:
+
+                break;
+            case 7:
+                //結束此程式
+                finish();
+                break;
+            default:
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -185,10 +258,13 @@ public class WashActivity extends AppCompatActivity {
                 ArrayList list = new ArrayList<HashMap<String,String>>();
                 if (output.size() == 0) {
                     //header
-                    headerTextView.setText("目前本年度尚未未有洗手稽核表");
+                    //headerTextView.setText("目前本年度尚未有洗手稽核表");
+                    ArrayAdapter adapter = new ArrayAdapter(WashActivity.this, R.layout.menu_adapter);
+                    adapter.add("目前本年度尚未有洗手稽核表");
+                    listView.setAdapter(adapter);
                 } else {
                     //header
-                    headerTextView.setText("洗手稽核列表");
+                    //headerTextView.setText("洗手稽核列表");
                     for (String str : output) {
                         String[] array = str.split(",");
                         //月份, 單位, 職稱
@@ -212,9 +288,9 @@ public class WashActivity extends AppCompatActivity {
                         temp.put(ListViewWashAdapter.FOURTH_COLUMN, String.valueOf(map.get(key)));
                         list.add(temp);
                     }
+                    ListViewWashAdapter adapter = new ListViewWashAdapter(WashActivity.this, list);
+                    listView.setAdapter(adapter);
                 }
-                ListViewWashAdapter adapter = new ListViewWashAdapter(WashActivity.this, list);
-                listView.setAdapter(adapter);
             }catch (Exception e){
                 e.printStackTrace();
             }

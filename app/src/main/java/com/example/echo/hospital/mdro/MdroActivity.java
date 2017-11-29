@@ -8,6 +8,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -15,10 +18,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.echo.hospital.MainActivity;
+import com.example.echo.hospital.MenuActivity;
 import com.example.echo.hospital.R;
+import com.example.echo.hospital.bundle.CVPBundleActivity;
+import com.example.echo.hospital.bundle.FoleyBundleActivity;
 import com.example.echo.hospital.bundle.VAPBundleActivity;
 import com.example.echo.hospital.model.User;
 import com.example.echo.hospital.utils.ListViewAdapter;
+import com.example.echo.hospital.wash.WashActivity;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.http.HttpTransport;
@@ -54,9 +61,9 @@ public class MdroActivity extends AppCompatActivity {
     //view
     private FloatingActionButton addBtn;
     private ListView listView;
-    private View headerView;
+    /*private View headerView;
     private TextView headerTextView;
-    private LinearLayout menuLayout;
+    private LinearLayout menuLayout;*/
 
     //google sheet api -----start
     static final int REQUEST_AUTHORIZATION = 1001;
@@ -73,16 +80,18 @@ public class MdroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mdro);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         //init view
         listView = (ListView) findViewById(R.id.listView);
 
         //set header
-        headerView = (View)getLayoutInflater().inflate(R.layout.menu_header_view, null);
+        /*headerView = (View)getLayoutInflater().inflate(R.layout.menu_header_view, null);
         listView.addHeaderView(headerView);
         headerTextView = (TextView)findViewById(R.id.menuHeader);
         menuLayout = (LinearLayout)findViewById(R.id.menuLayout);
-        menuLayout.setBackgroundColor(Color.parseColor(backgroundColor));
+        menuLayout.setBackgroundColor(Color.parseColor(backgroundColor));*/
 
         //get MDRO data
         new MakeRequestTask(MainActivity.mCredential).execute();
@@ -116,6 +125,70 @@ public class MdroActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    //set tool bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //參數1:群組id, 參數2:itemId, 參數3:item順序, 參數4:item名稱
+        menu.add(0, 0, 0, "主選單");
+        menu.add(0, 1, 1, "洗手稽核列表");
+        menu.add(0, 2, 2, "MDRO稽核列表");
+        menu.add(0, 3, 3, "Bundle CVP稽核列表");
+        menu.add(0, 4, 4, "Bundle VAP稽核列表");
+        menu.add(0, 5, 5, "Bundle Foley稽核列表");
+        menu.add(0, 6, 6, "登出");
+        menu.add(0, 7, 7, "離開");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //依據itemId來判斷使用者點選哪一個item
+        switch(item.getItemId()) {
+            case 0:
+                Intent intent = new Intent();
+                intent.setClass(MdroActivity.this, MenuActivity.class);
+                startActivity(intent);
+                break;
+            case 1:
+                intent = new Intent();
+                intent.setClass(MdroActivity.this, WashActivity.class);
+                startActivity(intent);
+                break;
+            case 2:
+                intent = new Intent();
+                intent.setClass(MdroActivity.this, MdroActivity.class);
+                startActivity(intent);
+                break;
+            case 3:
+                MenuActivity.bundleName = "CVP";
+                intent = new Intent();
+                intent.setClass(MdroActivity.this, CVPBundleActivity.class);
+                startActivity(intent);
+                break;
+            case 4:
+                MenuActivity.bundleName = "VAP";
+                intent = new Intent();
+                intent.setClass(MdroActivity.this, VAPBundleActivity.class);
+                startActivity(intent);
+                break;
+            case 5:
+                MenuActivity.bundleName = "Foley";
+                intent = new Intent();
+                intent.setClass(MdroActivity.this, FoleyBundleActivity.class);
+                startActivity(intent);
+                break;
+            case 6:
+
+                break;
+            case 7:
+                //結束此程式
+                finish();
+                break;
+            default:
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -186,10 +259,13 @@ public class MdroActivity extends AppCompatActivity {
                 ArrayList list = new ArrayList<HashMap<String,String>>();
                 if (output.size() == 0) {
                     //header
-                    headerTextView.setText("目前本年度尚未未有MDRO稽核表");
+                    //headerTextView.setText("目前本年度尚未未有MDRO稽核表");
+                    ArrayAdapter adapter = new ArrayAdapter(MdroActivity.this, R.layout.menu_adapter);
+                    adapter.add("目前本年度尚未未有MDRO稽核表");
+                    listView.setAdapter(adapter);
                 } else {
                     //header
-                    headerTextView.setText("MDRO稽核列表");
+                    //headerTextView.setText("MDRO稽核列表");
                     for (String str : output) {
                         //月份, 稽核日期, 單位
                         String[] array = str.split(",");
@@ -210,9 +286,9 @@ public class MdroActivity extends AppCompatActivity {
                         temp.put(ListViewAdapter.THIRD_COLUMN, String.valueOf(map.get(key)));
                         list.add(temp);
                     }
+                    ListViewAdapter adapter = new ListViewAdapter(MdroActivity.this, list);
+                    listView.setAdapter(adapter);
                 }
-                ListViewAdapter adapter = new ListViewAdapter(MdroActivity.this, list);
-                listView.setAdapter(adapter);
             }catch (Exception e){
                 e.printStackTrace();
             }

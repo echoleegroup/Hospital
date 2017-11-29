@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.echo.hospital.bundle.AddFoleyBundleActivity"
+    tools:showIn="@layout/activity_add_foley">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:id="@+id/tableRow0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextView0"
+                android:text="Bundle Foley完整性稽核表"
+                android:layout_weight="1"
+                android:background="#b0b0b0"
+                android:textColor="#000000"
+                android:padding="18dip"
+                android:gravity="center"/>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextView1"
+                android:text="稽核日期"
+                android:layout_weight="1"
+                android:background="#b0b0b0"
+                android:textColor="#000000"
+                android:padding="18dip"
+                android:gravity="left"/>
+
+            <EditText
+                android:id="@+id/EditText1"
+                android:focusable="false"
+                android:clickable="true"
+                />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextView2"
+                android:text="單位"
+                android:layout_weight="1"
+                android:background="#b0b0b0"
+                android:textColor="#000000"
+                android:padding="18dip"
+                android:gravity="left"/>
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <!--
+                <RadioButton
+                    android:id="@+id/RadioButton1"
+                    android:text="ICU-1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"/>
+
+                <RadioButton
+                    android:id="@+id/RadioButton2"
+                    android:text="ICU-2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />-->
+                <Spinner
+                    android:id="@+id/spinner1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+            </RadioGroup>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextView3"
+                android:text="床號"
+                android:layout_weight="1"
+                android:background="#b0b0b0"
+                android:textColor="#000000"
+                android:padding="18dip"
+                android:gravity="left"/>
+
+            <EditText
+                android:id="@+id/EditText2"
+                android:inputType="textVisiblePassword"
+                />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextView4"
+                android:text="病人"
+                android:layout_weight="1"
+                android:background="#b0b0b0"
+                android:textColor="#000000"
+                android:padding="18dip"
+                android:gravity="left"/>
+
+            <EditText
+                android:id="@+id/EditText3"
+                android:inputType="number"
+                />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextView5"
+                android:text="適應症評估"
+                android:layout_weight="1"
+                android:background="#b0b0b0"
+                android:textColor="#000000"
+                android:padding="18dip"
+                android:gravity="left"/>
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/RadioButton3"
+                    android:text="是"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/RadioButton4"
+                    android:text="否"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextView6"
+                android:text="手部衛生"
+                android:layout_weight="1"
+                android:background="#b0b0b0"
+                android:textColor="#000000"
+                android:padding="18dip"
+                android:gravity="left"/>
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/RadioButton5"
+                    android:text="是"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/RadioButton6"
+                    android:text="否"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextView7"
+                android:text="固定位置"
+                android:layout_weight="1"
+                android:background="#b0b0b0"
+                android:textColor="#000000"
+                android:padding="18dip"
+                android:gravity="left"/>
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/RadioButton7"
+                    android:text="是"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/RadioButton8"
+                    android:text="否"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+
+        </TableRow>
+
+
+        <TableRow
+            android:id="@+id/tableRow8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextView8"
+                android:text="無菌通暢"
+                android:layout_weight="1"
+                android:background="#b0b0b0"
+                android:textColor="#000000"
+                android:padding="18dip"
+                android:gravity="left"/>
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/RadioButton9"
+                    android:text="是"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/RadioButton10"
+                    android:text="否"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+
+        </TableRow>
+
+
+        <TableRow
+            android:id="@+id/tableRow9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextView9"
+                android:text="尿道口清潔"
+                android:layout_weight="1"
+                android:background="#b0b0b0"
+                android:textColor="#000000"
+                android:padding="18dip"
+                android:gravity="left"/>
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/RadioButton11"
+                    android:text="是"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/RadioButton12"
+                    android:text="否"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextView10"
+                android:text="醫師/專科護理師每日評估導管是否留置並簽章"
+                android:layout_weight="1"
+                android:background="#b0b0b0"
+                android:textColor="#000000"
+                android:padding="18dip"
+                android:gravity="left"/>
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/RadioButton13"
+                    android:text="是"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/RadioButton14"
+                    android:text="否"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow11"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextView11"
+                android:text="護理師每日常規照護均確實執行並簽章"
+                android:layout_weight="1"
+                android:background="#b0b0b0"
+                android:textColor="#000000"
+                android:padding="18dip"
+                android:gravity="left"/>
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/RadioButton15"
+                    android:text="是"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/RadioButton16"
+                    android:text="否"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow12"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/TextView12"
+                android:text="稽核者"
+                android:layout_weight="1"
+                android:background="#b0b0b0"
+                android:textColor="#000000"
+                android:padding="18dip"
+                android:gravity="left"/>
+
+            <EditText
+                android:id="@+id/EditText4"
+                android:enabled="false"
+                />
+
+        </TableRow>
+
+
+        <TableRow
+            android:id="@+id/tableRow13"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:text="Submit"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/save"
+                android:layout_span="2">
+            </Button>
+        </TableRow>
+    </TableLayout>
+
+</android.support.constraint.ConstraintLayout>
