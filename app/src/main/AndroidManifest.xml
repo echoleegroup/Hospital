@@ -35,11 +35,11 @@
         </activity>
         <activity
             android:name=".wash.WashActivity"
-            android:label="洗手稽核列表"
+            android:label="手部衛生稽核列表"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".wash.AddWashActivity"
-            android:label="新增洗手稽核表"
+            android:label="新增手部衛生稽核表"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".mdro.AddMdroActivity"

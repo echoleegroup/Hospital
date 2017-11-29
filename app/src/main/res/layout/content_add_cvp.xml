@@ -16,8 +16,7 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FFFFFF"
-            android:textSize="24dp">
+            android:background="#FFFFFF">
 
             <TableRow
                 android:id="@+id/tableRow0"
@@ -53,8 +52,7 @@
                     android:id="@+id/EditText1"
                     android:focusable="false"
                     android:clickable="true"
-                    android:textSize="18dp"
-                    />
+                    android:textSize="18dp"/>
 
             </TableRow>
 
@@ -71,25 +69,6 @@
                     android:gravity="right"
                     android:textSize="18dp"/>
 
-                <!--<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/RadioButton1"
-                        android:text="ICU-1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"/>
-
-                    <RadioButton
-                        android:id="@+id/RadioButton2"
-                        android:text="ICU-2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </RadioGroup>
-                -->
                 <Spinner
                     android:id="@+id/spinner1"
                     android:layout_width="fill_parent"
@@ -97,7 +76,6 @@
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown"
                     />
-
 
             </TableRow>
 
@@ -137,8 +115,7 @@
                 <EditText
                     android:id="@+id/EditText3"
                     android:inputType="number"
-                    android:textSize="18dp"
-                    />
+                    android:textSize="18dp"/>
 
             </TableRow>
 
@@ -448,8 +425,7 @@
                 <EditText
                     android:id="@+id/EditText4"
                     android:enabled="false"
-                    android:textSize="18dp"
-                    />
+                    android:textSize="18dp"/>
 
             </TableRow>
 
@@ -465,26 +441,11 @@
                     android:gravity="center"
                     android:layout_weight="1">
                 </Button>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow15"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:text=""
-                    android:textStyle="bold"
-                    android:clickable="true"
-                    android:id="@+id/errorOutput"
-                    android:textColor="#ac1c1c"
-                    android:layout_weight="1"
-                    android:padding="18dip"
-                    android:gravity="center">
-                </TextView>
 
             </TableRow>
+
         </TableLayout>
+
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

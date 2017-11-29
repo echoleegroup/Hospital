@@ -49,11 +49,11 @@ public class MenuActivity extends AppCompatActivity {
         //2- Bundle CVP稽核表
         //3- Bundle Foley稽核表
         //4- Bundle VAP稽核表
-        adapter.add("洗手稽核表");
-        adapter.add("MDRO稽核表");
-        adapter.add("Bundle CVP稽核表");
-        adapter.add("Bundle VAP稽核表");
-        adapter.add("Bundle Foley稽核表");
+        adapter.add("手部衛生稽核列表");
+        adapter.add("MDRO稽核列表");
+        adapter.add("Bundle CVP稽核列表");
+        adapter.add("Bundle VAP稽核列表");
+        adapter.add("Bundle Foley稽核列表");
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

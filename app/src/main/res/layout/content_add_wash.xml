@@ -13,73 +13,102 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <!--
-        <TextView
-            android:id="@+id/TextView0"
-            android:text="手部衛生稽核表"
-            android:layout_weight="1"
-            android:background="#b0b0b0"
-            android:textColor="#000000"
-            android:padding="18dip"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <TextView
-            android:id="@+id/TextView1_1"
-            android:text="＊稽核方式：(1)達到請打✓、未達到請打✘、未觀察到請空白(2)洗手方式：W或A請務必勾選一項(3)同一人有二種洗手方式請評二次"
-            android:background="#b0b0b0"
-            android:textColor="#000000"
-            android:padding="18dip"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <TextView
-            android:id="@+id/TextView1_2"
-            android:text="＊必稽核職別代碼：醫師=D、護士=N、醫師助理=NP、醫檢師=M、復健師=P、放射師=R、呼吸治療=RT、洗腎護士=HD"
-            android:background="#b0b0b0"
-            android:textColor="#000000"
-            android:padding="18dip"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <TextView
-            android:id="@+id/TextView1_3"
-            android:text="＊可稽核職別代碼：營養師=NU、工友=W、清潔工=C、行政人員=AD、照服員=T、其他人員請寫中文職稱"
-            android:background="#b0b0b0"
-            android:textColor="#000000"
-            android:padding="18dip"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
--->
-
         <!--項目　start-->
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#FFFFFF">
 
             <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView0"
+                    android:text="手部衛生稽核表"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:padding="18dip"
+                    android:gravity="center"
+                    android:textSize="22dp"/>
+
+            </TableRow>
+    <!--
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView1_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="18dip"
+                    android:text="＊稽核方式：(1)達到請打✓、未達到請打✘、未觀察到請空白(2)洗手方式：W或A請務必勾選一項(3)同一人有二種洗手方式請評二次"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView1_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="18dip"
+                    android:text="＊必稽核職別代碼：醫師=D、護士=N、醫師助理=NP、醫檢師=M、復健師=P、放射師=R、呼吸治療=RT、洗腎護士=HD"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView1_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="18dip"
+                    android:text="＊可稽核職別代碼：營養師=NU、工友=W、清潔工=C、行政人員=AD、照服員=T、其他人員請寫中文職稱"
+                    android:textColor="#000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+    -->
+            <TableRow
                 android:id="@+id/tableRow2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/TextView2"
-                    android:text="稽核日期"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:text="稽核日期"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/EditText1"
                     android:focusable="false"
                     android:clickable="true"
-                    />
+                    android:textSize="18dp"/>
 
             </TableRow>
 
@@ -91,15 +120,14 @@
                 <TextView
                     android:id="@+id/TextView3"
                     android:text="病房(單位)"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <EditText
                     android:id="@+id/EditText2"
-                    />
+                    android:textSize="18dp"/>
 
             </TableRow>
 
@@ -111,19 +139,17 @@
                 <TextView
                     android:id="@+id/TextView4"
                     android:text="職稱"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <EditText
                     android:id="@+id/EditText3"
-                    />
+                    android:textSize="18dp"/>
 
             </TableRow>
-            <!--項目　end-->
-            <!--設備　start-->
+
             <TableRow
                 android:id="@+id/tableRow5"
                 android:layout_width="match_parent"
@@ -132,31 +158,35 @@
                 <TextView
                     android:id="@+id/TextView5"
                     android:text="洗手液無缺乏"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
+
                     <RadioButton
                         android:id="@+id/RadioButton1"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"/>
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton2"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
+
+
 
             <TableRow
                 android:id="@+id/tableRow6"
@@ -166,28 +196,30 @@
                 <TextView
                     android:id="@+id/TextView6"
                     android:text="洗手設備（乾洗手瓶或水龍頭）功能正常"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
+
                     <RadioButton
                         android:id="@+id/RadioButton3"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton4"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -200,34 +232,34 @@
                 <TextView
                     android:id="@+id/TextView7"
                     android:text="擦手紙無缺乏"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton5"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton6"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
-            <!--設備　end-->
-            <!--方式　start-->
+
             <TableRow
                 android:id="@+id/tableRow8"
                 android:layout_width="match_parent"
@@ -236,34 +268,34 @@
                 <TextView
                     android:id="@+id/TextView8"
                     android:text="W：洗手液洗手 或 A：酒精乾式洗手"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton7"
                         android:text="W"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton8"
                         android:text="A"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
-            <!--方式　end-->
-            <!--洗手時機　start-->
+
             <TableRow
                 android:id="@+id/tableRow9"
                 android:layout_width="match_parent"
@@ -272,29 +304,30 @@
                 <TextView
                     android:id="@+id/TextView9"
                     android:text="1.接觸病人前"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton9"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton10"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -307,29 +340,30 @@
                 <TextView
                     android:id="@+id/TextView10"
                     android:text="2.執行清潔/無菌操作技術前"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton11"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton12"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -342,29 +376,30 @@
                 <TextView
                     android:id="@+id/TextView11"
                     android:text="3.暴觸病人體液風險後"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton13"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton14"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -377,29 +412,30 @@
                 <TextView
                     android:id="@+id/TextView12"
                     android:text="4.接觸病人後"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton15"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton16"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -412,34 +448,34 @@
                 <TextView
                     android:id="@+id/TextView13"
                     android:text="5.接觸病人週遭環境後"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton17"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton18"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
-            <!--洗手時機　end-->
-            <!--洗手步驟　start-->
+
             <TableRow
                 android:id="@+id/tableRow14"
                 android:layout_width="match_parent"
@@ -448,29 +484,30 @@
                 <TextView
                     android:id="@+id/TextView14"
                     android:text="1.打開水龍頭潤溼雙手"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton19"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton20"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -483,29 +520,30 @@
                 <TextView
                     android:id="@+id/TextView15"
                     android:text="2.取適量洗手液（或酒精乾洗手液）"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton21"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton22"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -518,29 +556,30 @@
                 <TextView
                     android:id="@+id/TextView16"
                     android:text="3.搓揉雙手至起泡並保持雙手低於手肘"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton23"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton24"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -553,11 +592,10 @@
                 <TextView
                     android:id="@+id/TextView18"
                     android:text="4.搓揉雙手六步驟"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
             </TableRow>
 
@@ -569,29 +607,30 @@
                 <TextView
                     android:id="@+id/TextView19"
                     android:text="a.掌心對掌心搓揉"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton25"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton26"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -604,29 +643,30 @@
                 <TextView
                     android:id="@+id/TextView20"
                     android:text="b.掌心搓揉手背"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton27"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton28"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -639,29 +679,30 @@
                 <TextView
                     android:id="@+id/TextView21"
                     android:text="c.指縫相互搓揉"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton29"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton30"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -674,29 +715,30 @@
                 <TextView
                     android:id="@+id/TextView22"
                     android:text="d.指背向掌心搓背"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton31"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton32"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -709,29 +751,30 @@
                 <TextView
                     android:id="@+id/TextView23"
                     android:text="e.手握拇指旋轉搓揉"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton33"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton34"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -744,29 +787,30 @@
                 <TextView
                     android:id="@+id/TextView24"
                     android:text="f.指尖對掌心來回搓揉"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton35"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton36"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -779,29 +823,30 @@
                 <TextView
                     android:id="@+id/TextView25"
                     android:text="g.洗手搓揉時間大於15秒"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton37"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton38"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -814,29 +859,30 @@
                 <TextView
                     android:id="@+id/TextView26"
                     android:text="5.指尖朝下沖洗雙手"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton39"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton40"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -849,29 +895,30 @@
                 <TextView
                     android:id="@+id/TextView27"
                     android:text="6.以擦手紙擦乾雙手"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton41"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton42"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -884,29 +931,30 @@
                 <TextView
                     android:id="@+id/TextView28"
                     android:text="7.以手肘或原擦手紙關緊水龍頭"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton43"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton44"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
@@ -919,34 +967,34 @@
                 <TextView
                     android:id="@+id/TextView29"
                     android:text="8.完成1~7步驟約40~60秒"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/RadioButton45"
                         android:text="Y"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true" />
+                        android:layout_height="fill_parent"
+                        android:checked="true"
+                        android:textSize="18dp"/>
 
                     <RadioButton
                         android:id="@+id/RadioButton46"
                         android:text="N"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="fill_parent"
+                        android:textSize="18dp"/>
                 </RadioGroup>
 
             </TableRow>
 
-            <!--洗手步驟　end-->
             <TableRow
                 android:id="@+id/tableRow30"
                 android:layout_width="match_parent"
@@ -955,16 +1003,15 @@
                 <TextView
                     android:id="@+id/TextView30"
                     android:text="稽核者"
-                    android:layout_weight="1"
-                    android:background="#b0b0b0"
-                    android:textColor="#000000"
+                    android:textStyle="bold"
                     android:padding="18dip"
-                    android:gravity="left"/>
+                    android:gravity="right"
+                    android:textSize="18dp"/>
 
                 <EditText
                     android:id="@+id/EditText4"
                     android:enabled="false"
-                    />
+                    android:textSize="18dp"/>
 
             </TableRow>
 
@@ -976,13 +1023,15 @@
                 <Button
                     android:text="Submit"
                     android:clickable="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/save"
-                    android:layout_span="2">
+                    android:gravity="center"
+                    android:layout_weight="1">
                 </Button>
+
             </TableRow>
+-->
         </TableLayout>
+
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

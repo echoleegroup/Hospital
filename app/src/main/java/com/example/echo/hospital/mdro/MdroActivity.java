@@ -132,7 +132,7 @@ public class MdroActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //參數1:群組id, 參數2:itemId, 參數3:item順序, 參數4:item名稱
         menu.add(0, 0, 0, "主選單");
-        menu.add(0, 1, 1, "洗手稽核列表");
+        menu.add(0, 1, 1, "手部衛生稽核列表");
         menu.add(0, 2, 2, "MDRO稽核列表");
         menu.add(0, 3, 3, "Bundle CVP稽核列表");
         menu.add(0, 4, 4, "Bundle VAP稽核列表");

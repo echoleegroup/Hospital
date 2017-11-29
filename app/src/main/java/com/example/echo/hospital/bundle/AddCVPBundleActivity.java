@@ -71,7 +71,6 @@ public class AddCVPBundleActivity extends AppCompatActivity {
     //store account and password -----end
 
     //google sheet api -----start
-    private TextView mOutputText;
     static final int REQUEST_AUTHORIZATION = 1001;
     // The ID of the spreadsheet to update.
     String spreadsheetId = "1ND5tMIyA_G1GnXwKPpFJGWVGeNUIQjcwGqF6cZokGNE";
@@ -88,9 +87,6 @@ public class AddCVPBundleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_cvp_bundle);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //set errorText
-        mOutputText = (TextView)findViewById(R.id.errorOutput);
 
         //init
         MyAlertDialog = new AlertDialog.Builder(this);
@@ -229,7 +225,7 @@ public class AddCVPBundleActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //參數1:群組id, 參數2:itemId, 參數3:item順序, 參數4:item名稱
         menu.add(0, 0, 0, "主選單");
-        menu.add(0, 1, 1, "洗手稽核列表");
+        menu.add(0, 1, 1, "手部衛生稽核列表");
         menu.add(0, 2, 2, "MDRO稽核列表");
         menu.add(0, 3, 3, "Bundle CVP稽核列表");
         menu.add(0, 4, 4, "Bundle VAP稽核列表");

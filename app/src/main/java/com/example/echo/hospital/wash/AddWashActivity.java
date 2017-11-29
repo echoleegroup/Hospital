@@ -57,7 +57,7 @@ public class AddWashActivity extends AppCompatActivity {
     private String dateValue, unitValue, titleValue, handWashValue, equipmentValue, tissueValue, washTypeValue, contactPatientValue, executeValue, bodyFluidValue,
         contactPatientAfterValue, surroundingValue, openFaucetValue, useWashHandValue, soupHandKeepDownValue, heartToHeartValue, heartToBackValue, sewToSewValue, backToHeartValue,
         handToThumbValue, sharpToHeartValue, fifteensecValue, washHandValue, wipeValue, closeFaucetValue, completeValue, correctValue, complianceRateValue, auditorValue;
-    private TableRow washSecond, washFourth, washFourthA, washFourthB, washFourthC, washFourthD, washFourthE, washFourthF, washFourthG, washEighth;
+    private TableRow washFirst, washThird, washFifth, washSixth, washSeventh;
     private Button saveBtn;
     private int mYear, mMonth, mDay; //西元年
     private int cYear, cMonth; //民國年月
@@ -97,16 +97,11 @@ public class AddWashActivity extends AppCompatActivity {
         });
 
         //set rows
-        washSecond = (TableRow) findViewById(R.id.tableRow15);
-        washFourth = (TableRow) findViewById(R.id.tableRow18);
-        washFourthA = (TableRow) findViewById(R.id.tableRow19);
-        washFourthB = (TableRow) findViewById(R.id.tableRow20);
-        washFourthC = (TableRow) findViewById(R.id.tableRow21);
-        washFourthD = (TableRow) findViewById(R.id.tableRow22);
-        washFourthE = (TableRow) findViewById(R.id.tableRow23);
-        washFourthF = (TableRow) findViewById(R.id.tableRow24);
-        washFourthG = (TableRow) findViewById(R.id.tableRow25);
-        washEighth = (TableRow) findViewById(R.id.tableRow29);
+        washFirst = (TableRow) findViewById(R.id.tableRow14);
+        washThird = (TableRow) findViewById(R.id.tableRow16);
+        washFifth = (TableRow) findViewById(R.id.tableRow26);
+        washSixth = (TableRow) findViewById(R.id.tableRow27);
+        washSeventh = (TableRow) findViewById(R.id.tableRow28);
 
         //set datePicker
         date = (EditText)findViewById(R.id.EditText1);
@@ -293,7 +288,6 @@ public class AddWashActivity extends AppCompatActivity {
             //
             auditorValue = NameValue.toString();
 
-
             //validate
             //choose w all value must be filled, otherwise 2, 4, 8 don't filled
             if(washTypeValue.equals("W")){
@@ -336,28 +330,18 @@ public class AddWashActivity extends AppCompatActivity {
     }
 
     private void changeWashType(boolean wash){
-        if(wash){//show 2, 4, 8
-            washSecond.setVisibility(View.VISIBLE);
-            washFourth.setVisibility(View.VISIBLE);
-            washFourthA.setVisibility(View.VISIBLE);
-            washFourthB.setVisibility(View.VISIBLE);
-            washFourthC.setVisibility(View.VISIBLE);
-            washFourthD.setVisibility(View.VISIBLE);
-            washFourthE.setVisibility(View.VISIBLE);
-            washFourthF.setVisibility(View.VISIBLE);
-            washFourthG.setVisibility(View.VISIBLE);
-            washEighth.setVisibility(View.VISIBLE);
-        }else{//hide 2, 4,8
-            washSecond.setVisibility(View.INVISIBLE);
-            washFourth.setVisibility(View.INVISIBLE);
-            washFourthA.setVisibility(View.INVISIBLE);
-            washFourthB.setVisibility(View.INVISIBLE);
-            washFourthC.setVisibility(View.INVISIBLE);
-            washFourthD.setVisibility(View.INVISIBLE);
-            washFourthE.setVisibility(View.INVISIBLE);
-            washFourthF.setVisibility(View.INVISIBLE);
-            washFourthG.setVisibility(View.INVISIBLE);
-            washEighth.setVisibility(View.INVISIBLE);
+        if(wash){//show 1, 3, 5, 6, 7
+            washFirst.setVisibility(View.VISIBLE);
+            washThird.setVisibility(View.VISIBLE);
+            washFifth.setVisibility(View.VISIBLE);
+            washSixth.setVisibility(View.VISIBLE);
+            washSeventh.setVisibility(View.VISIBLE);
+        }else{//hide 1, 3, 5, 6, 7
+            washFirst.setVisibility(View.GONE);
+            washThird.setVisibility(View.GONE);
+            washFifth.setVisibility(View.GONE);
+            washSixth.setVisibility(View.GONE);
+            washSeventh.setVisibility(View.GONE);
         }
     }
 
@@ -366,7 +350,7 @@ public class AddWashActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //參數1:群組id, 參數2:itemId, 參數3:item順序, 參數4:item名稱
         menu.add(0, 0, 0, "主選單");
-        menu.add(0, 1, 1, "洗手稽核列表");
+        menu.add(0, 1, 1, "手部衛生稽核列表");
         menu.add(0, 2, 2, "MDRO稽核列表");
         menu.add(0, 3, 3, "Bundle CVP稽核列表");
         menu.add(0, 4, 4, "Bundle VAP稽核列表");
@@ -437,9 +421,9 @@ public class AddWashActivity extends AppCompatActivity {
             HttpTransport transport = AndroidHttp.newCompatibleTransport();
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService = new com.google.api.services.sheets.v4.Sheets.Builder(
-                    transport, jsonFactory, credential)
-                    .setApplicationName("Google Sheets API Android Quickstart")
-                    .build();
+                transport, jsonFactory, credential)
+                .setApplicationName("Google Sheets API Android Quickstart")
+                .build();
         }
 
         /**
@@ -567,7 +551,6 @@ public class AddWashActivity extends AppCompatActivity {
                 //
                 data1.add(auditorValue);//稽核者
 
-
                 List<List<Object>> data = new ArrayList<List<Object>>();
                 data.add (data1);
 
@@ -586,9 +569,7 @@ public class AddWashActivity extends AppCompatActivity {
                 cancel(true);
                 return "failure";
             }
-
         }
-
 
         @Override
         protected void onPostExecute(String output) {
