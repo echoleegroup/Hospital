@@ -11,12 +11,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_hospital"
         android:label="Hospital"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="首頁">
+            android:label="感染控制稽核系統">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,10 +26,6 @@
             android:name=".MenuActivity"
             android:label="主選單"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".wash.WashActivity"
