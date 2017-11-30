@@ -180,7 +180,7 @@ public class WashActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case 6:
-
+                finish();//To finish your current acivity
                 break;
             case 7:
                 //結束此程式

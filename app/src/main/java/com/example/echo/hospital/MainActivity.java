@@ -46,6 +46,7 @@ import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.view.Gravity;
+import android.widget.ProgressBar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,7 +84,6 @@ public class MainActivity extends Activity
     private String NameValue;
     private int IdentityValue;
     //store account and password -----end
-
     /**
      * Create the main activity.
      * @param savedInstanceState previously saved instance data.
@@ -152,10 +152,8 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View v) {
             if(!account.getText().toString().trim().equals("") && !password.getText().toString().trim().equals("")){
-                mCallApiButton.setEnabled(false);
                 mOutputText.setText("");
                 getResultsFromApi();
-                mCallApiButton.setEnabled(true);
             }
             }
         });
@@ -438,12 +436,14 @@ public class MainActivity extends Activity
 
         @Override
         protected void onPreExecute() {
+            mCallApiButton.setEnabled(false);
             mOutputText.setText("");
             mProgress.show();
         }
 
         @Override
         protected void onPostExecute(List<String> output) {
+            mCallApiButton.setEnabled(true);
             mProgress.hide();
             if (output == null || output.size() == 0) {
                 mOutputText.setText("No results returned.");

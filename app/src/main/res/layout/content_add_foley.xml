@@ -386,7 +386,8 @@
                 <EditText
                     android:id="@+id/EditText4"
                     android:enabled="false"
-                    android:textSize="18dp"/>
+                    android:textSize="18dp"
+                    android:textColor="#000000"/>
 
             </TableRow>
 
