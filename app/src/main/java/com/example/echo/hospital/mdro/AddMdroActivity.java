@@ -2,6 +2,7 @@ package com.example.echo.hospital.mdro;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -78,6 +79,7 @@ public class AddMdroActivity extends AppCompatActivity {
     // Values will be appended after the last row of the table.
     String range;
     ValueRange body = new ValueRange();
+    private ProgressDialog mProgress;
     //google sheet api -----end
     final Calendar c = Calendar.getInstance();
 
@@ -95,6 +97,10 @@ public class AddMdroActivity extends AppCompatActivity {
                 dialog.cancel();
             }
         });
+
+        //set loading
+        mProgress = new ProgressDialog(this);
+        mProgress.setMessage("Calling Google Sheets API ...");
 
         //set datePicker
         date = (EditText)findViewById(R.id.EditText1);
@@ -245,14 +251,15 @@ public class AddMdroActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //參數1:群組id, 參數2:itemId, 參數3:item順序, 參數4:item名稱
-        menu.add(0, 0, 0, "主選單");
+        MenuItem item = menu.add(0, 0, 0, "home"); //your desired title here
+        item.setIcon(R.drawable.ic_action_name); //your desired icon here
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         menu.add(0, 1, 1, "手部衛生稽核列表");
         menu.add(0, 2, 2, "MDRO稽核列表");
         menu.add(0, 3, 3, "Bundle CVP稽核列表");
         menu.add(0, 4, 4, "Bundle VAP稽核列表");
         menu.add(0, 5, 5, "Bundle Foley稽核列表");
         menu.add(0, 6, 6, "登出");
-        menu.add(0, 7, 7, "離開");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -294,11 +301,13 @@ public class AddMdroActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case 6:
-
-                break;
-            case 7:
-                //結束此程式
-                finish();
+                SharedPreferences preferences = getSharedPreferences(User.PREFS_NAME, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.commit();
+                intent = new Intent();
+                intent.setClass(AddMdroActivity.this, MainActivity.class);
+                startActivity(intent);
                 break;
             default:
         }
@@ -457,9 +466,14 @@ public class AddMdroActivity extends AppCompatActivity {
             }
         }
 
+        @Override
+        protected void onPreExecute() {
+            mProgress.show();
+        }
 
         @Override
         protected void onPostExecute(String output) {
+            mProgress.hide();
             try {
                 if(output.equals("successful")){
                     Intent intent = new Intent();

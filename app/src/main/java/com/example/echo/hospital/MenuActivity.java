@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.content.SharedPreferences;
+import android.content.Context;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.example.echo.hospital.bundle.VAPBundleActivity;
 import com.example.echo.hospital.bundle.CVPBundleActivity;
 import com.example.echo.hospital.bundle.FoleyBundleActivity;
+import com.example.echo.hospital.model.User;
 import com.example.echo.hospital.wash.WashActivity;
 import com.example.echo.hospital.mdro.MdroActivity;
 
@@ -93,14 +96,15 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //參數1:群組id, 參數2:itemId, 參數3:item順序, 參數4:item名稱
-        menu.add(0, 0, 0, "主選單");
+        MenuItem item = menu.add(0, 0, 0, "home"); //your desired title here
+        item.setIcon(R.drawable.ic_action_name); //your desired icon here
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         menu.add(0, 1, 1, "手部衛生稽核列表");
         menu.add(0, 2, 2, "MDRO稽核列表");
         menu.add(0, 3, 3, "Bundle CVP稽核列表");
         menu.add(0, 4, 4, "Bundle VAP稽核列表");
         menu.add(0, 5, 5, "Bundle Foley稽核列表");
         menu.add(0, 6, 6, "登出");
-        menu.add(0, 7, 7, "離開");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -142,11 +146,13 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case 6:
-
-                break;
-            case 7:
-                //結束此程式
-                finish();
+                SharedPreferences preferences = getSharedPreferences(User.PREFS_NAME, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.commit();
+                intent = new Intent();
+                intent.setClass(MenuActivity.this, MainActivity.class);
+                startActivity(intent);
                 break;
             default:
         }

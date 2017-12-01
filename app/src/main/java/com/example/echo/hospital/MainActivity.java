@@ -65,7 +65,7 @@ public class MainActivity extends Activity
     private Button mCallApiButton;
     private EditText account, password;
     private ImageView logo;
-    ProgressDialog mProgress;
+    private ProgressDialog mProgress;
 
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
@@ -105,7 +105,7 @@ public class MainActivity extends Activity
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 80);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 120);
         layoutParams.gravity = Gravity.CENTER;
 
         logo = new ImageView(this);
@@ -124,7 +124,7 @@ public class MainActivity extends Activity
         account = new EditText(this);
         account.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         account.setHint("account");
-        account.setTextSize(20);
+        account.setTextSize(24);
         account.setLayoutParams(layoutParams);
         account.setGravity(Gravity.CENTER);
         activityLayout.addView(account);
@@ -133,7 +133,7 @@ public class MainActivity extends Activity
         password.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         password.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         password.setHint("password");
-        password.setTextSize(20);
+        password.setTextSize(24);
         password.setLayoutParams(layoutParams);
         password.setGravity(Gravity.CENTER);
         password.setTransformationMethod(new PasswordTransformationMethod());
@@ -152,8 +152,10 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View v) {
             if(!account.getText().toString().trim().equals("") && !password.getText().toString().trim().equals("")){
+                mCallApiButton.setEnabled(false);
                 mOutputText.setText("");
                 getResultsFromApi();
+                mCallApiButton.setEnabled(true);
             }
             }
         });
@@ -450,6 +452,10 @@ public class MainActivity extends Activity
             } else {
                 //output.add(0, "Data retrieved using the Google Sheets API:");
                 //mOutputText.setText(TextUtils.join("\n", output));
+                //default
+                //wrong password
+                mOutputText.setVisibility(View.INVISIBLE);
+                mOutputText.setText("帳號或密碼錯誤，請重新輸入");
                 for(String str: output){
                     String[] array = str.split(",");
                     String googleAccount = array[0].trim();
@@ -458,7 +464,8 @@ public class MainActivity extends Activity
                     int googleIdentity = Integer.parseInt(array[3].trim());
 
                     if(googleAccount.equals(account.getText().toString().trim()) && googlePassword.equals(password.getText().toString().trim())){
-
+                        mOutputText.setText("");
+                        mOutputText.setVisibility(View.VISIBLE);
                         //store input account and password  ---- start
                         SharedPreferences settings = getSharedPreferences(User.PREFS_NAME,
                                 Context.MODE_PRIVATE);

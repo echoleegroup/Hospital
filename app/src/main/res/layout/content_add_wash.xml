@@ -299,7 +299,8 @@
             <TableRow
                 android:id="@+id/tableRow9"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="#bdc2e8">
 
                 <TextView
                     android:id="@+id/TextView9"
@@ -335,7 +336,8 @@
             <TableRow
                 android:id="@+id/tableRow10"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="#bdc2e8">
 
                 <TextView
                     android:id="@+id/TextView10"
@@ -371,7 +373,8 @@
             <TableRow
                 android:id="@+id/tableRow11"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="#bdc2e8">
 
                 <TextView
                     android:id="@+id/TextView11"
@@ -379,7 +382,7 @@
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
-                    android:textSize="18dp"/>
+                    android:textSize="18dp" />
 
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="fill_parent"
@@ -407,7 +410,8 @@
             <TableRow
                 android:id="@+id/tableRow12"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="#bdc2e8">
 
                 <TextView
                     android:id="@+id/TextView12"
@@ -443,7 +447,8 @@
             <TableRow
                 android:id="@+id/tableRow13"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="#bdc2e8">
 
                 <TextView
                     android:id="@+id/TextView13"

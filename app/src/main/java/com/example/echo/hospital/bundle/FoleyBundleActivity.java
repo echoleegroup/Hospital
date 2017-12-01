@@ -1,5 +1,6 @@
 package com.example.echo.hospital.bundle;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -64,6 +65,7 @@ public class FoleyBundleActivity extends AppCompatActivity {
     /*private View headerView, rowView;
     private TextView headerTextView;
     private LinearLayout menuLayout;*/
+    private ProgressDialog mProgress;
 
     //google sheet api -----start
     static final int REQUEST_AUTHORIZATION = 1001;
@@ -95,6 +97,10 @@ public class FoleyBundleActivity extends AppCompatActivity {
 
         //set Foley bundle adapter
         //adapter = new ArrayAdapter(this, R.layout.menu_adapter);
+
+        //set loading
+        mProgress = new ProgressDialog(this);
+        mProgress.setMessage("Calling Google Sheets API ...");
 
         //get Foley bundle data
         new MakeRequestTask(MainActivity.mCredential).execute();
@@ -133,14 +139,15 @@ public class FoleyBundleActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //參數1:群組id, 參數2:itemId, 參數3:item順序, 參數4:item名稱
-        menu.add(0, 0, 0, "主選單");
+        MenuItem item = menu.add(0, 0, 0, "home"); //your desired title here
+        item.setIcon(R.drawable.ic_action_name); //your desired icon here
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         menu.add(0, 1, 1, "手部衛生稽核列表");
         menu.add(0, 2, 2, "MDRO稽核列表");
         menu.add(0, 3, 3, "Bundle CVP稽核列表");
         menu.add(0, 4, 4, "Bundle VAP稽核列表");
         menu.add(0, 5, 5, "Bundle Foley稽核列表");
         menu.add(0, 6, 6, "登出");
-        menu.add(0, 7, 7, "離開");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -182,11 +189,13 @@ public class FoleyBundleActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case 6:
-
-                break;
-            case 7:
-                //結束此程式
-                finish();
+                SharedPreferences preferences = getSharedPreferences(User.PREFS_NAME, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.commit();
+                intent = new Intent();
+                intent.setClass(FoleyBundleActivity.this, MainActivity.class);
+                startActivity(intent);
                 break;
             default:
         }
@@ -255,11 +264,18 @@ public class FoleyBundleActivity extends AppCompatActivity {
         }
 
         @Override
+        protected void onPreExecute() {
+            mProgress.show();
+        }
+
+        @Override
         protected void onPostExecute(List<String> output) {
+            mProgress.hide();
             try {
                 Map<String, Integer> map = new HashMap<String, Integer>();
                 String monthValue, unitValue = "";
                 ArrayList list = new ArrayList<HashMap<String,String>>();
+                HashMap<String,String> temp = new HashMap<String, String>();
                 if (output.size() == 0) {
                     //header
                     //headerTextView.setText("目前本年度尚未未有" + MenuActivity.bundleName + "稽核表");
@@ -278,13 +294,17 @@ public class FoleyBundleActivity extends AppCompatActivity {
                             map.put(monthValue+"_"+unitValue, 0);
                         map.put(monthValue+"_"+unitValue, map.get(monthValue+"_"+unitValue) + 1);
                     }
+                    //新增表頭
+                    temp.put(ListViewAdapter.FIRST_COLUMN, "月份");
+                    temp.put(ListViewAdapter.SECOND_COLUMN, "單位");
+                    temp.put(ListViewAdapter.THIRD_COLUMN, "件數");
+                    list.add(temp);
 
                     for(String key: map.keySet()){
                         String[] item = key.split("_");
                         monthValue = item[0];
                         unitValue = item[1];
-
-                        HashMap<String,String> temp = new HashMap<String, String>();
+                        temp = new HashMap<String, String>();
                         temp.put(ListViewAdapter.FIRST_COLUMN, monthValue);
                         temp.put(ListViewAdapter.SECOND_COLUMN, unitValue);
                         temp.put(ListViewAdapter.THIRD_COLUMN, String.valueOf(map.get(key)));
