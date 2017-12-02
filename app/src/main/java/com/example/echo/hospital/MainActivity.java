@@ -20,7 +20,7 @@ import com.google.api.services.sheets.v4.SheetsScopes;
 
 import com.google.api.services.sheets.v4.model.*;
 
-import android.graphics.Typeface;
+import android.graphics.*;
 import android.Manifest;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -29,6 +29,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -47,6 +48,8 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import android.view.Gravity;
 import android.widget.ProgressBar;
+import android.graphics.drawable.Drawable;
+import android.content.res.Resources;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,7 +75,7 @@ public class MainActivity extends Activity
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
 
-    private static final String BUTTON_TEXT = "Login";
+    private static final String BUTTON_TEXT = "登入";
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS };
     private String spreadsheetId = "1kvQn6_c6bBiuGZBYnBiTUveFxuXh9eaAom1PkQ8HWjs";
@@ -148,6 +151,10 @@ public class MainActivity extends Activity
 
         mCallApiButton = new Button(this);
         mCallApiButton.setText(BUTTON_TEXT);
+        mCallApiButton.setTextSize(24);
+        mCallApiButton.setTextColor(Color.WHITE);
+        mCallApiButton.setLayoutParams(layoutParams);
+        mCallApiButton.setBackgroundResource(R.drawable.button);
         mCallApiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

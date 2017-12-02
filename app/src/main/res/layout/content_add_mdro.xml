@@ -782,22 +782,53 @@
                     android:textColor="#000000"/>
 
             </TableRow>
-
+            <!--space start-->
             <TableRow
-                android:id="@+id/tableRow21"
+                android:id="@+id/tableRow31"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <TextView
+                    android:id="@+id/TextView31"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:padding="20dip"
+                    android:textSize="20dp" />
+
+            </TableRow>
+            <!--space end-->
+            <TableRow
+                android:id="@+id/tableRow32"
+                android:gravity="center">
+
                 <Button
-                    android:text="Submit"
+                    android:text="送出"
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
                     android:clickable="true"
                     android:id="@+id/save"
                     android:gravity="center"
-                    android:layout_weight="1">
+                    android:textSize="24dp"
+                    android:background="@drawable/button"
+                    android:textColor="@android:color/white">
                 </Button>
 
             </TableRow>
+            <!--space start-->
+            <TableRow
+                android:id="@+id/tableRow33"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <TextView
+                    android:id="@+id/TextView33"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:padding="20dip"
+                    android:textSize="40dp" />
+
+            </TableRow>
+            <!--space end-->
         </TableLayout>
 
     </ScrollView>
