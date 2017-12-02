@@ -42,6 +42,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class MdroActivity extends AppCompatActivity {
 
@@ -298,7 +300,9 @@ public class MdroActivity extends AppCompatActivity {
                     temp.put(ListViewAdapter.SECOND_COLUMN, "單位");
                     temp.put(ListViewAdapter.THIRD_COLUMN, "件數");
                     list.add(temp);
-                    for(String key: map.keySet()){
+                    //order
+                    SortedSet<String> keys = new TreeSet<String>(map.keySet()).descendingSet();
+                    for(String key: keys){
                         String[] item = key.split("_");
                         monthValue = item[0];
                         unitValue = item[1];

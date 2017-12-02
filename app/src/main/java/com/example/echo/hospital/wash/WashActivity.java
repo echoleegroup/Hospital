@@ -44,6 +44,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class WashActivity extends AppCompatActivity {
 
@@ -300,8 +302,9 @@ public class WashActivity extends AppCompatActivity {
                     temp.put(ListViewWashAdapter.THIRD_COLUMN, "職稱");
                     temp.put(ListViewWashAdapter.FOURTH_COLUMN, "件數");
                     list.add(temp);
-
-                    for(String key: map.keySet()){
+                    //order
+                    SortedSet<String> keys = new TreeSet<String>(map.keySet()).descendingSet();
+                    for(String key: keys){
                         String[] item = key.split("_");
                         monthValue = item[0];
                         unitValue = item[1];

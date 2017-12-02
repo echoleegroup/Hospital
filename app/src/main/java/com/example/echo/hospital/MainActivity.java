@@ -102,7 +102,7 @@ public class MainActivity extends Activity
         activityLayout.setPadding(16, 16, 16, 16);//left, top, right, bottom
 
         ViewGroup.LayoutParams tlp = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.FILL_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300, 120);
@@ -152,10 +152,7 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View v) {
             if(!account.getText().toString().trim().equals("") && !password.getText().toString().trim().equals("")){
-                mCallApiButton.setEnabled(false);
-                mOutputText.setText("");
                 getResultsFromApi();
-                mCallApiButton.setEnabled(true);
             }
             }
         });
@@ -163,10 +160,12 @@ public class MainActivity extends Activity
 
         mOutputText = new TextView(this);
         mOutputText.setLayoutParams(tlp);
-        mOutputText.setPadding(16, 16, 16, 16);
+        mOutputText.setGravity(Gravity.CENTER);
+        mOutputText.setPadding(16, 50, 16, 16);
         mOutputText.setVerticalScrollBarEnabled(true);
         mOutputText.setMovementMethod(new ScrollingMovementMethod());
         mOutputText.setText("");
+        mOutputText.setTextSize(24);
         activityLayout.addView(mOutputText);
 
         mProgress = new ProgressDialog(this);
@@ -464,8 +463,8 @@ public class MainActivity extends Activity
                     int googleIdentity = Integer.parseInt(array[3].trim());
 
                     if(googleAccount.equals(account.getText().toString().trim()) && googlePassword.equals(password.getText().toString().trim())){
+                        //empty mOutputText
                         mOutputText.setText("");
-                        mOutputText.setVisibility(View.VISIBLE);
                         //store input account and password  ---- start
                         SharedPreferences settings = getSharedPreferences(User.PREFS_NAME,
                                 Context.MODE_PRIVATE);
@@ -490,7 +489,7 @@ public class MainActivity extends Activity
                         break;
                     }
                 }
-
+                mOutputText.setVisibility(View.VISIBLE);
             }
         }
 
