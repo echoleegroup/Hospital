@@ -148,7 +148,7 @@
 
                 <TextView
                     android:id="@+id/TextView5"
-                    android:text="2.使用單人房或集中管理"
+                    android:text="2.使用單人房或集中隔離"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -664,7 +664,7 @@
 
                 <TextView
                     android:id="@+id/TextView17"
-                    android:text="14.清潔人員消毒方式正確"
+                    android:text="14.清潔人員消毒方式正確(乾淨→污染)"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"

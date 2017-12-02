@@ -279,16 +279,16 @@ public class WashActivity extends AppCompatActivity {
                 HashMap<String,String> temp = new HashMap<String, String>();
                 if (output.size() == 0) {
                     //header
-                    //headerTextView.setText("目前本年度尚未有洗手稽核表");
+                    //headerTextView.setText("目前本年度尚未有手部衛生稽核表");
                     ArrayAdapter adapter = new ArrayAdapter(WashActivity.this, R.layout.menu_adapter);
-                    adapter.add("目前本年度尚未有洗手稽核表");
+                    adapter.add("目前本年度尚未有手部衛生稽核表");
                     listView.setAdapter(adapter);
                 } else {
                     //header
                     //headerTextView.setText("洗手稽核列表");
                     for (String str : output) {
                         String[] array = str.split(",");
-                        //月份, 單位, 職稱
+                        //月份, 單位, 職別
                         monthValue = array[0].trim();
                         unitValue = array[1].trim();
                         titleValue = array[2].trim();
@@ -299,7 +299,7 @@ public class WashActivity extends AppCompatActivity {
                     //新增表頭
                     temp.put(ListViewWashAdapter.FIRST_COLUMN, "月份");
                     temp.put(ListViewWashAdapter.SECOND_COLUMN, "單位");
-                    temp.put(ListViewWashAdapter.THIRD_COLUMN, "職稱");
+                    temp.put(ListViewWashAdapter.THIRD_COLUMN, "職別");
                     temp.put(ListViewWashAdapter.FOURTH_COLUMN, "件數");
                     list.add(temp);
                     //order

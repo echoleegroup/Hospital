@@ -137,7 +137,7 @@
 
                 <TextView
                     android:id="@+id/TextView4"
-                    android:text="職稱"
+                    android:text="職別"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -194,7 +194,7 @@
 
                 <TextView
                     android:id="@+id/TextView6"
-                    android:text="洗手設備（乾洗手瓶或水龍頭）功能正常"
+                    android:text="洗手設備(乾洗手瓶或水龍頭)功能正常"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -523,7 +523,7 @@
 
                 <TextView
                     android:id="@+id/TextView15"
-                    android:text="2.取適量洗手液（或酒精乾洗手液）"
+                    android:text="2.取適量洗手液(或酒精乾洗手液)"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -718,7 +718,7 @@
 
                 <TextView
                     android:id="@+id/TextView22"
-                    android:text="d.指背向掌心搓背"
+                    android:text="d.指背向掌心搓揉"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
