@@ -148,7 +148,7 @@
 
                 <TextView
                     android:id="@+id/TextView5"
-                    android:text="2.使用單人房或集中隔離"
+                    android:text="2.使用單人房或集中隔離(VRE)"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -277,7 +277,7 @@
 
                 <TextView
                     android:id="@+id/TextView8"
-                    android:text="5.工作人員洗手時機正確"
+                    android:text="5.工作人員落實洗手"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -320,7 +320,7 @@
 
                 <TextView
                     android:id="@+id/TextView9"
-                    android:text="6.工作人員穿著適當防護裝備(如口罩、隔離衣、手套、防護面罩)"
+                    android:text="6.工作人員穿著適當防護裝備(如口罩、隔離衣、手套)"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -363,7 +363,7 @@
 
                 <TextView
                     android:id="@+id/TextView10"
-                    android:text="7.家屬或看護穿著適當防護裝備(如口罩、隔離衣、手套、防護面罩)"
+                    android:text="7.家屬或看護穿著適當防護裝備(如口罩、隔離衣、手套)"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -406,7 +406,7 @@
 
                 <TextView
                     android:id="@+id/TextView11"
-                    android:text="8.防護裝備每次更換且依感染性用物方式處理"
+                    android:text="8.單獨使用血壓計、聽診器等醫療儀器"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -449,7 +449,7 @@
 
                 <TextView
                     android:id="@+id/TextView12"
-                    android:text="9.單獨使用血壓計、聽診器等醫療儀器"
+                    android:text="9.有置放感染性垃圾桶於床邊"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -492,7 +492,7 @@
 
                 <TextView
                     android:id="@+id/TextView13"
-                    android:text="10.使用後的醫療用物有適當消毒(75%酒精擦拭或依廠商建議處理)"
+                    android:text="10.抗藥性菌株個案外出檢查或轉床時有適當交班"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -535,7 +535,7 @@
 
                 <TextView
                     android:id="@+id/TextView14"
-                    android:text="11.廢棄物皆依感染性廢棄物處理"
+                    android:text="11.有依規定解除接觸隔離"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -571,177 +571,177 @@
 
             </TableRow>
 
-            <TableRow
-                android:id="@+id/tableRow15"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <!--<TableRow-->
+                <!--android:id="@+id/tableRow15"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
 
-                <TextView
-                    android:id="@+id/TextView15"
-                    android:text="12.抗藥性菌株個案外出檢查或轉床時有適當交班"
-                    android:textStyle="bold"
-                    android:padding="18dip"
-                    android:gravity="right"
-                    android:textSize="18dp"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/TextView15"-->
+                    <!--android:text="12.抗藥性菌株個案外出檢查或轉床時有適當交班"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:padding="18dip"-->
+                    <!--android:gravity="right"-->
+                    <!--android:textSize="18dp"/>-->
 
-                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal">
+                <!--<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="fill_parent"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <RadioButton
-                        android:id="@+id/RadioButton34"
-                        android:text="Y"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:checked="true"
-                        android:textSize="18dp"/>
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/RadioButton34"-->
+                        <!--android:text="Y"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="fill_parent"-->
+                        <!--android:checked="true"-->
+                        <!--android:textSize="18dp"/>-->
 
-                    <RadioButton
-                        android:id="@+id/RadioButton35"
-                        android:text="N"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:textSize="18dp"/>
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/RadioButton35"-->
+                        <!--android:text="N"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="fill_parent"-->
+                        <!--android:textSize="18dp"/>-->
 
-                    <RadioButton
-                        android:id="@+id/RadioButton36"
-                        android:text="NA"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:textSize="18dp"/>
-                </RadioGroup>
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/RadioButton36"-->
+                        <!--android:text="NA"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="fill_parent"-->
+                        <!--android:textSize="18dp"/>-->
+                <!--</RadioGroup>-->
 
-            </TableRow>
+            <!--</TableRow>-->
 
-            <TableRow
-                android:id="@+id/tableRow16"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <!--<TableRow-->
+                <!--android:id="@+id/tableRow16"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
 
-                <TextView
-                    android:id="@+id/TextView16"
-                    android:text="13.清潔人員泡製正確濃度消毒溶液消毒病室內設備(5000ppm)"
-                    android:textStyle="bold"
-                    android:padding="18dip"
-                    android:gravity="right"
-                    android:textSize="18dp"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/TextView16"-->
+                    <!--android:text="13.清潔人員泡製正確濃度消毒溶液消毒病室內設備(5000ppm)"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:padding="18dip"-->
+                    <!--android:gravity="right"-->
+                    <!--android:textSize="18dp"/>-->
 
-                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal">
+                <!--<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="fill_parent"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <RadioButton
-                        android:id="@+id/RadioButton37"
-                        android:text="Y"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:checked="true"
-                        android:textSize="18dp"/>
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/RadioButton37"-->
+                        <!--android:text="Y"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="fill_parent"-->
+                        <!--android:checked="true"-->
+                        <!--android:textSize="18dp"/>-->
 
-                    <RadioButton
-                        android:id="@+id/RadioButton38"
-                        android:text="N"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:textSize="18dp"/>
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/RadioButton38"-->
+                        <!--android:text="N"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="fill_parent"-->
+                        <!--android:textSize="18dp"/>-->
 
-                    <RadioButton
-                        android:id="@+id/RadioButton39"
-                        android:text="NA"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:textSize="18dp"/>
-                </RadioGroup>
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/RadioButton39"-->
+                        <!--android:text="NA"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="fill_parent"-->
+                        <!--android:textSize="18dp"/>-->
+                <!--</RadioGroup>-->
 
-            </TableRow>
+            <!--</TableRow>-->
 
-            <TableRow
-                android:id="@+id/tableRow17"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <!--<TableRow-->
+                <!--android:id="@+id/tableRow17"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
 
-                <TextView
-                    android:id="@+id/TextView17"
-                    android:text="14.清潔人員消毒方式正確(乾淨→污染)"
-                    android:textStyle="bold"
-                    android:padding="18dip"
-                    android:gravity="right"
-                    android:textSize="18dp"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/TextView17"-->
+                    <!--android:text="14.清潔人員消毒方式正確(乾淨→污染)"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:padding="18dip"-->
+                    <!--android:gravity="right"-->
+                    <!--android:textSize="18dp"/>-->
 
-                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal">
+                <!--<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="fill_parent"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <RadioButton
-                        android:id="@+id/RadioButton40"
-                        android:text="Y"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:checked="true"
-                        android:textSize="18dp"/>
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/RadioButton40"-->
+                        <!--android:text="Y"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="fill_parent"-->
+                        <!--android:checked="true"-->
+                        <!--android:textSize="18dp"/>-->
 
-                    <RadioButton
-                        android:id="@+id/RadioButton41"
-                        android:text="N"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:textSize="18dp"/>
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/RadioButton41"-->
+                        <!--android:text="N"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="fill_parent"-->
+                        <!--android:textSize="18dp"/>-->
 
-                    <RadioButton
-                        android:id="@+id/RadioButton42"
-                        android:text="NA"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:textSize="18dp"/>
-                </RadioGroup>
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/RadioButton42"-->
+                        <!--android:text="NA"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="fill_parent"-->
+                        <!--android:textSize="18dp"/>-->
+                <!--</RadioGroup>-->
 
-            </TableRow>
+            <!--</TableRow>-->
 
-            <TableRow
-                android:id="@+id/tableRow18"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <!--<TableRow-->
+                <!--android:id="@+id/tableRow18"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
 
-                <TextView
-                    android:id="@+id/TextView18"
-                    android:text="15.有依規定解除接觸隔離"
-                    android:textStyle="bold"
-                    android:padding="18dip"
-                    android:gravity="right"
-                    android:textSize="18dp"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/TextView18"-->
+                    <!--android:text="15.有依規定解除接觸隔離"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:padding="18dip"-->
+                    <!--android:gravity="right"-->
+                    <!--android:textSize="18dp"/>-->
 
-                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal">
+                <!--<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="fill_parent"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <RadioButton
-                        android:id="@+id/RadioButton43"
-                        android:text="Y"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:checked="true"
-                        android:textSize="18dp"/>
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/RadioButton43"-->
+                        <!--android:text="Y"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="fill_parent"-->
+                        <!--android:checked="true"-->
+                        <!--android:textSize="18dp"/>-->
 
-                    <RadioButton
-                        android:id="@+id/RadioButton44"
-                        android:text="N"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:textSize="18dp"/>
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/RadioButton44"-->
+                        <!--android:text="N"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="fill_parent"-->
+                        <!--android:textSize="18dp"/>-->
 
-                    <RadioButton
-                        android:id="@+id/RadioButton45"
-                        android:text="NA"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:textSize="18dp"/>
-                </RadioGroup>
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/RadioButton45"-->
+                        <!--android:text="NA"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="fill_parent"-->
+                        <!--android:textSize="18dp"/>-->
+                <!--</RadioGroup>-->
 
-            </TableRow>
+            <!--</TableRow>-->
 
             <TableRow
                 android:id="@+id/tableRow19"
@@ -750,7 +750,7 @@
 
                 <TextView
                     android:id="@+id/TextView19"
-                    android:text="備註"
+                    android:text="單位工作人員"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -769,7 +769,7 @@
 
                 <TextView
                     android:id="@+id/TextView81"
-                    android:text="稽核者"
+                    android:text="查核者簽章"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"

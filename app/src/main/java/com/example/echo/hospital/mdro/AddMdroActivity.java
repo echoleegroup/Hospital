@@ -54,11 +54,10 @@ public class AddMdroActivity extends AppCompatActivity {
     private EditText date, bed, comment, auditor;
     private RadioButton firstY, firstN, firstNA, secondY, secondN, secondNA, thirdY, thirdN, thirdNA, fourthY, fourthN, fourthNA, fifthY, fifthN, fifthNA,
                         sixthY, sixthN, sixthNA, seventhY, seventhN, seventhNA, eighthY, eighthN, eighthNA, ninethY, ninethN, ninethNA, tenthY, tenthN, tenthNA,
-                        eleventhY, eleventhN, eleventhNA, twelfthY, twelfthN, twelfthNA, thirteenthY, thirteenthN, thirteenthNA, fourteenthY, fourteenthN, fourteenthNA,
-                        fifteenthY, fifteenthN, fifteenthNA;
+                        eleventhY, eleventhN, eleventhNA;
     private Spinner unitSpinner;
     private String dateValue, unitValue, bedValue, firstValue, secondValue, thirdValue, fourthValue, fifthValue, sixthValue, seventhValue, eighthValue, ninethValue, tenthValue,
-            eleventhValue, twelfthValue, thirteenthValue, fourteenthValue, fifteenthValue, commentValue, completeValue, auditorValue;
+            eleventhValue, commentValue,  completeValue, auditorValue;
     private String trueValue = "Y", falseValue = "N";
     private Button saveBtn;
     private int mYear, mMonth, mDay; //西元年
@@ -176,18 +175,18 @@ public class AddMdroActivity extends AppCompatActivity {
         eleventhY = (RadioButton) findViewById(R.id.RadioButton31);
         eleventhN = (RadioButton) findViewById(R.id.RadioButton32);
         eleventhNA = (RadioButton) findViewById(R.id.RadioButton33);
-        twelfthY = (RadioButton) findViewById(R.id.RadioButton34);
-        twelfthN = (RadioButton) findViewById(R.id.RadioButton35);
-        twelfthNA = (RadioButton) findViewById(R.id.RadioButton36);
-        thirteenthY = (RadioButton) findViewById(R.id.RadioButton37);
-        thirteenthN = (RadioButton) findViewById(R.id.RadioButton38);
-        thirteenthNA = (RadioButton) findViewById(R.id.RadioButton39);
-        fourteenthY = (RadioButton) findViewById(R.id.RadioButton40);
-        fourteenthN = (RadioButton) findViewById(R.id.RadioButton41);
-        fourteenthNA = (RadioButton) findViewById(R.id.RadioButton42);
-        fifteenthY= (RadioButton) findViewById(R.id.RadioButton43);
-        fifteenthN = (RadioButton) findViewById(R.id.RadioButton44);
-        fifteenthNA = (RadioButton) findViewById(R.id.RadioButton45);
+//        twelfthY = (RadioButton) findViewById(R.id.RadioButton34);
+//        twelfthN = (RadioButton) findViewById(R.id.RadioButton35);
+//        twelfthNA = (RadioButton) findViewById(R.id.RadioButton36);
+//        thirteenthY = (RadioButton) findViewById(R.id.RadioButton37);
+//        thirteenthN = (RadioButton) findViewById(R.id.RadioButton38);
+//        thirteenthNA = (RadioButton) findViewById(R.id.RadioButton39);
+//        fourteenthY = (RadioButton) findViewById(R.id.RadioButton40);
+//        fourteenthN = (RadioButton) findViewById(R.id.RadioButton41);
+//        fourteenthNA = (RadioButton) findViewById(R.id.RadioButton42);
+//        fifteenthY= (RadioButton) findViewById(R.id.RadioButton43);
+//        fifteenthN = (RadioButton) findViewById(R.id.RadioButton44);
+//        fifteenthNA = (RadioButton) findViewById(R.id.RadioButton45);
 
         //set comment
         comment = (EditText)findViewById(R.id.EditText3);
@@ -222,14 +221,13 @@ public class AddMdroActivity extends AppCompatActivity {
             ninethValue = ninethY.isChecked() ? ninethY.getText().toString() : ninethN.isChecked() ? ninethN.getText().toString() : "";
             tenthValue = tenthY.isChecked() ? tenthY.getText().toString() : tenthN.isChecked() ? tenthN.getText().toString() : "";
             eleventhValue = eleventhY.isChecked() ? eleventhY.getText().toString() : eleventhN.isChecked() ? eleventhN.getText().toString()  : "";
-            twelfthValue = twelfthY.isChecked() ? twelfthY.getText().toString() : twelfthN.isChecked() ? twelfthN.getText().toString() : "";
-            thirteenthValue = thirteenthY.isChecked() ? thirteenthY.getText().toString() : thirteenthN.isChecked() ? thirteenthN.getText().toString() : "";
-            fourteenthValue = fourteenthY.isChecked() ? fourteenthY.getText().toString() : fourteenthN.isChecked() ? fourteenthN.getText().toString() : "";
-            fifteenthValue = fifteenthY.isChecked() ? fifteenthY.getText().toString() : fifteenthN.isChecked() ? fifteenthN.getText().toString() : "";
+//            twelfthValue = twelfthY.isChecked() ? twelfthY.getText().toString() : twelfthN.isChecked() ? twelfthN.getText().toString() : "";
+//            thirteenthValue = thirteenthY.isChecked() ? thirteenthY.getText().toString() : thirteenthN.isChecked() ? thirteenthN.getText().toString() : "";
+//            fourteenthValue = fourteenthY.isChecked() ? fourteenthY.getText().toString() : fourteenthN.isChecked() ? fourteenthN.getText().toString() : "";
+//            fifteenthValue = fifteenthY.isChecked() ? fifteenthY.getText().toString() : fifteenthN.isChecked() ? fifteenthN.getText().toString() : "";
             completeValue = ( firstValue.equals(falseValue) || secondValue.equals(falseValue) || thirdValue.equals(falseValue) || fourthValue.equals(falseValue) ||
                     fifthValue.equals(falseValue) || sixthValue.equals(falseValue) || seventhValue.equals(falseValue) || eighthValue.equals(falseValue) ||
-                    ninethValue.equals(falseValue) || tenthValue.equals(falseValue) || eleventhValue.equals(falseValue) || twelfthValue.equals(falseValue) ||
-                    thirteenthValue.equals(falseValue) || fourteenthValue.equals(falseValue) || fifteenthValue.equals(falseValue) ) ? falseValue : trueValue;
+                    ninethValue.equals(falseValue) || tenthValue.equals(falseValue) || eleventhValue.equals(falseValue) ) ? falseValue : trueValue;
             commentValue = comment.getText().toString();
             auditorValue = NameValue.toString();
 
@@ -402,12 +400,13 @@ public class AddMdroActivity extends AppCompatActivity {
                     data1.add("9");//第9題
                     data1.add("10");//第10題
                     data1.add("11");//第11題
-                    data1.add("12");//第12題
-                    data1.add("13");//第13題
-                    data1.add("14");//第14題
-                    data1.add("15");//第15題
+//                    data1.add("12");//第12題
+//                    data1.add("13");//第13題
+//                    data1.add("14");//第14題
+//                    data1.add("15");//第15題
+                    data1.add("單位工作人員");//單位工作人員
                     data1.add("達成");//達成
-                    data1.add("稽核者");//稽核者
+                    data1.add("查核者簽章");//稽核者
 
                     List<List<Object>> data = new ArrayList<List<Object>>();
                     data.add (data1);
@@ -439,12 +438,13 @@ public class AddMdroActivity extends AppCompatActivity {
                 data1.add(ninethValue);//第9題
                 data1.add(tenthValue);//第10題
                 data1.add(eleventhValue);//第11題
-                data1.add(twelfthValue);//第12題
-                data1.add(thirteenthValue);//第13題
-                data1.add(fourteenthValue);//第14題
-                data1.add(fifteenthValue);//第15題
+//                data1.add(twelfthValue);//第12題
+//                data1.add(thirteenthValue);//第13題
+//                data1.add(fourteenthValue);//第14題
+//                data1.add(fifteenthValue);//第15題
+                data1.add(commentValue);//單位工作人員
                 data1.add(completeValue);//達成
-                data1.add(auditorValue);//稽核者
+                data1.add(auditorValue);//查核者簽章
 
                 List<List<Object>> data = new ArrayList<List<Object>>();
                 data.add (data1);
