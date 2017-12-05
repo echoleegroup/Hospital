@@ -39,12 +39,6 @@ public class MenuActivity extends AppCompatActivity {
         //init view
         listView = (ListView) findViewById(R.id.list);
 
-        //set header
-        /*headerView = (View)getLayoutInflater().inflate(R.layout.menu_header_view, null);
-        listView.addHeaderView(headerView);
-        headerTextView = (TextView)findViewById(R.id.menuHeader);
-        headerTextView.setText("感染控制稽核系統主選單");*/
-
         //set menu
         adapter = new ArrayAdapter(this, R.layout.menu_adapter);
         //0- 洗手稽核表

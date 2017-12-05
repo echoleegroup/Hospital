@@ -53,13 +53,12 @@ public class AddWashActivity extends AppCompatActivity {
     private EditText date, unit, title, auditor;
     private RadioButton handWashTrue, handWashFalse, equipmentTrue, equipmentFalse, tissueTrue, tissueFalse, washTypeW, washTypeA, contactPatientTrue, contactPatientFalse,
         executeTrue, executeFalse, bodyFluidTrue, bodyFluidFalse, contactPatientAfterTrue, contactPatientAfterFalse, surroundingTrue, surroundingFalse,
-        openFaucetTrue, openFaucetFalse, useWashHandTrue, useWashHandFalse, soupHandKeepDownTrue, soupHandKeepDownFalse, heartToHeartTrue, heartToHeartFalse,
-        heartToBackTrue, heartToBackFalse, sewToSewTrue, sewToSewFalse, backToHeartTrue, backToHeartFalse, handToThumbTrue, handToThumbFalse, sharpToHeartTrue,
-        sharpToHeartFalse, fifteensecTrue, fifteensecFalse, washHandTrue, washHandFalse, wipeTrue, wipeFalse, closeFaucetTrue, closeFaucetFalse, completeTrue, completeFalse;
+        heartToHeartTrue, heartToHeartFalse, heartToBackTrue, heartToBackFalse, sewToSewTrue, sewToSewFalse, backToHeartTrue, backToHeartFalse,
+        handToThumbTrue, handToThumbFalse, sharpToHeartTrue, sharpToHeartFalse, fifteensecTrue, fifteensecFalse, wipeTrue, wipeFalse, completeTrue, completeFalse;
     private String dateValue, unitValue, titleValue, handWashValue, equipmentValue, tissueValue, washTypeValue, contactPatientValue, executeValue, bodyFluidValue,
-        contactPatientAfterValue, surroundingValue, openFaucetValue, useWashHandValue, soupHandKeepDownValue, heartToHeartValue, heartToBackValue, sewToSewValue, backToHeartValue,
-        handToThumbValue, sharpToHeartValue, fifteensecValue, washHandValue, wipeValue, closeFaucetValue, completeValue, correctValue, complianceRateValue, auditorValue;
-    private TableRow washFirst, washThird, washFifth, washSixth, washSeventh;
+        contactPatientAfterValue, surroundingValue, heartToHeartValue, heartToBackValue, sewToSewValue, backToHeartValue,
+        handToThumbValue, sharpToHeartValue, fifteensecValue, wipeValue, completeValue, auditorValue;
+    private TableRow washSecond;
     private Button saveBtn;
     private int mYear, mMonth, mDay; //西元年
     private int cYear, cMonth; //民國年月
@@ -104,11 +103,7 @@ public class AddWashActivity extends AppCompatActivity {
         mProgress.setMessage("Calling Google Sheets API ...");
 
         //set rows
-        washFirst = (TableRow) findViewById(R.id.tableRow14);
-        washThird = (TableRow) findViewById(R.id.tableRow16);
-        washFifth = (TableRow) findViewById(R.id.tableRow26);
-        washSixth = (TableRow) findViewById(R.id.tableRow27);
-        washSeventh = (TableRow) findViewById(R.id.tableRow28);
+        washSecond = (TableRow) findViewById(R.id.tableRow22);
 
         //set datePicker
         date = (EditText)findViewById(R.id.EditText1);
@@ -191,61 +186,41 @@ public class AddWashActivity extends AppCompatActivity {
         surroundingTrue = (RadioButton) findViewById(R.id.RadioButton17);
         surroundingFalse = (RadioButton) findViewById(R.id.RadioButton18);
 
-        //set 1 open faucet radiobutton
-        openFaucetTrue = (RadioButton) findViewById(R.id.RadioButton19);
-        openFaucetFalse = (RadioButton) findViewById(R.id.RadioButton20);
+        //set 1a heart to heart radiobutton
+        heartToHeartTrue = (RadioButton) findViewById(R.id.RadioButton19);
+        heartToHeartFalse = (RadioButton) findViewById(R.id.RadioButton20);
 
-        //set 2 use wash hand radiobutton
-        useWashHandTrue = (RadioButton) findViewById(R.id.RadioButton21);
-        useWashHandFalse = (RadioButton) findViewById(R.id.RadioButton22);
+        //set 1b heart to back radiobutton
+        heartToBackTrue = (RadioButton) findViewById(R.id.RadioButton21);
+        heartToBackFalse = (RadioButton) findViewById(R.id.RadioButton22);
 
-        //set 3 soup and hand keep down radiobutton
-        soupHandKeepDownTrue = (RadioButton) findViewById(R.id.RadioButton23);
-        soupHandKeepDownFalse = (RadioButton) findViewById(R.id.RadioButton24);
+        //set 1c sew to sew radiobutton
+        sewToSewTrue = (RadioButton) findViewById(R.id.RadioButton23);
+        sewToSewFalse = (RadioButton) findViewById(R.id.RadioButton24);
 
-        //set 4a heart to heart radiobutton
-        heartToHeartTrue = (RadioButton) findViewById(R.id.RadioButton25);
-        heartToHeartFalse = (RadioButton) findViewById(R.id.RadioButton26);
+        //set 1d back to heart radiobutton
+        backToHeartTrue = (RadioButton) findViewById(R.id.RadioButton25);
+        backToHeartFalse = (RadioButton) findViewById(R.id.RadioButton26);
 
-        //set 4b heart to back radiobutton
-        heartToBackTrue = (RadioButton) findViewById(R.id.RadioButton27);
-        heartToBackFalse = (RadioButton) findViewById(R.id.RadioButton28);
+        //set 1e hand to thumb radiobutton
+        handToThumbTrue = (RadioButton) findViewById(R.id.RadioButton27);
+        handToThumbFalse = (RadioButton) findViewById(R.id.RadioButton28);
 
-        //set 4c sew to sew radiobutton
-        sewToSewTrue = (RadioButton) findViewById(R.id.RadioButton29);
-        sewToSewFalse = (RadioButton) findViewById(R.id.RadioButton30);
+        //set 1f sharp to heart radiobutton
+        sharpToHeartTrue = (RadioButton) findViewById(R.id.RadioButton29);
+        sharpToHeartFalse = (RadioButton) findViewById(R.id.RadioButton30);
 
-        //set 4d back to heart radiobutton
-        backToHeartTrue = (RadioButton) findViewById(R.id.RadioButton31);
-        backToHeartFalse = (RadioButton) findViewById(R.id.RadioButton32);
+        //set 1g fifteensec radiobutton
+        fifteensecTrue = (RadioButton) findViewById(R.id.RadioButton31);
+        fifteensecFalse = (RadioButton) findViewById(R.id.RadioButton32);
 
-        //set 4e hand to thumb radiobutton
-        handToThumbTrue = (RadioButton) findViewById(R.id.RadioButton33);
-        handToThumbFalse = (RadioButton) findViewById(R.id.RadioButton34);
+        //set 2 wipe radiobutton
+        wipeTrue = (RadioButton) findViewById(R.id.RadioButton33);
+        wipeFalse = (RadioButton) findViewById(R.id.RadioButton34);
 
-        //set 4f sharp to heart radiobutton
-        sharpToHeartTrue = (RadioButton) findViewById(R.id.RadioButton35);
-        sharpToHeartFalse = (RadioButton) findViewById(R.id.RadioButton36);
-
-        //set 4g fifteensec radiobutton
-        fifteensecTrue = (RadioButton) findViewById(R.id.RadioButton37);
-        fifteensecFalse = (RadioButton) findViewById(R.id.RadioButton38);
-
-        //set 5 wash hand radiobutton
-        washHandTrue = (RadioButton) findViewById(R.id.RadioButton39);
-        washHandFalse = (RadioButton) findViewById(R.id.RadioButton40);
-
-        //set 6 wipe radiobutton
-        wipeTrue = (RadioButton) findViewById(R.id.RadioButton41);
-        wipeFalse = (RadioButton) findViewById(R.id.RadioButton42);
-
-        //set 7 close faucet radiobutton
-        closeFaucetTrue = (RadioButton) findViewById(R.id.RadioButton43);
-        closeFaucetFalse = (RadioButton) findViewById(R.id.RadioButton44);
-
-        //set 8 complete radiobutton
-        completeTrue = (RadioButton) findViewById(R.id.RadioButton45);
-        completeFalse = (RadioButton) findViewById(R.id.RadioButton46);
+        //set 3 complete radiobutton
+        completeTrue = (RadioButton) findViewById(R.id.RadioButton35);
+        completeFalse = (RadioButton) findViewById(R.id.RadioButton36);
 
         //set auditor name
         //get input account and password  ---- start
@@ -275,9 +250,6 @@ public class AddWashActivity extends AppCompatActivity {
             bodyFluidValue = bodyFluidTrue.isChecked() ? bodyFluidTrue.getText().toString() : bodyFluidFalse.isChecked() ? bodyFluidFalse.getText().toString() : "";
             contactPatientAfterValue = contactPatientAfterTrue.isChecked() ? contactPatientAfterTrue.getText().toString() : contactPatientAfterFalse.isChecked() ? contactPatientAfterFalse.getText().toString() : "";
             surroundingValue = surroundingTrue.isChecked() ? surroundingTrue.getText().toString(): surroundingFalse.isChecked() ? surroundingFalse.getText().toString() : "";
-            openFaucetValue = washTypeA.isChecked() ? "" : openFaucetTrue.isChecked() ? openFaucetTrue.getText().toString(): openFaucetFalse.isChecked() ? openFaucetFalse.getText().toString() : "";
-            useWashHandValue =  useWashHandTrue.isChecked() ? useWashHandTrue.getText().toString(): useWashHandFalse.isChecked() ? useWashHandFalse.getText().toString() : "";
-            soupHandKeepDownValue = washTypeA.isChecked() ? "" : soupHandKeepDownTrue.isChecked() ? soupHandKeepDownTrue.getText().toString() :  soupHandKeepDownFalse.isChecked() ? soupHandKeepDownFalse.getText().toString() : "";
             heartToHeartValue = heartToHeartTrue.isChecked() ? heartToHeartTrue.getText().toString() : heartToHeartFalse.isChecked() ? heartToHeartFalse.getText().toString() : "";
             heartToBackValue = heartToBackTrue.isChecked() ? heartToBackTrue.getText().toString() : heartToBackFalse.isChecked() ? heartToBackFalse.getText().toString() : "";
             sewToSewValue = sewToSewTrue.isChecked() ? sewToSewTrue.getText().toString(): sewToSewFalse.isChecked() ? sewToSewFalse.getText().toString() : "";
@@ -285,24 +257,8 @@ public class AddWashActivity extends AppCompatActivity {
             handToThumbValue = handToThumbTrue.isChecked() ? handToThumbTrue.getText().toString() :  handToThumbFalse.isChecked() ? handToThumbFalse.getText().toString() : "";
             sharpToHeartValue = sharpToHeartTrue.isChecked() ? sharpToHeartTrue.getText().toString() : sharpToHeartFalse.isChecked() ? sharpToHeartFalse.getText().toString() : "";
             fifteensecValue = fifteensecTrue.isChecked() ? fifteensecTrue.getText().toString() : fifteensecFalse.isChecked() ? fifteensecFalse.getText().toString() : "";
-            washHandValue = washTypeA.isChecked() ? "" : washHandTrue.isChecked() ? washHandTrue.getText().toString(): washHandFalse.isChecked() ? washHandFalse.getText().toString() : "";
             wipeValue = washTypeA.isChecked() ? "" : wipeTrue.isChecked() ? wipeTrue.getText().toString(): wipeFalse.isChecked() ? wipeFalse.getText().toString() : "";
-            closeFaucetValue = washTypeA.isChecked() ? "" : closeFaucetTrue.isChecked() ? closeFaucetTrue.getText().toString() :  closeFaucetFalse.isChecked() ? closeFaucetFalse.getText().toString() : "";
             completeValue = completeTrue.isChecked() ? completeTrue.getText().toString() : completeFalse.isChecked() ? completeFalse.getText().toString() : "";
-            //correct
-            if(washTypeValue.equals("W")){
-                correctValue = (openFaucetValue.equals("Y") && useWashHandValue.equals("Y") && soupHandKeepDownValue.equals("Y") && heartToHeartValue.equals("Y") && heartToBackValue.equals("Y")
-                        && sewToSewValue.equals("Y") && backToHeartValue.equals("Y") && handToThumbValue.equals("Y") && sharpToHeartValue.equals("Y")
-                        && fifteensecValue.equals("Y") && washHandValue.equals("Y") && wipeValue.equals("Y") && closeFaucetValue.equals("Y") && completeValue.equals("Y")
-                        ) ? "Y" : "N";
-
-            }else{
-                correctValue = (useWashHandValue.equals("Y") && heartToHeartValue.equals("Y") && heartToBackValue.equals("Y") && sewToSewValue.equals("Y") && backToHeartValue.equals("Y")
-                        && handToThumbValue.equals("Y") && sharpToHeartValue.equals("Y") && fifteensecValue.equals("Y") && completeValue.equals("Y")
-                         ) ? "Y" : "N";
-            }
-            //compliance
-            complianceRateValue = (contactPatientValue.equals("Y") && executeValue.equals("Y") && bodyFluidValue.equals("Y") && contactPatientAfterValue.equals("Y") && surroundingValue.equals("Y")) ? "Y" : "N";
             auditorValue = NameValue.toString();
 
             //validate
@@ -310,10 +266,9 @@ public class AddWashActivity extends AppCompatActivity {
             if(washTypeValue.equals("W")){
                 if(dateValue.length() == 0 || unitValue.length() == 0 || titleValue.length() == 0 || handWashValue.length() == 0 || equipmentValue.length() == 0 || tissueValue.length() == 0
                         || washTypeValue.length() == 0 || contactPatientValue.length() == 0 || executeValue.length() == 0 || handWashValue.length() == 0 || bodyFluidValue.length() == 0
-                        || contactPatientAfterValue.length() == 0 || surroundingValue.length() == 0 || openFaucetValue.length() == 0 || useWashHandValue.length() == 0
-                        || soupHandKeepDownValue.length() == 0 || heartToHeartValue.length() == 0 || heartToBackValue.length() == 0 || sewToSewValue.length() == 0 || backToHeartValue.length() == 0
-                        || handToThumbValue.length() == 0 || sharpToHeartValue.length() == 0 || fifteensecValue.length() == 0 || washHandValue.length() == 0 || wipeValue.length() == 0
-                        || closeFaucetValue.length() == 0 || completeValue.length() == 0){
+                        || contactPatientAfterValue.length() == 0 || surroundingValue.length() == 0 || heartToHeartValue.length() == 0 || heartToBackValue.length() == 0
+                        || sewToSewValue.length() == 0 || backToHeartValue.length() == 0 || handToThumbValue.length() == 0 || sharpToHeartValue.length() == 0
+                        || fifteensecValue.length() == 0 || wipeValue.length() == 0 || completeValue.length() == 0){
                     MyAlertDialog.setTitle("Message");
                     MyAlertDialog.setMessage("請填寫正確資料");
                     MyAlertDialog.show();
@@ -324,7 +279,7 @@ public class AddWashActivity extends AppCompatActivity {
             }else{//choose wash a
                 if(dateValue.length() == 0 || unitValue.length() == 0 || titleValue.length() == 0 || handWashValue.length() == 0 || equipmentValue.length() == 0 || tissueValue.length() == 0
                         || washTypeValue.length() == 0 || contactPatientValue.length() == 0 || executeValue.length() == 0 || handWashValue.length() == 0 || bodyFluidValue.length() == 0
-                        || contactPatientAfterValue.length() == 0 || surroundingValue.length() == 0 || useWashHandValue.length() == 0 || heartToHeartValue.length() == 0
+                        || contactPatientAfterValue.length() == 0 || surroundingValue.length() == 0 || heartToHeartValue.length() == 0
                         || heartToBackValue.length() == 0 || sewToSewValue.length() == 0 || backToHeartValue.length() == 0 || handToThumbValue.length() == 0 || sharpToHeartValue.length() == 0
                         || fifteensecValue.length() == 0 || completeValue.length() == 0){
                     MyAlertDialog.setTitle("Message");
@@ -348,18 +303,10 @@ public class AddWashActivity extends AppCompatActivity {
     }
 
     private void changeWashType(boolean wash){
-        if(wash){//show 1, 3, 5, 6, 7
-            washFirst.setVisibility(View.VISIBLE);
-            washThird.setVisibility(View.VISIBLE);
-            washFifth.setVisibility(View.VISIBLE);
-            washSixth.setVisibility(View.VISIBLE);
-            washSeventh.setVisibility(View.VISIBLE);
-        }else{//hide 1, 3, 5, 6, 7
-            washFirst.setVisibility(View.GONE);
-            washThird.setVisibility(View.GONE);
-            washFifth.setVisibility(View.GONE);
-            washSixth.setVisibility(View.GONE);
-            washSeventh.setVisibility(View.GONE);
+        if(wash){//show 2
+            washSecond.setVisibility(View.VISIBLE);
+        }else{//hide 2
+            washSecond.setVisibility(View.GONE);
         }
     }
 
@@ -507,23 +454,16 @@ public class AddWashActivity extends AppCompatActivity {
                     data1.add("3體液後");//3體液後
                     data1.add("4病人後");//4病人後
                     data1.add("5環境後");//5環境後
-                    data1.add("步驟1");//步驟1
+                    data1.add("步驟1A");//步驟1A
+                    data1.add("步驟1B");//步驟1B
+                    data1.add("步驟1C");//步驟1C
+                    data1.add("步驟1D");//步驟1D
+                    data1.add("步驟1E");//步驟1E
+                    data1.add("步驟1F");//步驟1F
+                    data1.add("步驟1G");//步驟1G
                     data1.add("步驟2");//步驟2
                     data1.add("步驟3");//步驟3
-                    data1.add("步驟4A");//步驟4A
-                    data1.add("步驟4B");//步驟4B
-                    data1.add("步驟4C");//步驟4C
-                    data1.add("步驟4D");//步驟4D
-                    data1.add("步驟4E");//步驟4E
-                    data1.add("步驟4F");//步驟4F
-                    data1.add("步驟4G");//步驟4G
-                    data1.add("步驟5");//步驟5
-                    data1.add("步驟6");//步驟6
-                    data1.add("步驟7");//步驟7
-                    data1.add("步驟8");//步驟8
-                    data1.add("正確率");//正確率
-                    data1.add("遵從率");//遵從率
-                    data1.add("稽核者");//稽核者
+                    data1.add("稽核者簽章");//稽核者簽章
 
                     List<List<Object>> data = new ArrayList<List<Object>>();
                     data.add (data1);
@@ -552,31 +492,23 @@ public class AddWashActivity extends AppCompatActivity {
                 data1.add(bodyFluidValue);//3體液後
                 data1.add(contactPatientAfterValue);//4病人後
                 data1.add(surroundingValue);//5環境後
-                data1.add(openFaucetValue);//步驟1
-                data1.add(useWashHandValue);//步驟2
-                data1.add(soupHandKeepDownValue);//步驟3
-                data1.add(heartToHeartValue);//步驟4A
-                data1.add(heartToBackValue);//步驟4B
-                data1.add(sewToSewValue);//步驟4C
-                data1.add(backToHeartValue);//步驟4D
-                data1.add(handToThumbValue);//步驟4E
-                data1.add(sharpToHeartValue);//步驟4F
-                data1.add(fifteensecValue);//步驟4G
-                data1.add(washHandValue);//步驟5
-                data1.add(wipeValue);//步驟6
-                data1.add(closeFaucetValue);//步驟7
-                data1.add(completeValue);//步驟8
-                data1.add(correctValue);//正確率
-                data1.add(complianceRateValue);//遵從率
-                data1.add(auditorValue);//稽核者
+                data1.add(heartToHeartValue);//步驟1A
+                data1.add(heartToBackValue);//步驟1B
+                data1.add(sewToSewValue);//步驟1C
+                data1.add(backToHeartValue);//步驟1D
+                data1.add(handToThumbValue);//步驟1E
+                data1.add(sharpToHeartValue);//步驟1F
+                data1.add(fifteensecValue);//步驟1G
+                data1.add(wipeValue);//步驟2
+                data1.add(completeValue);//步驟3
+                data1.add(auditorValue);//稽核者簽章
 
                 List<List<Object>> data = new ArrayList<List<Object>>();
                 data.add (data1);
 
                 List<List<Object>> values = data;
 
-                body = new ValueRange()
-                        .setValues(values);
+                body = new ValueRange().setValues(values);
 
                 Sheets.Spreadsheets.Values.Append request =
                         mService.spreadsheets().values().append(spreadsheetId, range, body).setValueInputOption("RAW");

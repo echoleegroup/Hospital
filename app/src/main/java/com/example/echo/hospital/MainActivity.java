@@ -117,8 +117,6 @@ public class MainActivity extends Activity
 
         title = new TextView(this);
         title.setGravity(Gravity.CENTER);
-        /*title.setTypeface(Typeface.createFromAsset(getAssets()
-                , "fonts/MicrosoftJhengHei.ttf"));*/
         title.setText("感染控制稽核系統");
         title.setTextSize(32);
         title.setPadding(0, 100, 0, 80);//left, top, right, bottom

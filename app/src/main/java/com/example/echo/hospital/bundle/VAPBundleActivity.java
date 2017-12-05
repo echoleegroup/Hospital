@@ -91,13 +91,6 @@ public class VAPBundleActivity extends AppCompatActivity {
         //init view
         listView = (ListView) findViewById(R.id.listView);
 
-        //set header
-        /*headerView = (View)getLayoutInflater().inflate(R.layout.menu_header_view, null);
-        listView.addHeaderView(headerView);
-        headerTextView = (TextView)findViewById(R.id.menuHeader);
-        menuLayout = (LinearLayout)findViewById(R.id.menuLayout);
-        menuLayout.setBackgroundColor(Color.parseColor(backgroundColor));*/
-
         //set loading
         mProgress = new ProgressDialog(this);
         mProgress.setMessage("Calling Google Sheets API ...");
@@ -279,13 +272,10 @@ public class VAPBundleActivity extends AppCompatActivity {
                 HashMap<String,String> temp = new HashMap<String, String>();
                 if (output.size() == 0) {
                     //header
-                    //headerTextView.setText("目前本年度尚未未有" + MenuActivity.bundleName + "稽核表");
                     ArrayAdapter adapter = new ArrayAdapter(VAPBundleActivity.this, R.layout.menu_adapter);
                     adapter.add("目前本年度尚未未有" + MenuActivity.bundleName + "稽核表");
                     listView.setAdapter(adapter);
                 } else {
-                    //header
-                    //headerTextView.setText(MenuActivity.bundleName +" Bundle稽核列表");
                     for (String str : output) {
                         //月份, 稽核日期, 單位
                         String[] array = str.split(",");

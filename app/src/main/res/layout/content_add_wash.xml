@@ -156,7 +156,7 @@
 
                 <TextView
                     android:id="@+id/TextView5"
-                    android:text="洗手液無缺乏"
+                    android:text="洗手液"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -194,7 +194,7 @@
 
                 <TextView
                     android:id="@+id/TextView6"
-                    android:text="洗手設備(乾洗手瓶或水龍頭)功能正常"
+                    android:text="洗手設備整潔"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -230,7 +230,7 @@
 
                 <TextView
                     android:id="@+id/TextView7"
-                    android:text="擦手紙無缺乏"
+                    android:text="擦手紙"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -487,7 +487,22 @@
 
                 <TextView
                     android:id="@+id/TextView14"
-                    android:text="1.打開水龍頭潤溼雙手"
+                    android:text="1.搓揉雙手六步驟"
+                    android:textStyle="bold"
+                    android:padding="18dip"
+                    android:gravity="right"
+                    android:textSize="18dp"/>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow15"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/TextView15"
+                    android:text="a.掌心對掌心搓揉"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -517,13 +532,13 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/tableRow15"
+                android:id="@+id/tableRow16"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/TextView15"
-                    android:text="2.取適量洗手液(或酒精乾洗手液)"
+                    android:id="@+id/TextView16"
+                    android:text="b.掌心搓揉手背"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -553,13 +568,13 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/tableRow16"
+                android:id="@+id/tableRow17"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/TextView16"
-                    android:text="3.搓揉雙手至起泡並保持雙手低於手肘"
+                    android:id="@+id/TextView17"
+                    android:text="c.指縫相互搓揉"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -595,22 +610,7 @@
 
                 <TextView
                     android:id="@+id/TextView18"
-                    android:text="4.搓揉雙手六步驟"
-                    android:textStyle="bold"
-                    android:padding="18dip"
-                    android:gravity="right"
-                    android:textSize="18dp"/>
-
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow19"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/TextView19"
-                    android:text="a.掌心對掌心搓揉"
+                    android:text="d.指背向掌心搓揉"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -640,13 +640,13 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/tableRow20"
+                android:id="@+id/tableRow19"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/TextView20"
-                    android:text="b.掌心搓揉手背"
+                    android:id="@+id/TextView19"
+                    android:text="e.手握拇指旋轉搓揉"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -676,13 +676,13 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/tableRow21"
+                android:id="@+id/tableRow20"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/TextView21"
-                    android:text="c.指縫相互搓揉"
+                    android:id="@+id/TextView20"
+                    android:text="f.指尖對掌心來回搓揉"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -712,13 +712,13 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/tableRow22"
+                android:id="@+id/tableRow21"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/TextView22"
-                    android:text="d.指背向掌心搓揉"
+                    android:id="@+id/TextView21"
+                    android:text="g.洗手搓揉時間大於15秒(酒精乾式洗手約20~30秒)"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -748,13 +748,13 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/tableRow23"
+                android:id="@+id/tableRow22"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/TextView23"
-                    android:text="e.手握拇指旋轉搓揉"
+                    android:id="@+id/TextView22"
+                    android:text="2.以擦手紙擦乾雙手(酒精乾式洗手免此步驟)"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -784,13 +784,13 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/tableRow24"
+                android:id="@+id/tableRow29"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/TextView24"
-                    android:text="f.指尖對掌心來回搓揉"
+                    android:id="@+id/TextView29"
+                    android:text="3.完成1~7步驟約40~60秒(酒精乾式洗手需直到雙手乾爽)"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
@@ -820,193 +820,13 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/tableRow25"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/TextView25"
-                    android:text="g.洗手搓揉時間大於15秒"
-                    android:textStyle="bold"
-                    android:padding="18dip"
-                    android:gravity="right"
-                    android:textSize="18dp"/>
-
-                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/RadioButton37"
-                        android:text="Y"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:checked="true"
-                        android:textSize="18dp"/>
-
-                    <RadioButton
-                        android:id="@+id/RadioButton38"
-                        android:text="N"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:textSize="18dp"/>
-                </RadioGroup>
-
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow26"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/TextView26"
-                    android:text="5.指尖朝下沖洗雙手"
-                    android:textStyle="bold"
-                    android:padding="18dip"
-                    android:gravity="right"
-                    android:textSize="18dp"/>
-
-                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/RadioButton39"
-                        android:text="Y"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:checked="true"
-                        android:textSize="18dp"/>
-
-                    <RadioButton
-                        android:id="@+id/RadioButton40"
-                        android:text="N"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:textSize="18dp"/>
-                </RadioGroup>
-
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow27"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/TextView27"
-                    android:text="6.以擦手紙擦乾雙手"
-                    android:textStyle="bold"
-                    android:padding="18dip"
-                    android:gravity="right"
-                    android:textSize="18dp"/>
-
-                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/RadioButton41"
-                        android:text="Y"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:checked="true"
-                        android:textSize="18dp"/>
-
-                    <RadioButton
-                        android:id="@+id/RadioButton42"
-                        android:text="N"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:textSize="18dp"/>
-                </RadioGroup>
-
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow28"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/TextView28"
-                    android:text="7.以手肘或原擦手紙關緊水龍頭"
-                    android:textStyle="bold"
-                    android:padding="18dip"
-                    android:gravity="right"
-                    android:textSize="18dp"/>
-
-                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/RadioButton43"
-                        android:text="Y"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:checked="true"
-                        android:textSize="18dp"/>
-
-                    <RadioButton
-                        android:id="@+id/RadioButton44"
-                        android:text="N"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:textSize="18dp"/>
-                </RadioGroup>
-
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow29"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/TextView29"
-                    android:text="8.完成1~7步驟約40~60秒"
-                    android:textStyle="bold"
-                    android:padding="18dip"
-                    android:gravity="right"
-                    android:textSize="18dp"/>
-
-                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/RadioButton45"
-                        android:text="Y"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:checked="true"
-                        android:textSize="18dp"/>
-
-                    <RadioButton
-                        android:id="@+id/RadioButton46"
-                        android:text="N"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:textSize="18dp"/>
-                </RadioGroup>
-
-            </TableRow>
-
-            <TableRow
                 android:id="@+id/tableRow30"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/TextView30"
-                    android:text="稽核者"
+                    android:text="稽核者簽章"
                     android:textStyle="bold"
                     android:padding="18dip"
                     android:gravity="right"
